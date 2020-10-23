@@ -25,7 +25,7 @@ const config = {
     },
     subject: 'panyunyi的博客 - 您的评论获得新的回复！', // 主题
     text: '您的评论获得新的回复！',
-    WEB_HOST: 'http://127.0.0.1:3000' // email callback url
+    WEB_HOST: 'http://127.0.0.1:80' // email callback url
   },
   TOKEN: {
     secret: 'root', // secret is very important!
