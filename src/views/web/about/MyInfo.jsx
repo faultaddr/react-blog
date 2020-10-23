@@ -45,22 +45,22 @@ const MyInfo = () => {
       <Divider orientation='left'>关于我</Divider>
 
       <ul className='about-list'>
-        <li>姓名：郭少威</li>
-        <li>学历专业：本科 软件工程</li>
+        <li>姓名：panyunyi</li>
+        <li>学历专业：NJU CS master</li>
         <li>
           联系方式：
-          <Icon type='qq' /> 434358603
+          <Icon type='qq' /> 779087031
           <Divider type='vertical' />
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
-          <a href='mailto:alvin00216@163.com'>alvin00216@163.com</a>
+          <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
         </li>
-        <li>坐标：广州市</li>
-        <li>
+        <li>坐标：shanghai市</li>
+        {/* <li>
           其他博客地址：
           <Href href='https://alvin.run'>alvin's note</Href>
           <Divider type='vertical' />
           <Href href='https://juejin.im/user/5acac6c4f265da2378408f92'>掘金主页</Href>
-        </li>
+        </li> */}
         <li>
           技能
           <ul>
@@ -76,7 +76,7 @@ const MyInfo = () => {
           其他
           <ul>
             <li>常用开发工具： vscode、webstorm、git</li>
-            <li>熟悉的 UI 框架： antd、element-ui、vux</li>
+            <li>熟悉的 UI 框架： antd、element-ui</li>
             <li>具备良好的编码风格和习惯，团队规范意识，乐于分享</li>
           </ul>
         </li>

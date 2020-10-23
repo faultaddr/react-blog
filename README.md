@@ -167,17 +167,17 @@ import MyInfo from '@/views/web/about/MyInfo'
 export const API_BASE_URL = 'http://127.0.0.1:6060'
 
 // project config
-export const HEADER_BLOG_NAME = '郭大大的博客' // header title 显示的名字
+export const HEADER_BLOG_NAME = 'panyunyi的博客' // header title 显示的名字
 
 // === sidebar
 export const SIDEBAR = {
   avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-  title: '郭大大', // 标题
-  subTitle: '前端打杂人员，略微代码洁癖', // 子标题
+  title: 'panyunyi', // 标题
+  subTitle: 'coder', // 子标题
   // 个人主页
   homepages: {
-    github: 'https://github.com/gershonv',
-    juejin: 'https://juejin.im/user/5acac6c4f265da2378408f92',
+    github: 'https://github.com/panyunyi97',
+    juejin: 'https://juejin.im/user/',
   },
 }
 
@@ -227,12 +227,12 @@ const config = {
         pass: '123456', // generated ethereal password 授权码 而非 密码
       },
     },
-    subject: '郭大大的博客 - 您的评论获得新的回复！', // 主题
+    subject: 'panyunyi的博客 - 您的评论获得新的回复！', // 主题
     text: '您的评论获得新的回复！',
     WEB_HOST: 'http://127.0.0.1:3000', // email callback url
   },
   TOKEN: {
-    secret: 'guo-test', // secret is very important!
+    secret: 'panyunyi', // secret is very important!
     expiresIn: '720h', // token 有效期
   },
   DATABASE: {
