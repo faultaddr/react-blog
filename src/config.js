@@ -6,7 +6,7 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 
 // API_BASE_URL
-export const API_BASE_URL = 'http://localhost:6060'
+export const API_BASE_URL = 'http://120.79.229.207:6060'
 
 // project config
 export const HEADER_BLOG_NAME = 'panyunyi的博客' // header title 显示的名字
