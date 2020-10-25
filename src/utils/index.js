@@ -2,9 +2,47 @@ import marked from 'marked'
 import { COLOR_LIST } from '@/utils/config'
 import xss from 'xss'
 import { clear, get } from '@/utils/storage'
+import * as React from 'react'
+import * as ReactMarkdown from 'react-markdown'
+import MathJax from '@matejmazur/react-mathjax'
+import * as RemarkMathPlugin from 'remark-math'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-// 转化 md 语法为 html
+export const MarkdownRender = props => {
+  const newProps = {
+    ...props,
+    plugins: [
+      RemarkMathPlugin,
+    ],
+    renderers: {
+      ...props.renderers,
+      code: ({language, value}) =>
+        <SyntaxHighlighter style={dark} language={language} children={value} />,
+      math: props =>
+        <MathJax.Node>{props.value}</MathJax.Node>,
+      inlineMath: props =>
+        <MathJax.Node inline>{props.value}</MathJax.Node>,
+    }
+
+  }
+  return (
+    <MathJax.Context input='tex'>
+      <ReactMarkdown {...newProps} allowDangerousHtml />
+    </MathJax.Context>
+  )
+}
+
+// 转化 md 语法为 React Node
+
 export const translateMarkdown = (plainText, isGuardXss = false) => {
+  console.log(plainText)
+  return (<MarkdownRender source={plainText}/>)
+}
+
+// 转化md 为html
+export const translateMarkdown2html = (plainText, isGuardXss = false) => {
+  console.log(plainText)
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: new marked.Renderer(),
     gfm: true,
@@ -12,7 +50,6 @@ export const translateMarkdown = (plainText, isGuardXss = false) => {
     sanitize: false,
     tables: true,
     breaks: true,
-    smartLists: true,
     smartypants: true,
     highlight: function(code) {
       /*eslint no-undef: "off"*/
@@ -95,11 +132,11 @@ export function RandomId(len) {
  */
 export function debounce(func, wait) {
   let timer = null
-  return function() {
+  return function () {
     const context = this
     const args = arguments
     clearTimeout(timer)
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       func.apply(context, args)
     }, wait)
   }

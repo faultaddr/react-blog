@@ -4,7 +4,7 @@ import './index.less'
 import { useMediaQuery } from 'react-responsive'
 // methods
 import axios from '@/utils/axios'
-import { translateMarkdown, calcCommentsCount } from '@/utils'
+import { translateMarkdown, translateMarkdown2html, calcCommentsCount } from '@/utils'
 import useAjaxLoading from '@/hooks/useAjaxLoading'
 
 // components
@@ -39,7 +39,6 @@ function Article(props) {
   useEffect(() => {
     withLoading(axios.get(`/article/${props.match.params.id}`))
       .then(res => {
-        res.content = translateMarkdown(res.content)
         setArticle(res)
       })
       .catch(e => {
@@ -54,6 +53,7 @@ function Article(props) {
   const { title, content, tags, categories, comments, createdAt, viewCount } = article
   const articleId = parseInt(props.match.params.id)
   const isFoldNavigation = useMediaQuery({ query: '(max-width: 1300px)' })
+  console.log(article)
   return (
     <Spin tip='Loading...' spinning={loading}>
       <article className='app-article' style={{ paddingRight: isFoldNavigation ? 0 : 275 }}>
@@ -76,8 +76,7 @@ function Article(props) {
             <span>{viewCount}</span>
           </div>
         </div>
-
-        <div className='article-detail' dangerouslySetInnerHTML={{ __html: content }} />
+        {translateMarkdown(content)}
 
         {isFoldNavigation ? (
           <>
@@ -92,14 +91,14 @@ function Article(props) {
               visible={drawerVisible}
               getContainer={() => document.querySelector('.app-article')}>
               <div className='right-navigation'>
-                <Navigation content={content} />
+                <Navigation content={translateMarkdown2html(content)} />
               </div>
             </Drawer>
           </>
         )
           : (
             <nav className='article-navigation'>
-              <Navigation content={content} />
+              <Navigation content={translateMarkdown2html(content)} />
             </nav>
           )}
 

@@ -7,28 +7,56 @@ import SvgIcon from '@/components/SvgIcon'
 
 const skills = [
   {
+    label: '具备扎实的Java功底，熟练了解各种特性',
+    rate: '5'
+  },
+  {
+    label: '具备扎实的Python功底，熟练了解各类特性',
+    rate: '5'
+  },
+  {
     label: '具备扎实的 Javascript 基础，熟练使用 ES6+ 语法。',
+    rate: 4
+  },
+  {
+    label: '具备不那么扎实的 C++ 基础，没熟练了解各类特性',
     rate: 3
+  },
+  {
+    label: 'Android 顶级玩家',
+    rate: 5
   },
   {
     label: '熟悉 React 并理解其原理，熟悉 Vue 框架及其用法。',
-    rate: 3
+    rate: 5
+  },
+  {
+    label: '熟悉 Flask/Django 并理解其原理，熟悉各类用法。',
+    rate: 5
+  },
+  {
+    label: 'Spring 全家桶爱好者，后端中级开发者,netty/kafka/hadoop/Storm/Spark',
+    rate: '3'
+  },
+  {
+    label: '3D 轻量级玩家，openGL小菜,3D shape segmentation & 3D scene segmentation',
+    rate: '3'
   },
   {
     label: '熟练使用 Webpack 打包工具，熟悉常用工程化和模块化方案。',
-    rate: 3
+    rate: 4
   },
   {
     label: '熟悉 Koa、Mysql，针对需求可以做到简单的数据库设计、接口的开发与设计！',
-    rate: 2
+    rate: 3
   },
   {
     label: '熟悉 HTTP 协议，缓存、性能优化、安全等，了解浏览器原理。',
-    rate: 2
+    rate: 4
   },
   {
     label: '熟悉常用的算法与数据结构',
-    rate: 2
+    rate: 3
   }
 ]
 
@@ -38,15 +66,16 @@ const MyInfo = () => {
       <Divider orientation='left'>博客简述</Divider>
       <p>本博客使用的技术为 react hooks + antd + koa2 + mysql</p>
       <p>
-        源码地址为 <Href href='https://github.com/gershonv/react-blog'>github</Href>
+        源码地址为 <Href href='https://github.com/panyunyi97/react-blog'>github</Href>
         ，仅供参考，不做商业用途！
       </p>
 
       <Divider orientation='left'>关于我</Divider>
 
       <ul className='about-list'>
-        <li>姓名：panyunyi</li>
-        <li>学历专业：NJU CS master</li>
+        <li>姓名：潘云逸</li>
+        <li>本科： 中央财经大学（CUFE CS</li>
+        <li>硕士： 南京大学（NJU）CS</li>
         <li>
           联系方式：
           <Icon type='qq' /> 779087031
@@ -54,7 +83,7 @@ const MyInfo = () => {
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
           <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
         </li>
-        <li>坐标：shanghai市</li>
+        <li>坐标：北京市or上海市</li>
         {/* <li>
           其他博客地址：
           <Href href='https://alvin.run'>alvin's note</Href>
@@ -75,15 +104,18 @@ const MyInfo = () => {
         <li>
           其他
           <ul>
-            <li>常用开发工具： vscode、webstorm、git</li>
+            <li>常用开发工具： idea、pycharm、vim、vscode、webstorm、git</li>
             <li>熟悉的 UI 框架： antd、element-ui</li>
             <li>具备良好的编码风格和习惯，团队规范意识，乐于分享</li>
           </ul>
         </li>
         <li>
-          个人
+          publication
           <ul>
-            <li>欢迎交流！</li>
+            <li>ICPR 2020: Two Stage Scene Segmentation Base on Self-attention Mechanism</li>
+            <li> 安徽大学学报： 图核综述 </li>
+            <li> 专利： 一种基于机器学习的CME事件跟踪方法 </li>
+            <li> 译著： 计算机视觉基础 </li>
           </ul>
         </li>
       </ul>

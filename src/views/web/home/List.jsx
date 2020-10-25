@@ -28,9 +28,9 @@ const ArticleList = props => {
 
           <div
             onClick={() => jumpTo(item.id)}
-            className='article-detail content'
-            dangerouslySetInnerHTML={{ __html: item.content }}
-          />
+            className='article-detail content'>
+            {item.content}
+          </div>
 
           <div className='list-item-others'>
             <SvgIcon type='iconcomment' />
