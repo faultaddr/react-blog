@@ -1,5 +1,4 @@
 const moment = require('moment')
-const { get } = require('utils/storage')
 // article 表
 module.exports = (sequelize, dataTypes) => {
   const Reply = sequelize.define(
