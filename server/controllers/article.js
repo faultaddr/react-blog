@@ -132,6 +132,11 @@ class ArticleController {
           id: {
             $not: -1 // 过滤关于页面的副本
           },
+          $and: {
+            type: {
+              $not: false
+            }
+          },
           $or: {
             title: {
               $like: `%${keyword}%`

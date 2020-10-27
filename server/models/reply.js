@@ -1,4 +1,5 @@
 const moment = require('moment')
+const { get } = require('utils/storage')
 // article 表
 module.exports = (sequelize, dataTypes) => {
   const Reply = sequelize.define(
@@ -23,7 +24,7 @@ module.exports = (sequelize, dataTypes) => {
         get() {
           return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss')
         }
-      }
+      },
     },
     {
       timestamps: true
