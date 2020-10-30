@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import axios from '@/utils/axios'
-import { translateMarkdown } from '@/utils'
+import { translateMarkdown2html } from '@/utils'
 import dayjs from '@/utils/dayjs'
 import AppAvatar from '@/components/Avatar'
 import { Comment, Button, Tooltip, Input, Icon, Popconfirm, message } from 'antd'
@@ -80,7 +80,7 @@ function CommentItem(props) {
       author={<span>{user && user.username}</span>}
       avatar={<AppAvatar userInfo={user} />}
       content={
-        <div className='article-detail' dangerouslySetInnerHTML={{ __html: translateMarkdown(item.content, true) }} />
+        <div className='article-detail' dangerouslySetInnerHTML={{ __html: translateMarkdown2html(item.content, true) }} />
       }
       datetime={
         <Tooltip title={item.createdAt}>
