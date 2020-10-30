@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import './index.less'
 
-import { decodeQuery, translateMarkdown2html } from '@/utils'
+import { decodeQuery, translateMarkdown } from '@/utils'
 import { HOME_PAGESIZE } from '@/utils/config'
 
 // components
@@ -24,7 +24,7 @@ const Home = props => {
   const list = useMemo(() => {
     return [...dataList].map(item => {
       const index = item.content.indexOf('<!--more-->')
-      item.content = translateMarkdown2html(item.content.slice(0, index))
+      item.content = translateMarkdown(item.content.slice(0, index))
       return item
     })
   }, [dataList])

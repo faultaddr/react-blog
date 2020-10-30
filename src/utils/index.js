@@ -36,13 +36,11 @@ export const MarkdownRender = props => {
 // 转化 md 语法为 React Node
 
 export const translateMarkdown = (plainText, isGuardXss = false) => {
-  console.log(plainText)
   return (<MarkdownRender source={plainText}/>)
 }
 
 // 转化md 为html
 export const translateMarkdown2html = (plainText, isGuardXss = false) => {
-  console.log(plainText)
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: new marked.Renderer(),
     gfm: true,
