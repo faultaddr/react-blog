@@ -12,7 +12,7 @@ function MdEditor(props) {
   // return <textarea id='simple-editor' style={{ display: 'none' }} />
   return (
     <SimpleMDE
-      value={''}
+      value={props.value}
       onChange={props.onChange}
       options={{ autofocus: true, autosave: {
         enabled: true,
