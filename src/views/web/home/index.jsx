@@ -17,7 +17,7 @@ import useFetchList from '@/hooks/useFetchList'
 const Home = props => {
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
-    queryParams: { pageSize: HOME_PAGESIZE },
+    queryParams: { pageSize: HOME_PAGESIZE, type: true},
     fetchDependence: [props.location.search]
   })
 

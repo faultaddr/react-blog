@@ -50,6 +50,7 @@ function Edit(props) {
       setTitle(res.title)
       setContent(res.content)
       setType(res.type)
+      alert(res.type)
       const tags = res.tags.map(d => d.name)
       const categories = res.categories.map(d => d.name)
       setTagList(tags)
@@ -132,7 +133,7 @@ function Edit(props) {
           </span>
         </li>
         <li>
-          <Switch checkedChildren='公开' unCheckedChildren='私密' defaultChecked={type} onChange={setType} />
+          <Switch checkedChildren='公开' unCheckedChildren='私密' checked={type} onChange={setType} />
         </li>
       </ul>
       <MdEditor value={content} onChange={setContent} />

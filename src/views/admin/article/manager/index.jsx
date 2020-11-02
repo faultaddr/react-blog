@@ -23,7 +23,6 @@ function ArticleManager(props) {
   const [queryParams, setQueryParams] = useState({})
   const [batch, setBatch] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
-
   const { tableProps, updateList, onSearch } = useAntdTable({
     requestUrl: '/article/list',
     queryParams,
@@ -58,6 +57,16 @@ function ArticleManager(props) {
         title: '浏览数',
         dataIndex: 'viewCount',
         sorter: (a, b) => b.viewCount - a.viewCount
+      },
+      {
+        title: '私密性',
+        dataIndex: 'type',
+        render: text => {
+          return (
+            <Tag color='#FF6666' key={text ? '公开' : '私密'}>
+              {text ? '公开' : '私密'}
+            </Tag>)
+        }
       },
       {
         title: '发布时间',
@@ -163,6 +172,18 @@ function ArticleManager(props) {
                   {item.name}
                 </Select.Option>
               ))}
+            </Select>
+          )}
+        </Form.Item>
+        <Form.Item label='私密性'>
+          {getFieldDecorator('type')(
+            <Select style={{ width: 200 }} allowClear>
+              <Select.Option key={'公开'} value={true}>
+                {'公开'}
+              </Select.Option>
+              <Select.Option key={'私密'} value={false}>
+                {'私密'}
+              </Select.Option>
             </Select>
           )}
         </Form.Item>

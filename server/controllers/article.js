@@ -41,7 +41,7 @@ class ArticleController {
     })
 
     if (validator) {
-      const { title, content, categoryList = [], tagList = [], authorId ,type} = ctx.request.body
+      const { title, content, categoryList = [], tagList = [], authorId, type } = ctx.request.body
       const result = await ArticleModel.findOne({ where: { title } })
       if (result) {
         ctx.throw(403, '创建失败，该文章已存在！')
@@ -120,7 +120,7 @@ class ArticleController {
     })
 
     if (validator) {
-      const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order, type } = ctx.query
+      const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order, type = null } = ctx.query
       const tagFilter = tag ? { name: tag } : null
       const categoryFilter = category ? { name: category } : null
 
@@ -128,54 +128,92 @@ class ArticleController {
       if (order) {
         articleOrder = [order.split(' ')]
       }
-      
-      const data = await ArticleModel.findAndCountAll({
-        where: {
-          id: {
-            $not: -1 // 过滤关于页面的副本
-          },
-          $and: {
-            type: {
-              $eq: type
-            }
-          },
-          $or: {
-            title: {
-              $like: `%${keyword}%`
+      if (type != null) {
+        const data = await ArticleModel.findAndCountAll({
+          where: {
+            id: {
+              $not: -1 // 过滤关于页面的副本
             },
-            content: {
-              $like: `%${keyword}%`
+            $and: {
+              type: {
+                $eq: JSON.parse(type)
+              }
+            },
+            $or: {
+              title: {
+                $like: `%${keyword}%`
+              },
+              content: {
+                $like: `%${keyword}%`
+              }
             }
-          }
-        },
-        include: [
-          { model: TagModel, attributes: ['name'], where: tagFilter },
-          { model: CategoryModel, attributes: ['name'], where: categoryFilter },
-          {
-            model: CommentModel,
-            attributes: ['id'],
-            include: [{ model: ReplyModel, attributes: ['id'] }]
-          }
-        ],
-        offset: (page - 1) * pageSize,
-        limit: parseInt(pageSize),
-        order: articleOrder,
-        row: true,
-        distinct: true // count 计算
-      })
-      if (preview === 1) {
-        data.rows.forEach(d => {
-          d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
+          },
+          include: [
+            { model: TagModel, attributes: ['name'], where: tagFilter },
+            { model: CategoryModel, attributes: ['name'], where: categoryFilter },
+            {
+              model: CommentModel,
+              attributes: ['id'],
+              include: [{ model: ReplyModel, attributes: ['id'] }]
+            }
+          ],
+          offset: (page - 1) * pageSize,
+          limit: parseInt(pageSize),
+          order: articleOrder,
+          row: true,
+          distinct: true // count 计算
         })
-      }
+        if (preview === 1) {
+          data.rows.forEach(d => {
+            d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
+          })
+        }
 
-      ctx.body = data
+        ctx.body = data
+      } else {
+        const data = await ArticleModel.findAndCountAll({
+          where: {
+            id: {
+              $not: -1 // 过滤关于页面的副本
+            },
+            $or: {
+              title: {
+                $like: `%${keyword}%`
+              },
+              content: {
+                $like: `%${keyword}%`
+              }
+            }
+          },
+          include: [
+            { model: TagModel, attributes: ['name'], where: tagFilter },
+            { model: CategoryModel, attributes: ['name'], where: categoryFilter },
+            {
+              model: CommentModel,
+              attributes: ['id'],
+              include: [{ model: ReplyModel, attributes: ['id'] }]
+            }
+          ],
+          offset: (page - 1) * pageSize,
+          limit: parseInt(pageSize),
+          order: articleOrder,
+          row: true,
+          distinct: true // count 计算
+        })
+        if (preview === 1) {
+          data.rows.forEach(d => {
+            d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
+          })
+        }
+
+        ctx.body = data
+      }
     }
+
   }
 
   // 修改文章
   static async update(ctx) {
-    console.log(ctx.params)
     const validator = ctx.validate(
       {
         articleId: ctx.params.id,
@@ -191,7 +229,7 @@ class ArticleController {
       }
     )
     if (validator) {
-      const { title, content, categories = [], tags = [], type} = ctx.request.body
+      const { title, content, categories = [], tags = [], type } = ctx.request.body
       const articleId = parseInt(ctx.params.id)
       const tagList = tags.map(tag => ({ name: tag, articleId }))
       const categoryList = categories.map(cate => ({ name: cate, articleId }))
@@ -200,7 +238,7 @@ class ArticleController {
       await TagModel.bulkCreate(tagList)
       await CategoryModel.destroy({ where: { articleId } })
       await CategoryModel.bulkCreate(categoryList)
-      ctx.body={'type': type}
+      ctx.body = { 'type': type }
     }
   }
 
