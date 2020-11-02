@@ -50,7 +50,6 @@ function Edit(props) {
       setTitle(res.title)
       setContent(res.content)
       setType(res.type)
-      alert(res.type)
       const tags = res.tags.map(d => d.name)
       const categories = res.categories.map(d => d.name)
       setTagList(tags)
@@ -80,7 +79,6 @@ function Edit(props) {
   }
 
   function update() {
-    alert(type)
     axios
       .put(`/article/${editId}`, {
         title,
@@ -90,7 +88,6 @@ function Edit(props) {
         type: type
       })
       .then(res => {
-        alert(res)
         message.success('更新成功')
       })
   }
