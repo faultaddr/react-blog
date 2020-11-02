@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux'
 import './index.less'
 
 import axios from '@/utils/axios'
-import { Button, Input, Modal, BackTop, message } from 'antd'
+import { Button, Input, Modal, BackTop, message, Switch } from 'antd'
 import MdEditor from '@/components/MdEditor'
 import List from './Tag'
 import useBreadcrumb from '@/hooks/useBreadcrumb'
@@ -16,11 +16,11 @@ function Edit(props) {
 
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
+  const [type, setType] = useState(true)
   const [tagList, setTagList] = useState([])
   const [categoryList, setCategoryList] = useState([])
   const [tagSelectedList, setTagSelectedList] = useState([])
   const [cateSelectedList, setCateSelectedList] = useState([])
-
   const editId = parseInt(props.match.params.id)
 
   useBreadcrumb([{ link: '/admin/article/manager', name: '文章管理' }, editId ? '编辑文章' : '新增文章'])
@@ -49,6 +49,7 @@ function Edit(props) {
     axios.get(`/article/${id}?type=0`).then(res => {
       setTitle(res.title)
       setContent(res.content)
+      setType(res.type)
       const tags = res.tags.map(d => d.name)
       const categories = res.categories.map(d => d.name)
       setTagList(tags)
@@ -66,7 +67,8 @@ function Edit(props) {
         content,
         tagList: tagSelectedList,
         categoryList: cateSelectedList,
-        authorId: store.authorId
+        authorId: store.authorId,
+        type: type
       })
       .then(res => {
         Modal.confirm({
@@ -77,14 +79,17 @@ function Edit(props) {
   }
 
   function update() {
+    alert(type)
     axios
       .put(`/article/${editId}`, {
         title,
         content,
         tags: tagSelectedList,
-        categories: cateSelectedList
+        categories: cateSelectedList,
+        type: type
       })
-      .then(() => {
+      .then(res => {
+        alert(res)
         message.success('更新成功')
       })
   }
@@ -125,6 +130,9 @@ function Edit(props) {
               setSelectedList={setCateSelectedList}
             />
           </span>
+        </li>
+        <li>
+          <Switch checkedChildren='公开' unCheckedChildren='私密' defaultChecked={type} onChange={setType} />
         </li>
       </ul>
       <MdEditor value={content} onChange={setContent} />

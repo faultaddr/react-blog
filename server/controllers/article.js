@@ -36,11 +36,12 @@ class ArticleController {
       title: Joi.string().required(),
       content: Joi.string(),
       categoryList: Joi.array(),
-      tagList: Joi.array()
+      tagList: Joi.array(),
+      type: Joi.boolean()
     })
 
     if (validator) {
-      const { title, content, categoryList = [], tagList = [], authorId } = ctx.request.body
+      const { title, content, categoryList = [], tagList = [], authorId ,type} = ctx.request.body
       const result = await ArticleModel.findOne({ where: { title } })
       if (result) {
         ctx.throw(403, '创建失败，该文章已存在！')
@@ -48,7 +49,7 @@ class ArticleController {
         const tags = tagList.map(t => ({ name: t }))
         const categories = categoryList.map(c => ({ name: c }))
         const data = await ArticleModel.create(
-          { title, content, authorId, tags, categories },
+          { title, content, authorId, tags, categories, type },
           { include: [TagModel, CategoryModel] }
         )
         ctx.body = data
@@ -114,11 +115,12 @@ class ArticleController {
       category: Joi.string(),
       tag: Joi.string(),
       preview: Joi.number(),
-      order: Joi.string()
+      order: Joi.string(),
+      type: Joi.boolean()
     })
 
     if (validator) {
-      const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order } = ctx.query
+      const { page = 1, pageSize = 10, preview = 1, keyword = '', tag, category, order, type } = ctx.query
       const tagFilter = tag ? { name: tag } : null
       const categoryFilter = category ? { name: category } : null
 
@@ -126,7 +128,7 @@ class ArticleController {
       if (order) {
         articleOrder = [order.split(' ')]
       }
-
+      
       const data = await ArticleModel.findAndCountAll({
         where: {
           id: {
@@ -134,7 +136,7 @@ class ArticleController {
           },
           $and: {
             type: {
-              $not: false
+              $eq: type
             }
           },
           $or: {
@@ -173,6 +175,7 @@ class ArticleController {
 
   // 修改文章
   static async update(ctx) {
+    console.log(ctx.params)
     const validator = ctx.validate(
       {
         articleId: ctx.params.id,
@@ -183,20 +186,21 @@ class ArticleController {
         title: Joi.string(),
         content: Joi.string(),
         categories: Joi.array(),
-        tags: Joi.array()
+        tags: Joi.array(),
+        type: Joi.boolean()
       }
     )
     if (validator) {
-      const { title, content, categories = [], tags = [] } = ctx.request.body
+      const { title, content, categories = [], tags = [], type} = ctx.request.body
       const articleId = parseInt(ctx.params.id)
       const tagList = tags.map(tag => ({ name: tag, articleId }))
       const categoryList = categories.map(cate => ({ name: cate, articleId }))
-      await ArticleModel.update({ title, content }, { where: { id: articleId } })
+      await ArticleModel.update({ title, content, type }, { where: { id: articleId } })
       await TagModel.destroy({ where: { articleId } })
       await TagModel.bulkCreate(tagList)
       await CategoryModel.destroy({ where: { articleId } })
       await CategoryModel.bulkCreate(categoryList)
-      ctx.status = 204
+      ctx.body={'type': type}
     }
   }
 
