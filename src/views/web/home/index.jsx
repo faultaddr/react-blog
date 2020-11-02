@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from 'react-redux'
 const Home = props => {
   const dispatch = useDispatch() // dispatch hooks
   const userInfo = useSelector(state => state.user)
+  console.log(userInfo)
   if (userInfo == null) {
     const values = {'account': 'person', 'password': 'root'}
     const action = login
