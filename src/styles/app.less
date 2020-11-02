@@ -1,7 +1,8 @@
 .app-container {
+  background-image: url(../assets/images/background.jpg);
   .app-header {
     padding: 0;
-    background: #fff;
+    background: rgba(255,255,255,0.99);
     -webkit-box-shadow: 0 2px 8px #f0f1f2;
     box-shadow: 0 2px 8px #f0f1f2;
     position: relative;
@@ -54,7 +55,7 @@
           border: 0;
           -webkit-box-shadow: none;
           box-shadow: none;
-          background: transparent;
+          background: rgba(255,255,255,0.95);;
           &::placeholder {
             color: #a3b1bf;
           }
@@ -145,7 +146,7 @@
       }
       li:hover {
         border-radius: 4px;
-        background: #eee;
+        background: rgba(255,255,255,0.95);;
       }
     }
 
@@ -164,7 +165,7 @@
           cursor: pointer;
         }
         &:hover {
-          background: #f0f2f5;
+          background: rgba(255,255,255,0.95);
           a {
             color: #40a9ff;
           }
@@ -184,7 +185,7 @@
   }
 
   .app-wrapper {
-    background: #fff;
+    background: rgba(255,255,255,0.95);
     padding: 40px 0 0;
     position: relative;
     .app-main {
@@ -263,4 +264,8 @@
   .app-container .app-wrapper .app-main {
     padding: 0 20px;
   }
+}
+
+.canvasNest{
+  pointer-events: none;
 }

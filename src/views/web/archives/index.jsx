@@ -18,7 +18,8 @@ function Archives(props) {
   const { dataList, loading, pagination } = useFetchList({
     requestUrl: '/article/list',
     queryParams: {
-      pageSize: ARCHIVES_PAGESIZE
+      pageSize: ARCHIVES_PAGESIZE,
+      type: true
     },
     fetchDependence: [props.location.pathname, props.location.search]
   })

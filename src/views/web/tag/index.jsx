@@ -40,7 +40,7 @@ function List(props) {
 
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
-    queryParams: { [type]: name, pageSize: TAG_PAGESIZE },
+    queryParams: { [type]: name, pageSize: TAG_PAGESIZE, type: true },
     fetchDependence: [props.location.search, props.location.pathname]
   })
 

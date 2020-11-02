@@ -9939,6 +9939,11 @@ react-app-polyfill@^1.0.2:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
+react-canvas-nest@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npm.taobao.org/react-canvas-nest/download/react-canvas-nest-1.1.1.tgz#e53687ad725a2131101276b565b144dde6863015"
+  integrity sha1-5TaHrXJaITEQEna1ZbFE3eaGMBU=
+
 react-dev-utils@^9.0.3:
   version "9.1.0"
   resolved "https://registry.npm.taobao.org/react-dev-utils/download/react-dev-utils-9.1.0.tgz#3ad2bb8848a32319d760d0a84c56c14bdaae5e81"
