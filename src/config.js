@@ -9,12 +9,12 @@ import MyInfo from '@/views/web/about/MyInfo'
 export const API_BASE_URL = 'http://120.79.229.207:6060'
 
 // project config
-export const HEADER_BLOG_NAME = 'panyunyi的博客' // header title 显示的名字
+export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
 
 // === sidebar
 export const SIDEBAR = {
   avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-  title: 'panyunyi', // 标题
+  title: '种菜的小朋友', // 标题
   subTitle: 'Carpe diem', // 子标题
   // 个人主页
   homepages: {
@@ -23,8 +23,14 @@ export const SIDEBAR = {
       icon: <Icon type='github' theme='filled' className='homepage-icon' />
     },
     juejin: {
-      link: 'https://juejin.im/user/',
+      link: 'https://juejin.im/user/96412755827687',
       icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
+    }
+  },
+  friendslink: {
+    lizi: {
+      link: 'http://blog.liziyang.co/',
+      img: 'http://blog.liziyang.co/images/pikachu.jpg',
     }
   }
 }

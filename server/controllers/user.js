@@ -86,6 +86,9 @@ class UserController {
 
   // github 登录
   static async githubLogin(ctx, code) {
+    alert('github login')
+    console.log(GITHUB.client_id)
+    console.log(GITHUB.client_secret)
     const result = await axios.post(GITHUB.access_token_url, {
       client_id: GITHUB.client_id,
       client_secret: GITHUB.client_secret,

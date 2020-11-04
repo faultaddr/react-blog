@@ -2,6 +2,7 @@ import React, { Component, Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
+import { login, register } from '@/redux/user/actions'
 import { DISCUSS_AVATAR } from '@/config'
 
 // methods
@@ -83,14 +84,22 @@ function Discuss(props) {
 
   function handleSubmit() {
     if (!value) return
-    if (!userInfo.username) return message.warn('您未登陆，请登录后再试。')
-
-    withLoading(
-      axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })
-    ).then(res => {
-      setValue('')
-      props.setCommentList(res.rows)
-    })
+    if (!userInfo.username) {
+      if (userInfo == null || userInfo.username === '') {
+        const values = {'account': 'person', 'password': 'root'}
+        const action = login
+        dispatch(action(values)).then(res => {
+          return
+        })
+      }
+    } else {
+      withLoading(
+        axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })
+      ).then(res => {
+        setValue('')
+        props.setCommentList(res.rows)
+      })
+    }
   }
 
   return (

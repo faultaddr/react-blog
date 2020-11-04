@@ -63,14 +63,8 @@ const skills = [
 const MyInfo = () => {
   return (
     <>
-      <Divider orientation='left'>博客简述</Divider>
-      <p>本博客使用的技术为 react hooks + antd + koa2 + mysql</p>
-      <p>
-        源码地址为 <Href href='https://github.com/panyunyi97/react-blog'>github</Href>
-        ，仅供参考，不做商业用途！
-      </p>
 
-      <Divider orientation='left'>关于我</Divider>
+      <Divider orientation='center'>关于我</Divider>
 
       <ul className='about-list'>
         <li>姓名：潘云逸</li>
@@ -84,12 +78,11 @@ const MyInfo = () => {
           <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
         </li>
         <li>坐标：北京市or上海市</li>
-        {/* <li>
-          其他博客地址：
-          <Href href='https://alvin.run'>alvin's note</Href>
+        <li>
+          友情链接博客地址：
+          <Href href='http://blog.liziyang.co/'>栗子栗子</Href>
           <Divider type='vertical' />
-          <Href href='https://juejin.im/user/5acac6c4f265da2378408f92'>掘金主页</Href>
-        </li> */}
+        </li>
         <li>
           技能
           <ul>

@@ -17,16 +17,6 @@ import { login, register } from '@/redux/user/actions'
 import { useSelector, useDispatch } from 'react-redux'
 
 const Home = props => {
-  const dispatch = useDispatch() // dispatch hooks
-  const userInfo = useSelector(state => state.user)
-  console.log(userInfo)
-  if (userInfo == null) {
-    const values = {'account': 'person', 'password': 'root'}
-    const action = login
-    dispatch(action(values)).then(() => {
-      console.log('游客登录')
-    })
-  }
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
     queryParams: { pageSize: HOME_PAGESIZE, type: true},

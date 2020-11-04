@@ -59,6 +59,15 @@ function SideBar(props) {
           </Tag>
         ))}
       </div>
+      <Divider orientation='left'>友情连接</Divider>
+      <ul className='tag-list'>
+        {Object.entries(SIDEBAR.friendslink).map(([linkName, item]) => (
+          <li key={linkName}>
+            <img src={item.img} style={{height: '20px', width: '20px'}} alt={'lizi'}/>
+            <Href href={item.link}>{linkName}</Href>
+          </li>
+        ))}
+      </ul>
     </aside>
   )
 }

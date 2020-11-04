@@ -5,10 +5,10 @@ const config = {
   ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // 博主的 github 登录的账户名 user
   GITHUB: {
     client_id: 'dbe8bec90bd80891bc73',
-    client_secret: 'dc04953e1fa92e3bc799b95c7ca54930157b0ae7',
+    client_secret: 'c31c8eb6c420bf2bc3b51774c7bc0eb067b67f15',
     access_token_url: 'https://github.com/login/oauth/access_token',
     fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
-    fetch_user: 'https://api.github.com/users/' // fetch user url https://api.github.com/users/gershonv
+    fetch_user: 'https://api.github.com/users/panyunyi97' // fetch user url https://api.github.com/users/gershonv
   },
   EMAIL_NOTICE: {
     // 邮件通知服务
