@@ -43,6 +43,7 @@ class UserController {
   // 登录
   static async login(ctx) {
     const { code } = ctx.request.body
+    console.log(code)
     if (code) {
       await UserController.githubLogin(ctx, code)
     } else {
@@ -86,7 +87,7 @@ class UserController {
 
   // github 登录
   static async githubLogin(ctx, code) {
-    alert('github login')
+    console.log('github login')
     console.log(GITHUB.client_id)
     console.log(GITHUB.client_secret)
     const result = await axios.post(GITHUB.access_token_url, {

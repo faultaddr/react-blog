@@ -31,6 +31,10 @@ export const SIDEBAR = {
     lizi: {
       link: 'http://blog.liziyang.co/',
       img: 'http://blog.liziyang.co/images/pikachu.jpg',
+    },
+    wizchen: {
+      link: 'http://blog.wizchen.com',
+      img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
     }
   }
 }

@@ -63,7 +63,7 @@ function SideBar(props) {
       <ul className='tag-list'>
         {Object.entries(SIDEBAR.friendslink).map(([linkName, item]) => (
           <li key={linkName}>
-            <img src={item.img} style={{height: '20px', width: '20px'}} alt={'lizi'}/>
+            <img src={item.img} style={{height: '20px', width: '20px', marginRight: '10px'}} alt={'lizi'}/>
             <Href href={item.link}>{linkName}</Href>
           </li>
         ))}
