@@ -168,7 +168,11 @@ class ArticleController {
             d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
           })
         }
-        data.sort((a, b) => a - b); 
+        let rows = data.rows
+        console.log(rows)
+        rows = rows.sort((a, b) => b.top - a.top)
+        console.log(rows)
+        data.rows=rows
         ctx.body = data
       } else {
         const data = await ArticleModel.findAndCountAll({
@@ -205,7 +209,11 @@ class ArticleController {
             d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
           })
         }
-        data.sort((a, b) => a - b); 
+        let rows = data.rows
+        console.log(rows)
+        rows = rows.sort((a, b) => b.top - a.top)
+        console.log(rows)
+        data.rows=rows
         ctx.body = data
       }
     }
@@ -251,11 +259,11 @@ class ArticleController {
       const articleId = ctx.params.id
       await sequelize.query(
         `delete comment, reply, category, tag, article
-        from article 
-        left join reply on article.id=reply.articleId 
-        left join comment on article.id=comment.articleId 
-        left join category on article.id=category.articleId 
-        left join tag on article.id=tag.articleId 
+        from article
+        left join reply on article.id=reply.articleId
+        left join comment on article.id=comment.articleId
+        left join category on article.id=category.articleId
+        left join tag on article.id=tag.articleId
         where article.id=${articleId}`
       )
       ctx.status = 204
@@ -272,11 +280,11 @@ class ArticleController {
       const list = ctx.params.list.split(',')
       await sequelize.query(
         `delete comment, reply, category, tag, article
-        from article 
-        left join reply on article.id=reply.articleId 
-        left join comment on article.id=comment.articleId 
-        left join category on article.id=category.articleId 
-        left join tag on article.id=tag.articleId 
+        from article
+        left join reply on article.id=reply.articleId
+        left join comment on article.id=comment.articleId
+        left join category on article.id=category.articleId
+        left join tag on article.id=tag.articleId
         where article.id in (${list})`
       )
       ctx.status = 204

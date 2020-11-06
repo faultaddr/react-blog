@@ -44,6 +44,30 @@
 .app-home .app-home-list-item .list-item-others a {
   color: inherit;
 }
+.app-home .app-home-list-item .list-item-others .div2:before { /*做一个书签效果*/
+  position: absolute; /*必须*/
+  top: 50px;
+  left: 20px;
+  z-index: 1;
+  height: 0;
+  padding-right: 10px;
+  font-weight: bold;
+  line-height: 0;
+  color: #000;
+  border: 15px solid #ee7600;
+  border-right-color: transparent; /*右边框透明，变成空缺的角*/
+  content: '书签';
+  box-shadow: 0 5px 5px -5px #000;
+}
+.app-home .app-home-list-item .list-item-others .div2:after { /*书签的夹角*/
+  content: '';
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  border: 4px solid #89540c;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
 .app-home .preview {
   position: fixed;
   width: 260px;
@@ -124,3 +148,4 @@
     margin-right: 0;
   }
 }
+
