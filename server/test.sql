@@ -28,6 +28,8 @@
               `viewCount` int(11) DEFAULT '0',
               `createdAt` datetime DEFAULT NULL,
               `updatedAt` datetime DEFAULT NULL,
+              `type` boolean DEFAULT true,
+              `top` boolean DEFAULT false,
               PRIMARY KEY (`id`)
 
         ) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;

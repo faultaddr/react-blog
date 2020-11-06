@@ -8,7 +8,8 @@ module.exports = (sequelize, dataTypes) => {
       title: { type: dataTypes.STRING(255), allowNull: false, unique: true },
       content: { type: dataTypes.TEXT },
       viewCount: { type: dataTypes.INTEGER(11), defaultValue: 0 }, // 阅读数
-      type: { type: dataTypes.BOOLEAN, defaultValue: true},
+      type: { type: dataTypes.BOOLEAN, defaultValue: true}, // 是否私密
+      top: {type: dataTypes.BOOLEAN, defaultValue: false},
       createdAt: {
         type: dataTypes.DATE,
         defaultValue: dataTypes.NOW,

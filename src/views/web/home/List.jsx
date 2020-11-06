@@ -40,6 +40,7 @@ const ArticleList = props => {
             <span>{item.viewCount}</span>
 
             <ArticleTag tagList={item.tags} categoryList={item.categories} />
+            <span>{item.top ? '置顶' : ''}</span>
           </div>
         </li>
       ))}

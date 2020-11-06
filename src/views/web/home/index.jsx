@@ -13,8 +13,6 @@ import Pagination from '@/components/Pagination'
 
 // hooks
 import useFetchList from '@/hooks/useFetchList'
-import { login, register } from '@/redux/user/actions'
-import { useSelector, useDispatch } from 'react-redux'
 
 const Home = props => {
   const { loading, pagination, dataList } = useFetchList({
