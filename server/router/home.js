@@ -9,6 +9,7 @@ router.get('/category/list', getCategoryList) // 获取 category 列表
 
 // root
 router.post('/login', login) // 登录
+router.get('/login', login)
 router.post('/register', register) // 注册
 
 module.exports = router

@@ -215,7 +215,7 @@ const config = {
   PORT: 6060, // 启动端口
   ADMIN_GITHUB_LOGIN_NAME: 'gershonv', // 博主的 github 登录的账户名 user
   GITHUB: {
-    client_id: 'dbe8bec90bd80891bc73',
+    client_id: '87a4f88b943adaafd44a',
     client_secret: '',
     access_token_url: 'https://github.com/login/oauth/access_token',
     fetch_user_url: 'https://api.github.com/user', // 用于 oauth2

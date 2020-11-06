@@ -22,6 +22,26 @@ class UserController {
     return UserModel.findOne({ where: params })
   }
 
+  static async findUser(ctx) {
+    const validator = ctx.validate(
+      { ...ctx.params, ...ctx.query },
+      {
+        username: Joi.string().required(),
+      }
+    )
+    if (validator) {
+      const username = ctx.params.username
+      const user = await UserModel.findOne({ where: { username } })
+      ctx.status = 200
+      if (user) {
+        ctx.body = {id: user.id}
+      } else {
+        ctx.body = {}
+      }
+      
+    }
+  }
+
   // 创建用户
   static createGithubUser(data, role = 2) {
     const { id, login, email } = data
@@ -42,7 +62,7 @@ class UserController {
 
   // 登录
   static async login(ctx) {
-    const { code } = ctx.request.body
+    const code  = ctx.query['code']
     console.log(code)
     if (code) {
       await UserController.githubLogin(ctx, code)
@@ -79,7 +99,7 @@ class UserController {
           const { id, role } = user
           const token = createToken({ username: user.username, userId: id, role }) // 生成 token
           // ctx.client(200, '登录成功', { username: user.username, role, userId: id, token })
-          ctx.body = { username: user.username, role, userId: id, token }
+          ctx.body = { username: user.username, role, userId: id, token, email: user.email }
         }
       }
     }
@@ -95,12 +115,12 @@ class UserController {
       client_secret: GITHUB.client_secret,
       code
     })
-
-    const { access_token } = decodeQuery(result.data)
-
+    
+    const access_token  = decodeQuery(result.data)
+    console.log(access_token)
     if (access_token) {
       // 拿到 access_token 去获取用户信息
-      const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token}`)
+      const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token['access_token']}`)
       const githubInfo = result2.data
 
       let target = await UserController.find({ id: githubInfo.id }) // 在数据库中查找该用户是否存在
@@ -165,6 +185,7 @@ class UserController {
           await UserModel.create({ username, password: saltPassword, email })
           // ctx.client(200, '注册成功')
           ctx.status = 204
+          ctx.body = {'status': 204}
         }
       }
     }

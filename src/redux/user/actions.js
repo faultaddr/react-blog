@@ -17,6 +17,7 @@ export const register = params => {
   return dispatch =>
     axios.post('/register', params).then(res => {
       message.success('注册成功，请重新登录您的账号！')
+      return res
     })
 }
 

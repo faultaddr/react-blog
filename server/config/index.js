@@ -4,11 +4,11 @@ const config = {
   PORT: 6060, // 启动端口
   ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // 博主的 github 登录的账户名 user
   GITHUB: {
-    client_id: 'dbe8bec90bd80891bc73',
-    client_secret: 'c31c8eb6c420bf2bc3b51774c7bc0eb067b67f15',
+    client_id: '87a4f88b943adaafd44a',
+    client_secret: '9494809fc485d93084452fbf8b21ba2a829bfb82',
     access_token_url: 'https://github.com/login/oauth/access_token',
-    fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
-    fetch_user: 'https://api.github.com/users/panyunyi97' // fetch user url https://api.github.com/users/gershonv
+    fetch_user_url: 'https://13.230.158.120/user', // 用于 oauth2
+    fetch_user: 'https://api.github.com/user' // fetch user url https://api.github.com/users/gershonv
   },
   EMAIL_NOTICE: {
     // 邮件通知服务

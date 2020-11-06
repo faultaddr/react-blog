@@ -6,7 +6,7 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 
 // API_BASE_URL
-export const API_BASE_URL = 'http://120.79.229.207:6060'
+export const API_BASE_URL = 'http://127.0.0.1:6060'
 
 // project config
 export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
@@ -47,7 +47,7 @@ export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
  */
 export const GITHUB = {
   enable: true, // github 第三方授权开关
-  client_id: 'dbe8bec90bd80891bc73', // Setting > Developer setting > OAuth applications => client_id
+  client_id: '87a4f88b943adaafd44a', // Setting > Developer setting > OAuth applications => client_id
   url: 'https://github.com/login/oauth/authorize' // 跳转的登录的地址
 }
 

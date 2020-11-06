@@ -78,7 +78,7 @@ function CommentItem(props) {
         </>
       ]}
       author={<span>{user && user.username}</span>}
-      avatar={<AppAvatar userInfo={user} />}
+      avatar={ <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + user.email.split('@') + '&s=100'} alt='头像'/>}
       content={
         <div className='article-detail' dangerouslySetInnerHTML={{ __html: translateMarkdown2html(item.content, true) }} />
       }
