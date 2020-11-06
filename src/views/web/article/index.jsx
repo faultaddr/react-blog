@@ -76,8 +76,7 @@ function Article(props) {
             <span>{viewCount}</span>
           </div>
         </div>
-        <div dangerouslySetInnerHTML = {{__html: content}}></div>
-
+        <div className='article-detail' dangerouslySetInnerHTML={{ __html: content }} />
         {isFoldNavigation ? (
           <>
             <div className='drawer-btn' onClick={e => setDrawerVisible(true)}>

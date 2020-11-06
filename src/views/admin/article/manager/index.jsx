@@ -69,6 +69,16 @@ function ArticleManager(props) {
         }
       },
       {
+        title: '置顶',
+        dataIndex: 'top',
+        render: text => {
+          return (
+            <Tag color='#D2B4DE' key={text ? '置顶' : '普通'}>
+              {text ? '置顶' : '普通'}
+            </Tag>)
+        }
+      },
+      {
         title: '发布时间',
         dataIndex: 'createdAt',
         sorter: (a, b) => (dayjs(a.createdAt).isBefore(b.createdAt) ? 1 : -1)

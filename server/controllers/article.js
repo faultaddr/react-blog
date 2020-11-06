@@ -233,15 +233,16 @@ class ArticleController {
         content: Joi.string(),
         categories: Joi.array(),
         tags: Joi.array(),
-        type: Joi.boolean()
+        type: Joi.boolean(),
+        top: Joi.boolean()
       }
     )
     if (validator) {
-      const { title, content, categories = [], tags = [], type } = ctx.request.body
+      const { title, content, categories = [], tags = [], type, top } = ctx.request.body
       const articleId = parseInt(ctx.params.id)
       const tagList = tags.map(tag => ({ name: tag, articleId }))
       const categoryList = categories.map(cate => ({ name: cate, articleId }))
-      await ArticleModel.update({ title, content, type }, { where: { id: articleId } })
+      await ArticleModel.update({ title, content, type, top}, { where: { id: articleId } })
       await TagModel.destroy({ where: { articleId } })
       await TagModel.bulkCreate(tagList)
       await CategoryModel.destroy({ where: { articleId } })

@@ -17,6 +17,7 @@ function Edit(props) {
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
   const [type, setType] = useState(true)
+  const [top, setTop] = useState(false)
   const [tagList, setTagList] = useState([])
   const [categoryList, setCategoryList] = useState([])
   const [tagSelectedList, setTagSelectedList] = useState([])
@@ -50,6 +51,7 @@ function Edit(props) {
       setTitle(res.title)
       setContent(res.content)
       setType(res.type)
+      setTop(res.top)
       const tags = res.tags.map(d => d.name)
       const categories = res.categories.map(d => d.name)
       setTagList(tags)
@@ -68,7 +70,8 @@ function Edit(props) {
         tagList: tagSelectedList,
         categoryList: cateSelectedList,
         authorId: store.authorId,
-        type: type
+        type: type,
+        top: top
       })
       .then(res => {
         Modal.confirm({
@@ -85,7 +88,8 @@ function Edit(props) {
         content,
         tags: tagSelectedList,
         categories: cateSelectedList,
-        type: type
+        type: type,
+        top: top
       })
       .then(res => {
         message.success('更新成功')
@@ -129,8 +133,14 @@ function Edit(props) {
             />
           </span>
         </li>
-        <li>
+
+        <li style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'center'}}>
+          <span className='label'>私密：</span>
           <Switch checkedChildren='公开' unCheckedChildren='私密' checked={type} onChange={setType} />
+        </li>
+        <li style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'center'}}>
+          <span className='label'>置顶：</span>
+          <Switch checkedChildren='置顶' unCheckedChildren='普通' checked={top} onChange={setTop} />
         </li>
       </ul>
       <MdEditor value={content} onChange={setContent} />
