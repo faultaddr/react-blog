@@ -178,7 +178,7 @@ function Discuss(props) {
         }
         content={
           <Editor
-            username={loginUser}
+            username={username}
             onChange={e => setValue(e.target.value)}
             userNameChange={e => setUserName(e.target.value)}
             emailChange={e => setEmail(e.target.value)}
