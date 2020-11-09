@@ -2,42 +2,42 @@ import marked from 'marked'
 import { COLOR_LIST } from '@/utils/config'
 import xss from 'xss'
 import { clear, get } from '@/utils/storage'
-import * as React from 'react'
-import * as ReactMarkdown from 'react-markdown'
-import MathJax from '@matejmazur/react-mathjax'
-import * as RemarkMathPlugin from 'remark-math'
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+// import * as React from 'react'
+// import * as ReactMarkdown from 'react-markdown'
+// import MathJax from '@matejmazur/react-mathjax'
+// import * as RemarkMathPlugin from 'remark-math'
+// import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+// import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-export const MarkdownRender = props => {
-  const newProps = {
-    ...props,
-    plugins: [
-      RemarkMathPlugin,
-    ],
-    renderers: {
-      ...props.renderers,
-      code: ({language, value}) =>
-        <SyntaxHighlighter style={dark} language={language} children={value} />,
-      math: props =>
-        <MathJax.Node>{props.value}</MathJax.Node>,
-      inlineMath: props =>
-        <MathJax.Node inline>{props.value}</MathJax.Node>,
-    }
+// export const MarkdownRender = props => {
+//   const newProps = {
+//     ...props,
+//     plugins: [
+//       RemarkMathPlugin,
+//     ],
+//     renderers: {
+//       ...props.renderers,
+//       code: ({language, value}) =>
+//         <SyntaxHighlighter style={dark} language={language} children={value} />,
+//       math: props =>
+//         <MathJax.Node>{props.value}</MathJax.Node>,
+//       inlineMath: props =>
+//         <MathJax.Node inline>{props.value}</MathJax.Node>,
+//     }
 
-  }
-  return (
-    <MathJax.Context input='tex'>
-      <ReactMarkdown {...newProps} allowDangerousHtml />
-    </MathJax.Context>
-  )
-}
+//   }
+//   return (
+//     <MathJax.Context input='tex'>
+//       <ReactMarkdown {...newProps} allowDangerousHtml />
+//     </MathJax.Context>
+//   )
+// }
 
-// 转化 md 语法为 React Node
+// // 转化 md 语法为 React Node
 
-export const translateMarkdown = (plainText, isGuardXss = false) => {
-  return (<MarkdownRender source={plainText}/>)
-}
+// export const translateMarkdown = (plainText, isGuardXss = false) => {
+//   return (<MarkdownRender source={plainText}/>)
+// }
 
 // 转化md 为html
 export const translateMarkdown2html = (plainText, isGuardXss = false) => {

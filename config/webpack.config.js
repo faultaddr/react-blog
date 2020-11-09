@@ -264,12 +264,15 @@ module.exports = function(webpackEnv) {
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
       splitChunks: {
         chunks: 'all',
-        name: false,
+        name: true,
+        maxAsyncRequests: 50,
+        maxInitialRequests: 50,
         cacheGroups: {
           commons: {
-            name: 'commons',
-            chunks: 'initial',
-            minChunks: 2
+            chunks: "initial",
+            minChunks: 2,
+            maxInitialRequests: 5, // The default limit is too small to showcase the effect
+            minSize: 0 // This is example is too small to create commons chunks
           },
           'react-vendor': {
             test: /[\\/]node_modules[\\/](react|react-dom|redux|react-router-dom)[\\/]/,
@@ -278,7 +281,7 @@ module.exports = function(webpackEnv) {
             reuseExistingChunk: false
           },
           'antd-vendor': {
-            test: /[\\/]node_modules[\\/](antd)[\\/]/,
+            test: /[\\/]node_modules[\\/](antd|ant-design)[\\/]/,
             name: 'antd-vendor',
             priority: 2,
             reuseExistingChunk: false
