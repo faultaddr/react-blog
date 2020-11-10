@@ -22,7 +22,8 @@ function SideBar(props) {
     queryParams: {
       order: 'viewCount DESC',
       page: 1,
-      pageSize: 6
+      pageSize: 6,
+      type: true
     }
   })
 
