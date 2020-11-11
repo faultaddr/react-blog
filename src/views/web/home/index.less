@@ -144,9 +144,10 @@
   font-size: small;  
   line-height: 30px;  
   text-align: center;  
-  position: absolute;  
-  top: -5px;  
-  left: -15px;  
+  position: relative;  
+  top: 15px;  
+  left: -15px;
+  z-index: 3;
 }
 .button-content-right:before{
   content:'';
@@ -158,14 +159,16 @@
   left: -15px;  
   position: absolute;  
   top: 30px;
+  z-index: 1;
 }
 .button-content-right:after{
   content:'';
   width:20px;  
-  height: 0%;  
+  height: 0%;
   border: 15px solid;  
   border-color: transparent  transparent  transparent #B2DE34;   
   position: absolute;  
   right:-30px;  
   top: 0px; 
+  z-index: 2;
 }

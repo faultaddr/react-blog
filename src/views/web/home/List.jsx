@@ -19,6 +19,9 @@ const ArticleList = props => {
     <ul className='app-home-list'>
       {list.map(item => (
         <div>
+          {item.top ? (
+            <div className='button-content-right'>置顶</div>
+          ) : (<div />)}
           <li key={item.id} className='app-home-list-item'>
             <Divider orientation='left'>
               <span className='title' onClick={() => jumpTo(item.id)}>
@@ -44,9 +47,6 @@ const ArticleList = props => {
               {/* {item.top ? (<span style={{ marginLeft: 5, border: 'solid 3px #f90', background: '#FAD7A0'}}> {item.top ? '置顶' : ''}</span>) : <span />} */}
             </div>
           </li>
-          {item.top ? (
-            <div className='button-content-right'>置顶</div>
-          ) : (<div />)}
         </div>
       ))}
     </ul>
