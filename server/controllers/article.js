@@ -37,11 +37,12 @@ class ArticleController {
       content: Joi.string(),
       categoryList: Joi.array(),
       tagList: Joi.array(),
-      type: Joi.boolean()
+      type: Joi.boolean(),
+      top: Joi.boolean()
     })
 
     if (validator) {
-      const { title, content, categoryList = [], tagList = [], authorId, type } = ctx.request.body
+      const { title, content, categoryList = [], tagList = [], authorId, type, top } = ctx.request.body
       const result = await ArticleModel.findOne({ where: { title } })
       if (result) {
         ctx.throw(403, '创建失败，该文章已存在！')
@@ -49,7 +50,7 @@ class ArticleController {
         const tags = tagList.map(t => ({ name: t }))
         const categories = categoryList.map(c => ({ name: c }))
         const data = await ArticleModel.create(
-          { title, content, authorId, tags, categories, type },
+          { title, content, authorId, tags, categories, type, top },
           { include: [TagModel, CategoryModel] }
         )
         ctx.body = data
