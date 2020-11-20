@@ -77,7 +77,7 @@ const MyInfo = () => {
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
           <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
         </li>
-        <li>坐标：北京市or上海市</li>
+        <li>Base：ShangHai</li>
         <li>
           友情链接博客地址：
           <Href href='http://blog.liziyang.co/'>栗子栗子</Href>
