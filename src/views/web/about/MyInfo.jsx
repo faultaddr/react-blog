@@ -68,7 +68,7 @@ const MyInfo = () => {
 
       <ul className='about-list'>
         <li>姓名：潘云逸</li>
-        <li>本科： 中央财经大学（CUFE) CS</li>
+        <li>本科： 中央财经大学（CUFE）CS</li>
         <li>硕士： 南京大学（NJU）CS</li>
         <li>
           联系方式：
@@ -77,7 +77,7 @@ const MyInfo = () => {
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
           <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
         </li>
-        <li>Base：ShangHai</li>
+        <li>工作地：上海</li>
         <li>
           友情链接博客地址：
           <Href href='http://blog.liziyang.co/'>栗子栗子</Href>

@@ -64,7 +64,7 @@ export const ANNOUNCEMENT = {
   content: (
     <>
       个人笔记网站，请访问
-      <Href href=''> alvin's note</Href>
+      <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href>
     </>
   )
 }
