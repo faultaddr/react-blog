@@ -48,11 +48,7 @@
 
 ### pc 端
 
-![](https://user-gold-cdn.xitu.io/2019/10/14/16dc944b4cdc4409?w=1908&h=1056&f=png&s=385734)
-
-### 移动端
-
-![](https://user-gold-cdn.xitu.io/2019/9/20/16d4df6fb00c0abf?w=370&h=789&f=png&s=144230)
+![](https://s3.ax1x.com/2020/11/27/DDf5lV.md.png)](https://imgchr.com/i/DDf5lV)
 
 ## 项目结构
 
