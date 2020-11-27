@@ -9,8 +9,8 @@
 - 具备了代码高亮、权限管理、第三方 `github` 登录、评论与通知、以及邮件通知功能的个人博客...
 - 具备文件导入导出功能，假如你之前用 `hexo` 博客, 那么你可以直接通过导入 `md` 文件迁移你的文章。
 
-* 我的博客地址: [panyunyi的博客](https://blog.alvin.run)
-* 测试博客地址: [测试使用的panyunyi的博客](https://test.alvin.run)) `admin/admin` 为博主账号 小伙伴可以使用看看博客的完整功能！
+* 我的博客地址: [panyunyi的博客](http://blog.panyunyi.cn)
+* 测试博客地址: [测试使用的panyunyi的博客](http://blog.panyunyi.cn)) `admin/admin` 为博主账号 小伙伴可以使用看看博客的完整功能！
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
@@ -20,13 +20,14 @@
 
 - [x] 前台：主页 + 列表页 + 搜索页 + 分类页 + 标签页
 - [x] 后台：文章管理 + 用户管理
-- [x] 响应式、文章锚点导航、回到顶部、`markdown` 代码高亮
+- [x] 响应式、文章锚点导航、回到顶部、`markdown` 代码高亮、`mathjax`支持
 - [x] 用户：站内用户、`github` 第三方授权登录的用户
 - [x] 用户可以评论与回复、以及**邮件通知**回复的状态
 - [x] `md` 文件导入导出功能！可以直接上传 `md` 文件生成文章
 - [x] 私密与公开文章分离
 - [x] 一键评论，无需注册
 - [x] 主页背景
+- [x] 文章置顶
 
 ### 技术栈
 
