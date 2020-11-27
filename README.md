@@ -10,7 +10,6 @@
 - 具备文件导入导出功能，假如你之前用 `hexo` 博客, 那么你可以直接通过导入 `md` 文件迁移你的文章。
 
 * 我的博客地址: [panyunyi的博客](http://blog.panyunyi.cn)
-* 测试博客地址: [测试使用的panyunyi的博客](http://blog.panyunyi.cn)) `admin/admin` 为博主账号 小伙伴可以使用看看博客的完整功能！
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
@@ -339,7 +338,7 @@ categories: Javascript
 tags:
   - Javascript
   - ES6
----
+---不过
 ```
 
 对应会解析为
@@ -351,6 +350,12 @@ tags:
 
 如果导入标题一样的文件，可以确认是否覆盖原来的文章！
 
-由于太多小伙伴私聊 QQ，故本人建了个群方便交流技术答疑源码，无商业用途，感兴趣的伙伴可以加群 855655742。请勿广告，谢谢。
 
-PS : 觉得不错的伙伴可以给个 star ~~~ 或者 fork 下来看看哦。如果有什么建议，也可以提 issue 哦
+--------
+### 特别鸣谢：
+
+本博客主体基于[alvin2016的博客](https://github.com/alvin0216/react-blog)，做了一些个性化的调整，功能更加强大，修复了一些bug。
+
+欢迎fork & star，如有问题可提issue或直接pr
+
+
