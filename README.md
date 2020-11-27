@@ -48,7 +48,7 @@
 
 ### pc 端
 
-![](https://s3.ax1x.com/2020/11/27/DDf5lV.md.png)](https://imgchr.com/i/DDf5lV)
+![](https://s3.ax1x.com/2020/11/27/DDf5lV.md.png)
 
 ## 项目结构
 
