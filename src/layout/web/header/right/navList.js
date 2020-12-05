@@ -18,5 +18,10 @@ export default [
     icon: 'user',
     title: '关于',
     link: '/about'
+  },
+  {
+    icon: 'message',
+    title: '碎🐡',
+    link: '/fragment'
   }
 ]

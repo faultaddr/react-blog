@@ -54,3 +54,4 @@ export { default as CheckCircleFill } from '@ant-design/icons/lib/fill/CheckCirc
 export { default as CloseCircleFill } from '@ant-design/icons/lib/fill/CloseCircleFill'
 export { default as InfoCircleFill } from '@ant-design/icons/lib/fill/InfoCircleFill'
 export { default as StarFill } from '@ant-design/icons/lib/fill/StarFill'
+export { default as MessageOutline } from '@ant-design/icons/lib/outline/MessageOutline'
