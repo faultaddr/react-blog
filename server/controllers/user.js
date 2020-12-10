@@ -11,7 +11,7 @@ const { user: UserModel, comment: CommentModel, reply: ReplyModel, ip: IpModel, 
  * @param {String} username - github 登录名
  */
 async function getGithubInfo(username) {
-  const result = await axios.get(`${GITHUB.fetch_user}${username}`)
+  const result = await axios.get(`${GITHUB.fetch_user}/${username}`)
   return result && result.data
 }
 
@@ -34,11 +34,10 @@ class UserController {
       const user = await UserModel.findOne({ where: { username } })
       ctx.status = 200
       if (user) {
-        ctx.body = {id: user.id}
+        ctx.body = { id: user.id }
       } else {
         ctx.body = {}
       }
-      
     }
   }
 
@@ -50,7 +49,7 @@ class UserController {
       username: login,
       role,
       email,
-      github: JSON.stringify(data)
+      github: JSON.stringify(data),
     })
   }
 
@@ -62,7 +61,7 @@ class UserController {
 
   // 登录
   static async login(ctx) {
-    const code  = ctx.query['code']
+    const code = ctx.query['code']
     console.log(code)
     if (code) {
       await UserController.githubLogin(ctx, code)
@@ -75,7 +74,7 @@ class UserController {
   static async defaultLogin(ctx) {
     const validator = ctx.validate(ctx.request.body, {
       account: Joi.string().required(),
-      password: Joi.string()
+      password: Joi.string(),
     })
     if (validator) {
       const { account, password } = ctx.request.body
@@ -83,8 +82,8 @@ class UserController {
       const user = await UserModel.findOne({
         where: {
           // $or: { email: account, username: account }
-          username: account
-        }
+          username: account,
+        },
       })
 
       if (!user) {
@@ -113,24 +112,26 @@ class UserController {
     const result = await axios.post(GITHUB.access_token_url, {
       client_id: GITHUB.client_id,
       client_secret: GITHUB.client_secret,
-      code
+      code,
     })
-    
-    const access_token  = decodeQuery(result.data)
+
+    const access_token = decodeQuery(result.data)
     console.log(access_token)
     if (access_token) {
       // 拿到 access_token 去获取用户信息
       // const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token['access_token']}`)
-      const result2 = await axios.get(`${GITHUB.fetch_user_url}`,{ headers: {'Authorization': `token ${access_token['access_token']}`}})
+      const result2 = await axios.get(`${GITHUB.fetch_user_url}`, {
+        headers: { Authorization: `token ${access_token['access_token']}` },
+      })
       const githubInfo = result2.data
       let target = await UserController.find({ id: githubInfo.id }) // 在数据库中查找该用户是否存在
-
+      console.log(target)
       if (!target) {
         target = await UserModel.create({
           id: githubInfo.id,
           username: githubInfo.name || githubInfo.username,
           github: JSON.stringify(githubInfo),
-          email: githubInfo.email
+          email: githubInfo.email,
         })
       } else {
         if (target.github !== JSON.stringify(githubInfo)) {
@@ -140,7 +141,7 @@ class UserController {
           const data = {
             username: login,
             email,
-            github: JSON.stringify(githubInfo)
+            github: JSON.stringify(githubInfo),
           }
           await UserController.updateUserById(id, data)
         }
@@ -153,8 +154,9 @@ class UserController {
         username: target.username,
         userId: target.id,
         role: target.role,
-        token
+        token,
       }
+      console.log(ctx.body)
     } else {
       ctx.throw(403, 'github 授权码已失效！')
     }
@@ -165,9 +167,7 @@ class UserController {
     const validator = ctx.validate(ctx.request.body, {
       username: Joi.string().required(),
       password: Joi.string().required(),
-      email: Joi.string()
-        .email()
-        .required()
+      email: Joi.string().email().required(),
     })
 
     if (validator) {
@@ -185,7 +185,7 @@ class UserController {
           await UserModel.create({ username, password: saltPassword, email })
           // ctx.client(200, '注册成功')
           ctx.status = 204
-          ctx.body = {'status': 204}
+          ctx.body = { status: 204 }
         }
       }
     }
@@ -200,14 +200,14 @@ class UserController {
       type: Joi.number(), // 检索类型 type = 1 github 用户 type = 2 站内用户 不传则检索所有
       'rangeDate[]': Joi.array(),
       page: Joi.string(),
-      pageSize: Joi.number()
+      pageSize: Joi.number(),
     })
 
     if (validator) {
       const { page = 1, pageSize = 10, username, type } = ctx.query
       const rangeDate = ctx.query['rangeDate[]']
       const where = {
-        role: { $not: 1 }
+        role: { $not: 1 },
       }
 
       if (username) {
@@ -228,7 +228,7 @@ class UserController {
         offset: (page - 1) * pageSize,
         limit: parseInt(pageSize),
         row: true,
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
       })
 
       // ctx.client(200, 'success', result)
@@ -238,7 +238,7 @@ class UserController {
 
   static async delete(ctx) {
     const validator = ctx.validate(ctx.params, {
-      userId: Joi.number().required()
+      userId: Joi.number().required(),
     })
 
     if (validator) {
@@ -258,12 +258,12 @@ class UserController {
     const validator = ctx.validate(
       {
         ...ctx.params,
-        ...ctx.request.body
+        ...ctx.request.body,
       },
       {
         userId: Joi.number().required(),
         notice: Joi.boolean(),
-        disabledDiscuss: Joi.boolean()
+        disabledDiscuss: Joi.boolean(),
       }
     )
 
