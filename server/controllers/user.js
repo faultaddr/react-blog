@@ -120,9 +120,10 @@ class UserController {
     console.log(access_token)
     if (access_token) {
       // 拿到 access_token 去获取用户信息
-      const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token['access_token']}`)
+      //const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token['access_token']}`)
+      
+      const result2 = await axios.get(`${GITHUB.fetch_user_url}`,{ headers: {'Authorization': `token ${access_token['access_token']}`})
       const githubInfo = result2.data
-
       let target = await UserController.find({ id: githubInfo.id }) // 在数据库中查找该用户是否存在
 
       if (!target) {
