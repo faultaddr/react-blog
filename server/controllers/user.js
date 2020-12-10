@@ -61,7 +61,10 @@ class UserController {
 
   // 登录
   static async login(ctx) {
-    const code = ctx.query['code']
+    let code =ctx.request.body['code']
+    if(!code){
+      code = ctx.query['code']
+    }
     console.log(code)
     if (code) {
       await UserController.githubLogin(ctx, code)
@@ -106,9 +109,6 @@ class UserController {
 
   // github 登录
   static async githubLogin(ctx, code) {
-    console.log('github login')
-    console.log(GITHUB.client_id)
-    console.log(GITHUB.client_secret)
     const result = await axios.post(GITHUB.access_token_url, {
       client_id: GITHUB.client_id,
       client_secret: GITHUB.client_secret,
@@ -116,7 +116,6 @@ class UserController {
     })
 
     const access_token = decodeQuery(result.data)
-    console.log(access_token)
     if (access_token) {
       // 拿到 access_token 去获取用户信息
       // const result2 = await axios.get(`${GITHUB.fetch_user_url}?access_token=${access_token['access_token']}`)
@@ -124,6 +123,7 @@ class UserController {
         headers: { Authorization: `token ${access_token['access_token']}` },
       })
       const githubInfo = result2.data
+      console.log(githubInfo.id)
       let target = await UserController.find({ id: githubInfo.id }) // 在数据库中查找该用户是否存在
       console.log(target)
       if (!target) {
@@ -156,7 +156,6 @@ class UserController {
         role: target.role,
         token,
       }
-      console.log(ctx.body)
     } else {
       ctx.throw(403, 'github 授权码已失效！')
     }

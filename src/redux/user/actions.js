@@ -2,6 +2,7 @@ import * as TYPES from '@/redux/types'
 import axios from '@/utils/axios'
 import { message } from 'antd'
 export const login = params => {
+  console.log('redux', params)
   return dispatch =>
     axios.post('/login', params).then(res => {
       dispatch({
