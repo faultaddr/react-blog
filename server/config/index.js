@@ -15,17 +15,17 @@ const config = {
     // detail: https://nodemailer.com/
     enable: true, // 开关
     transporterConfig: {
-      host: 'smtp.163.com',
+      host: 'smtp.qq.com',
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
         user: '779087031@qq.com', // generated ethereal user
-        pass: '123456' // generated ethereal password 授权码 而非 密码
+        pass: 'wlurmrhtfvgibajb' // generated ethereal password 授权码 而非 密码
       }
     },
     subject: 'panyunyi的博客 - 您的评论获得新的回复！', // 主题
     text: '您的评论获得新的回复！',
-    WEB_HOST: 'http://127.0.0.1:80' // email callback url
+    WEB_HOST: 'http://www.panyunyi.cn' // email callback url
   },
   TOKEN: {
     secret: 'root', // secret is very important!
