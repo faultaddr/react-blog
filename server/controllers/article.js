@@ -169,11 +169,7 @@ class ArticleController {
             d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
           })
         }
-        let rows = data.rows
-        console.log(rows)
-        rows = rows.sort((a, b) => b.top - a.top)
-        console.log(rows)
-        data.rows = rows
+        data.rows = data.rows.sort((a, b) => b.top - a.top)
         ctx.body = data
       } else {
         const data = await ArticleModel.findAndCountAll({
@@ -210,11 +206,7 @@ class ArticleController {
             d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
           })
         }
-        let rows = data.rows
-        console.log(rows)
-        rows = rows.sort((a, b) => b.top - a.top)
-        console.log(rows)
-        data.rows = rows
+        data.rows = data.rows.sort((a, b) => b.top - a.top)
         ctx.body = data
       }
     }

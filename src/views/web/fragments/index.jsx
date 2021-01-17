@@ -59,8 +59,8 @@ function FragmentList(props) {
         renderItem={item => (
           <List.Item key={item.title}>
             <List.Item.Meta
-              style={{display: 'flex', flexDirection: 'row', flex: '1'}}
-              avatar={<Avatar src={'http://127.0.0.1/static/media/avatar.7e58ba1b.jpeg'}/>}
+              style={{ display: 'flex', flexDirection: 'row', flex: '1' }}
+              avatar={<Avatar src={'http://www.panyunyi.cn/static/media/avatar.7e58ba1b.jpeg'} />}
               title={'种菜的小朋友'}
               description={dayjs(item.createdAt, 'YYYYMMDD').fromNow()}
             />
