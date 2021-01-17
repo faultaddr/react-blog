@@ -95,22 +95,33 @@ function Discuss(props) {
     }
   }
 
+  function checkEmailAvailable(emailString) {
+    const regExp = new RegExp(/[1-9][0-9]{4,}@qq\.com/)
+    if (!regExp.test(emailString)) {
+      message.error('邮箱不合法')
+      return false
+    } else {
+      message.success('邮箱满足条件')
+      return true
+    }
+  }
+
   function handleSubmit() {
     if (!value) return
+
     if (!userInfo.username) {
       if (userInfo == null || userInfo.username === '') {
         const values = {'username': userName, 'password': 'root', 'email': email}
         const loginValues = {'account': userName, 'password': 'root'}
         const registerAction = register
         const loginAction = login
-        console.log(userName)
+        if (!checkEmailAvailable(email)) {
+          return
+        }
         axios.get(`/user/find/${userName}`).then(res => {
-          console.log('uuuu')
-          console.log(res)
           if (res.id === undefined) {
             dispatch(registerAction(values)).then(res => {
               dispatch(loginAction(loginValues)).then(res => {
-                console.log(res)
                 if (res) {
                   userInfo = get('userInfo')
                   setLoginUser(userInfo.username)
@@ -183,7 +194,11 @@ function Discuss(props) {
             username={username}
             onChange={e => setValue(e.target.value)}
             userNameChange={e => setUserName(e.target.value)}
-            emailChange={e => setEmail(e.target.value)}
+            emailChange={e => {
+              setEmail(e.target.value)
+              checkEmailAvailable(e.target.value)
+            }
+            }
             onSubmit={handleSubmit}
             submitting={submitting}
             name={userName}

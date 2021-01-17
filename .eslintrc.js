@@ -176,6 +176,6 @@ module.exports = {
     'prefer-promise-reject-errors': 0,
     "react-hooks/rules-of-hooks": "off",
     'react-hooks/exhaustive-deps': 'off',
-    'jsx-a11y/anchor-is-valid': 'off' 
+    'jsx-a11y/anchor-is-valid': 'off'
   }
 }

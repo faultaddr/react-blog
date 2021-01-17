@@ -25,3 +25,9 @@ yarn-error.log*
 # upload
 /server/upload/*
 /server/output/*
+
+# ide file
+/.vscode
+/.idea
+/src/.idea
+/server/.idea
