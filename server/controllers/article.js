@@ -173,7 +173,7 @@ class ArticleController {
         console.log(rows)
         rows = rows.sort((a, b) => b.top - a.top)
         console.log(rows)
-        data.rows=rows
+        data.rows = rows
         ctx.body = data
       } else {
         const data = await ArticleModel.findAndCountAll({
@@ -214,7 +214,7 @@ class ArticleController {
         console.log(rows)
         rows = rows.sort((a, b) => b.top - a.top)
         console.log(rows)
-        data.rows=rows
+        data.rows = rows
         ctx.body = data
       }
     }

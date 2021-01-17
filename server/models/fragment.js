@@ -16,8 +16,11 @@ module.exports = (sequelize, dataTypes) => {
       allowNull: true,
     },
     createdAt: {
-      type: dataTypes.STRING(100),
-      allowNull: false,
+      type: dataTypes.DATE,
+      defaultValue: dataTypes.NOW,
+      get() {
+        return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+      }
     },
   })
   return Fragment

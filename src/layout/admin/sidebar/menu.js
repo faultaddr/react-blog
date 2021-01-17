@@ -22,6 +22,23 @@ const menu = [
     ]
   },
   {
+    path: '/admin/fragment',
+    icon: 'switcher',
+    name: '闲言',
+    children: [
+      {
+        path: '/admin/fragment/manager',
+        icon: 'folder',
+        name: '管理'
+      },
+      {
+        path: '/admin/fragment/add',
+        icon: 'edit',
+        name: '新增'
+      }
+    ]
+  },
+  {
     path: '/admin/user',
     icon: 'user',
     name: '用户管理'

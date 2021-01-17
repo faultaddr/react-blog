@@ -14,16 +14,15 @@ class FragmentController {
 
   static async create(ctx) {
     const validator = ctx.validate(ctx.request.body, {
-      id: Joi.number().required(),
-      author: Joi.String(),
+      author: Joi.string(),
       content: Joi.string(),
-      createAt: Joi.String()
+      createAt: Joi.string()
     })
 
     if (validator) {
-      const {id, author, content, createAt} = ctx.request.body
+      const {author, content, createAt} = ctx.request.body
       const data = await FragmentModel.create(
-        {id, author, content, createAt},
+        {author, content, createAt},
       )
       ctx.body = data
     }
