@@ -34,7 +34,7 @@ function Archives(props) {
             <Fragment key={i}>
               {i === 0 && (
                 <Timeline.Item>
-                  <span className='desc'>{`Nice! ${pagination.total} posts in total. Keep on posting.`}</span>
+                  <span className='desc'>{`共计 ${pagination.total} 篇文章`}</span>
                   <br />
                   <br />
                 </Timeline.Item>

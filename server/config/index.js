@@ -1,5 +1,4 @@
 const devMode = process.env.NODE_ENV === 'development'
-
 const config = {
   PORT: 6060, // 启动端口
   ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // 博主的 github 登录的账户名 user
@@ -20,7 +19,7 @@ const config = {
       secure: true, // true for 465, false for other ports
       auth: {
         user: '779087031@qq.com', // generated ethereal user
-        pass: 'wlurmrhtfvgibajb' // generated ethereal password 授权码 而非 密码
+        pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 授权码 而非 密码
       }
     },
     subject: 'panyunyi的博客 - 您的评论获得新的回复！', // 主题
@@ -77,7 +76,7 @@ if (!devMode) {
   // config.EMAIL_NOTICE.enable = true
   config.EMAIL_NOTICE.transporterConfig.auth = {
     user: '779087031@qq.com', // generated ethereal user
-    pass: '123456XXX' // generated ethereal password 授权码 而非 密码
+    pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 授权码 而非 密码
   }
   config.EMAIL_NOTICE.WEB_HOST = 'https://panyunyi.cn'
 }

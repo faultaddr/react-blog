@@ -1,7 +1,16 @@
 const nodemailer = require('nodemailer') // detail: https://nodemailer.com/
 const { EMAIL_NOTICE } = require('../config')
-
+const PSW = require('../utils/password')
+/**
+ * 增加mail secret拉取
+ */
+function fetchEmailSecret(str) {
+  // ctx.body = PSW.default.encrypt('gructcrqhnrybbfj')
+  // return PSW.default.encrypt('jblqwiqkayqibfga')
+  return PSW.default.decrypt(str)
+}
 // create reusable transporter object using the default SMTP transport
+EMAIL_NOTICE.transporterConfig.auth.pass= fetchEmailSecret(EMAIL_NOTICE.transporterConfig.auth.pass)
 const transporter = nodemailer.createTransport(EMAIL_NOTICE.transporterConfig)
 
 /**
