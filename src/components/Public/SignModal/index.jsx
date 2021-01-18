@@ -44,7 +44,6 @@ function SignModal(props) {
   function handleSubmit(e) {
     e.preventDefault()
     props.form.validateFieldsAndScroll((errors, values) => {
-      console.log(values)
       if (errors) return
       const action = type === 'login' ? login : register
       dispatch(action(values)).then(() => {

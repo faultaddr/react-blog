@@ -44,7 +44,7 @@ export const translateMarkdown2html = (plainText, isGuardXss = false) => {
   const marked_render = new marked.Renderer()
   marked_render.old_paragraph = marked_render.paragraph
   // 重写`paragraph()`方法
-  marked_render.paragraph = function(text) {
+  marked_render.paragraph = function (text) {
     // isTeXInline - 该文本是否有行内公式
     var isTeXInline = /\$(.*)\$/g.test(text)
     // isTeXLine - 该文本是否有行间公式
@@ -52,7 +52,7 @@ export const translateMarkdown2html = (plainText, isGuardXss = false) => {
 
     if (!isTeXLine && isTeXInline) {
       // 如果不是行间公式，但是行内公式，则使用<span class="marked_inline_tex">包裹公式内容，消除$定界符
-      text = text.replace(/(\$([^\$]*)\$)+/g, function($1, $2) {
+      text = text.replace(/(\$([^\$]*)\$)+/g, function ($1, $2) {
         // 避免和行内代码冲突
         if ($2.indexOf('<code>') >= 0 || $2.indexOf('</code>') >= 0) {
           return $2
@@ -81,7 +81,7 @@ export const translateMarkdown2html = (plainText, isGuardXss = false) => {
     smartLists: true,
     smartypants: false,
     xhtml: false,
-    highlight: function(code) {
+    highlight: function (code) {
       /*eslint no-undef: "off"*/
       return hljs.highlightAuto(code).value
     }
@@ -179,4 +179,22 @@ export function genertorColor(list = [], colorList = COLOR_LIST) {
     l.color = colorList[i] || colorList[randomIndex(colorList)]
   })
   return _list
+}
+
+export function encryption(data) {
+  let strs = []
+  for (const i in data) {
+    strs.push(i + '=' + data[i])
+  }
+  strs.sort() // 数组排序
+  strs = strs.join('&') // 数组变字符串
+  const endData = strs + '&sign=' + CryptoJS.MD5(strs + 'ADfj3kcadc2349akvm1CPFFCD84f').toString() // MD5加密
+  const key = CryptoJS.enc.Utf8.parse('0880076B18D7EE81') // 加密秘钥
+  const iv = CryptoJS.enc.Utf8.parse('CB3EC842D7C69578')//  矢量
+  const encryptResult = CryptoJS.AES.encrypt(endData, key, {//  AES加密
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7 // 后台用的是pad.Pkcs5,前台对应为Pkcs7
+  })
+  return encodeURIComponent(CryptoJS.enc.Base64.stringify(encryptResult.ciphertext)) // Base64加密encode;
 }

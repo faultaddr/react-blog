@@ -61,8 +61,8 @@ class UserController {
 
   // 登录
   static async login(ctx) {
-    let code =ctx.request.body['code']
-    if(!code){
+    let code = ctx.request.body['code']
+    if (!code) {
       code = ctx.query['code']
     }
     console.log(code)
@@ -74,13 +74,14 @@ class UserController {
   }
 
   // 站内用户登录
+  // 使用
   static async defaultLogin(ctx) {
     const validator = ctx.validate(ctx.request.body, {
       account: Joi.string().required(),
       password: Joi.string(),
     })
     if (validator) {
-      const { account, password } = ctx.request.body
+      const { account } = ctx.request.body
 
       const user = await UserModel.findOne({
         where: {
