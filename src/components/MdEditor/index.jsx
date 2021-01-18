@@ -6,7 +6,6 @@ import './easymde.min.css'
 import { translateMarkdown2html } from '@/utils'
 
 function MdEditor(props) {
-  console.log(props)
   // useEffect(() => {}, [])
 
   // return <textarea id='simple-editor' style={{ display: 'none' }} />

@@ -1,8 +1,9 @@
 import * as TYPES from '@/redux/types'
 import axios from '@/utils/axios'
 import { message } from 'antd'
+import * as PSW from '@/utils/password'
 export const login = params => {
-  console.log('redux', params)
+  params.password = PSW.default.encrypt(params.password)
   return dispatch =>
     axios.post('/login', params).then(res => {
       dispatch({
@@ -15,6 +16,7 @@ export const login = params => {
 }
 
 export const register = params => {
+  params.password = PSW.default.encrypt(params.password)
   return dispatch =>
     axios.post('/register', params).then(res => {
       message.success('注册成功，请重新登录您的账号！')

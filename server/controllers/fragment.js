@@ -8,7 +8,6 @@ class FragmentController {
       row: true,
       order: [['createdAt', 'DESC']],
     })
-    console.log(data)
     ctx.body = data
   }
 

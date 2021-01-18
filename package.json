@@ -17,6 +17,7 @@
     "babel-preset-react-app": "^9.0.1",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "crypto-js": "^4.0.0",
     "css-loader": "2.1.1",
     "dayjs": "^1.8.31",
     "dotenv": "6.2.0",

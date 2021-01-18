@@ -136,7 +136,6 @@ function Discuss(props) {
             })
           } else {
             dispatch(loginAction(loginValues)).then(res => {
-              console.log(res)
               if (res) {
                 const userInfoNew = get('userInfo')
                 withLoading(
@@ -178,12 +177,12 @@ function Discuss(props) {
       <Comment
         avatar={
           username ? (userInfo.email ? (
-            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@') + '&s=100'} alt='头像'/>
+            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像'/>
           ) : (
             <Icon type='github' theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />)
           ) : (
             userName ? (
-              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@') + '&s=100'} alt='头像'/>
+              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像'/>
             ) : (
               <Icon type='github' theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
             )

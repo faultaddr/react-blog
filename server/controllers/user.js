@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const axios = require('axios')
+const PSW = require('../utils/password')
 const { GITHUB } = require('../config')
 const { decodeQuery } = require('../utils')
 const { comparePassword, encrypt } = require('../utils/bcrypt')
@@ -65,7 +66,6 @@ class UserController {
     if (!code) {
       code = ctx.query['code']
     }
-    console.log(code)
     if (code) {
       await UserController.githubLogin(ctx, code)
     } else {
@@ -81,7 +81,7 @@ class UserController {
       password: Joi.string(),
     })
     if (validator) {
-      const { account } = ctx.request.body
+      const { account, password } = ctx.request.body
 
       const user = await UserModel.findOne({
         where: {
@@ -94,7 +94,7 @@ class UserController {
         // ctx.client(403, '用户不存在')
         ctx.throw(403, '用户不存在')
       } else {
-        const isMatch = await comparePassword(password, user.password)
+        const isMatch = await comparePassword(PSW.default.decrypt(password), user.password)
         if (!isMatch) {
           // ctx.client(403, '密码不正确')
           ctx.throw(403, '密码不正确')
@@ -124,9 +124,7 @@ class UserController {
         headers: { Authorization: `token ${access_token['access_token']}` },
       })
       const githubInfo = result2.data
-      console.log(githubInfo.id)
       let target = await UserController.find({ id: githubInfo.id }) // 在数据库中查找该用户是否存在
-      console.log(target)
       if (!target) {
         target = await UserModel.create({
           id: githubInfo.id,
@@ -181,7 +179,8 @@ class UserController {
         if (user && !user.github) {
           ctx.throw(403, '用户名已被占用')
         } else {
-          const saltPassword = await encrypt(password)
+          const decryptPassword = PSW.default.decrypt(password)
+          const saltPassword = await encrypt(decryptPassword)
           await UserModel.create({ username, password: saltPassword, email })
           // ctx.client(200, '注册成功')
           ctx.status = 204
