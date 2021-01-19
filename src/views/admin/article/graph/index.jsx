@@ -7,7 +7,7 @@ const DemoLine = () => {
     asyncFetch()
   }, [])
   const asyncFetch = () => {
-    fetch(API_BASE_URL+'/record')
+    fetch(API_BASE_URL + '/record')
       .then(response => response.json())
       .then(json => setData(json))
       .catch(error => {
