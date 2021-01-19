@@ -137,3 +137,13 @@ CREATE TABLE `fragment` (
       PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 101 DEFAULT CHARSET = utf8;
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `record`;
+CREATE TABLE `record`(
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `articleId` int(11) NOT NULL,
+      `userId` int(11) DEFAULT NULL,
+      `recordTime` datetime DEFAULT NULL,
+      PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 101 DEFAULT CHARSET = utf8;
+SET FOREIGN_KEY_CHECKS = 1;

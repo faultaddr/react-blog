@@ -8,6 +8,7 @@ const {
   comment: CommentModel,
   reply: ReplyModel,
   user: UserModel,
+  record: RecordModel,
   sequelize
 } = require('../models')
 
@@ -95,7 +96,8 @@ class ArticleController {
       const { type = 1 } = ctx.query
       // viewer count ++
       type === 1 && ArticleModel.update({ viewCount: ++data.viewCount }, { where: { id: ctx.params.id } })
-
+      // 每个浏览记录都存一个stamp，这样后续能够看出文章的阅读趋势方便推荐
+      type ===1 && RecordModel.create({articleId: ctx.params.id})
       // JSON.parse(github)
       data.comments.forEach(comment => {
         comment.user.github = JSON.parse(comment.user.github)

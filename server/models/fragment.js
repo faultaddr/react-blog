@@ -1,5 +1,5 @@
 const moment = require('moment')
-// article 表
+// fragment 表
 module.exports = (sequelize, dataTypes) => {
   const Fragment = sequelize.define('fragment', {
     id: {
