@@ -13,6 +13,9 @@
  
  Date: 20/01/2020 16:11:05
  */
+DROP DATABASE IF EXISTS `test`;
+CREATE DATABASE test;
+use test;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------

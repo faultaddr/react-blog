@@ -71,11 +71,11 @@ ln -s $cur_dir"/npm" "/usr/local/bin/npm";
 
 npm install yarn -g
 
-npm install pm2 -g
+npm install forever -g
 
 ln -s $cur_dir"/yarn" "/usr/local/bin/yarn";
 
-ln -s $cur_dir"/pm2" "/usr/local/bin/pm2";
+ln -s $cur_dir"/forever" "/usr/local/bin/forever";
 
 cd ${oldpath}
 
@@ -129,12 +129,14 @@ mysql -u root -p${mysql_passwd} -e "SHOW VARIABLES LIKE 'validate_password%';" -
 
 # write the database using test.sql
 echo ${oldpath}
-mysql -uroot -p${mysql_passwd} ${oldpath}/server/test.sql
+
+mysql -uroot -p${mysql_passwd} -e "source ${oldpath}/server/test.sql" --connect-expired-password
 
 yarn install
 # run the app front & backend
-nohup yarn dev >/dev/null 2>&1 & exit
-cd server
+nohup yarn dev >/dev/null 2>&1 &
+echo "\n"
+cd "${oldpath}/server"
+pwd
 yarn install
-
-nphup yarn dev >/dev/null 2>&1 & exit
+forever start app.js
