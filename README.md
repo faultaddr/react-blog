@@ -1,19 +1,23 @@
-## react hooks + koa + mysql
+>写在前面：
+>用烦了wordpress，hexo和其他各种各样的博客框架，是时候该从桎梏中跳出，写一个自己的博客了！
+>
+> 我的博客 www.panyunyi.cn
+>
+> 博客的github地址 https://github.com/panyunyi97/react-blog
+>
+> 欢迎 star & pr
 
+在试图搭建一个完全属于自己且自主可控的博客之前，我使用过 wordpress 和 Hexo 等傻瓜式的博客。但这类可少量客制化的博客并不能完完全全满足我的需求，我希望我自己的博客在我手中完全可控，一丝一毫都可以被我掌握，这样才显得安心和舒适。作为一个开发者，自己的博客其实就是自己的Resume，不单单需要内容翔实，更需要样式美观可控，所以我建议大家，都自己动手搭建一个真正属于自己的博客！
 
+在启动之前我也雄心壮志过，试图从零开始一点一点做，后来发现，成本太高而且旷日持久，所以我决定偷师github，找一个符合自己审美的React-blog进行深度改造，非常幸运的是，我找到了一个完全可用的[React Blog](https://github.com/alvin0216/react-blog)。
 
-> 一个及其简洁的个人博客系统、即插即用，如果你想使用这个博客、动动手改改配置即可使用！！
+基于这个原始版blog，我开启了我的blog 客制化之路。
 
-- 前后台分离式开发（项目中也包含博客的后台管理系统），为了方便记录后端开发过程，笔者将后端也一起放在同个项目文件夹中。
-- 博客样式几乎借助于 `antd` 这个优秀的 UI 框架，主打简约风格，是笔者借鉴了 `antd` 官方的风格所设计。
-- 具备了代码高亮、权限管理、第三方 `github` 登录、评论与通知、以及邮件通知功能的个人博客...
-- 具备文件导入导出功能，假如你之前用 `hexo` 博客, 那么你可以直接通过导入 `md` 文件迁移你的文章。
+首先给大家看一下最后的成果：
 
-* 我的博客地址: [panyunyi的博客](http://blog.panyunyi.cn)
+![菜园子](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45408d8286f044da936cdb0a0e17ef8a~tplv-k3u1fbpfcp-zoom-1.image)
 
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
-[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+以及实现的功能一览：
 
 ### 实现功能
 
@@ -31,7 +35,7 @@
 - [x] 动态获取mailbox secret
 - [x] 密码传输加密
 - [x] 后台图表
-- [ ] 智能推荐 （关联推荐）
+- [ ] 智能推荐（关联推荐）
 
 ### 技术栈
 
@@ -48,16 +52,8 @@
   - `jwt` + `bcrypt`
   - `nodemailer`
   - `koa-send` `archiver`
-
-## 博客预览
-
-### pc 端
-
-![](https://s3.ax1x.com/2020/11/27/DDf5lV.md.png)
-
-## 项目结构
-
-### 目录结构
+  
+### 项目结构
 
 ```js
 .
@@ -92,271 +88,206 @@
 
 ```
 
-### 数据库模型
+## blog改造流程一览
+- 页面的客制化改造
+- 功能的修复与添加
+- 个人信息的填充
 
-![](https://user-gold-cdn.xitu.io/2019/9/20/16d4e0f97411e6cb?w=660&h=655&f=png&s=340072)
+### 页面的客制化改造
+为了更加适用于自己的使用场景，对页面进行了一些客制化的改造
 
-role === 1: 博主用户
-role === 2: 普通用户
+- 页面背景（写成了可配置可拆卸的）
+此处奉上我最喜欢的这张图即封面图
 
-权限管理 `server/middlewares/authHandler.js`
+- 页面动效
+加上了很多博客都有的翻转滚动的小棒！是不是很棒！
 
-```js
-const { checkToken } = require('../utils/token')
+### 功能的修复与添加
+为了将博客所有者与阅读者隔离开，加入了role字段进行控制。
 
-/**
- * role === 1 需要权限的路由
- * @required 'all': get post put delete 均需要权限。
- */
-const verifyList1 = [
-  { regexp: /\/article\/output/, required: 'get', verifyTokenBy: 'url' }, // 导出文章 verifyTokenBy 从哪里验证 token
-  { regexp: /\/article/, required: 'post, put, delete' }, // 普通用户 禁止修改或者删除、添加文章
-  { regexp: /\/discuss/, required: 'delete, post' }, // 普通用户 禁止删除评论
-  { regexp: /\/user/, required: 'get, put, delete' }, // 普通用户 禁止获取用户、修改用户、以及删除用户
-]
+- 公开与私密文章：
 
-// role === 2 需要权限的路由
-const verifyList2 = [
-  { regexp: /\/discuss/, required: 'post' }, // 未登录用户 禁止评论
-]
+  博客不单单是展示自己、记录笔记的地方，更是个人情感的树洞，是回忆编织的大网，所以肯定是需要将公开和私密的文章隔离开啦，根据用户角色鉴权来返回对应的数据。这样更好的保护了隐私，也让博客所有者穿上了自己的底裤~
+  
+- Markdown 编辑器 mathjax 支持
+  
+  因为博主是一个弱小的科研爱好者，所以写公式更是必须的啦，之前找的这个React-blog在这个功能上存在一些瑕疵，不能有效的支持mathjax，所以进行了一些改动，对 react-simplemde-editor 进行了一些简单的封装，使其支持MathJax预览，在文章显示上适用marked进行编码，使mathjax可以有效显示。
+  
+  具体实现
+ ```js
+    export const translateMarkdown2html = (plainText, isGuardXss = false) => {
+    const marked_render = new marked.Renderer()
+    marked_render.old_paragraph = marked_render.paragraph
+    // 重写`paragraph()`方法
+    marked_render.paragraph = function(text) {
+      // isTeXInline - 该文本是否有行内公式
+      var isTeXInline = /\$(.*)\$/g.test(text)
+      // isTeXLine - 该文本是否有行间公式
+      var isTeXLine = /^\$\$(\s*.*\s*)\$\$$/.test(text)
 
-/**
- * 检查路由是否需要权限，返回一个权限列表
- *
- * @return {Array} 返回 roleList
- */
-function checkAuth(method, url) {
-  function _verify(list, role) {
-    const target = list.find((v) => {
-      return v.regexp.test(url) && (v.required === 'all' || v.required.toUpperCase().includes(method))
-    })
-
-    return target
-  }
-
-  const roleList = []
-  const result1 = _verify(verifyList1)
-  const result2 = _verify(verifyList2)
-
-  result1 && roleList.push({ role: 1, verifyTokenBy: result1.verifyTokenBy || 'headers' })
-  result2 && roleList.push({ role: 2, verifyTokenBy: result1.verifyTokenBy || 'headers' })
-
-  return roleList
-}
-
-// auth example token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoyLCJpZCI6MSwiaWF0IjoxNTY3MDcyOTE4LCJleHAiOjE1Njk2NjQ5MTh9.-V71bEfuUczUt_TgK0AWUJTbAZhDAN5wAv8RjmxfDKI
-module.exports = async (ctx, next) => {
-  const roleList = checkAuth(ctx.method, ctx.url)
-  //  该路由需要验证
-  if (roleList.length > 0) {
-    if (checkToken(ctx, roleList)) {
-      await next()
-    } else {
-      ctx.status = 401
-      ctx.client(401)
+      if (!isTeXLine && isTeXInline) {
+        // 如果不是行间公式，但是行内公式，则使用<span class="marked_inline_tex">包裹公式内容，消除$定界符
+        text = text.replace(/(\$([^\$]*)\$)+/g, function($1, $2) {
+          // 避免和行内代码冲突
+          if ($2.indexOf('<code>') >= 0 || $2.indexOf('</code>') >= 0) {
+            return $2
+          } else {
+            return '<span class=\'marked_inline_tex\'>' + $2.replace(/\$/g, '') + '</span>'
+          }
+        })
+      } else {
+        // 如果是行间公式，则使用<div class='marked_tex'>包裹公式内容，消除$$定界符
+        // 如果不是LaTex公式，则直接返回原文本
+        text = (isTeXLine) ? '<div class=\'marked_tex\'>' + text.replace(/\$/g, '') + '</div>' : text
+      }
+      // 使用渲染器原有的`paragraph()`方法渲染整段文本
+      text = this.old_paragraph(text)
+      return text
     }
-  } else {
-    await next()
-  }
-}
+    // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
+
+    return marked(isGuardXss ? xss(plainText) : plainText, {
+      renderer: marked_render,
+      pedantic: false,
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false,
+      highlight: function(code) {
+        /*eslint no-undef: "off"*/
+        return hljs.highlightAuto(code).value
+      }
+    })
+    }
 ```
+  
+- 文章置顶
+  
+  置顶文章是一个必须的功能，当你有一些得意之作时，更希望它能有更高的优先级，能帮助到更多的人，所以增加了该功能
+  
+- 一键评论
+  
+  这是为了方便朋友们能够更快速的进行评论，因为让朋友们注册的话有持有密码和密码泄漏的风险，所以直接使用用户名和qq邮箱（方便拿到头像）进行快速评论即可，后台将自动注册登录该用户。
 
-## 关于使用这个项目需要的配置
+ - github登录：
+   
+   之前的blog中的登录方式已经被取缔了，所以更新了新的登录方式：
+   
+   具体可见：[github oauth2 认证](https://docs.github.com/cn/free-pro-team@latest/developers/apps/authorizing-oauth-apps)
+   
+- 闲言碎语：
 
-### 前端 `src/config.js`
+  该模块是模拟信息流模式留给博客所有者的独立空间，可以发布心情和感受，更好地完善博客的完整功能————记录美好生活。
+ 
+  
+- 后台管理：
 
-```js
-import React from 'react'
-import MyInfo from '@/views/web/about/MyInfo'
+[![后台管理](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a68948e4b6d44a8bb5a05156b385ce6~tplv-k3u1fbpfcp-zoom-1.image)](https://imgchr.com/i/rAMKDP)
 
-// API_BASE_URL
-export const API_BASE_URL = 'http://127.0.0.1:6060'
+### 个人信息的填充
 
-// project config
-export const HEADER_BLOG_NAME = 'panyunyi的博客' // header title 显示的名字
+  把很多东西都做成了完全可配置的
+  例如： 友链、头像等等，如果你不喜欢折腾，可以即插即用，部署好mysql/npm/yarn 就可以一键使用了，未来也会提供一键安装的功能。
+  ```js
+    import React from 'react'
+    import { Icon } from 'antd'
+    import SvgIcon from '@/components/SvgIcon'
 
-// === sidebar
-export const SIDEBAR = {
-  avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-  title: 'panyunyi', // 标题
-  subTitle: 'coder', // 子标题
-  // 个人主页
-  homepages: {
-    github: 'https://github.com/panyunyi97',
-    juejin: 'https://juejin.im/user/',
-  },
-}
+    import Href from '@/components/Href'
+    import MyInfo from '@/views/web/about/MyInfo'
 
-// === discuss avatar
-export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
+    // API_BASE_URL
+    export const API_BASE_URL = 'http://120.79.229.207:6060'
+    // export const API_BASE_URL = 'http://127.0.0.1:6060'
+    // project config
+    export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
 
-// github
-export const GITHUB = {
-  enable: true, // github 第三方授权开关
-  client_id: '', // Setting > Developer setting > OAuth applications => client_id
-  url: 'https://github.com/login/oauth/authorize', // 跳转的登录的地址
-}
-
-export const ABOUT = {
-  avatar: SIDEBAR.avatar,
-  describe: SIDEBAR.subTitle,
-  discuss: true, // 关于页面是否开启讨论
-  renderMyInfo: <MyInfo />, // 我的介绍 自定义组件 => src/views/web/about/MyInfo.jsx
-}
-```
-
-### 后端 `server/config.js`
-
-```js
-const devMode = process.env.NODE_ENV === 'development'
-
-const config = {
-  PORT: 6060, // 启动端口
-  ADMIN_GITHUB_LOGIN_NAME: 'gershonv', // 博主的 github 登录的账户名 user
-  GITHUB: {
-    client_id: '87a4f88b943adaafd44a',
-    client_secret: '',
-    access_token_url: 'https://github.com/login/oauth/access_token',
-    fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
-    fetch_user: 'https://api.github.com/users/', // fetch user url https://api.github.com/users/gershonv
-  },
-  EMAIL_NOTICE: {
-    // 邮件通知服务
-    // detail: https://nodemailer.com/
-    enable: true, // 开关
-    transporterConfig: {
-      host: 'smtp.qq.com',
-      port: 465,
-      secure: true, // true for 465, false for other ports
-      auth: {
-        user: '779087031@qq.com', // generated ethereal user
-        pass: '123456', // generated ethereal password 授权码 而非 密码
+    // === sidebar
+    export const SIDEBAR = {
+      avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
+      title: '种菜的小朋友', // 标题
+      subTitle: 'Carpe diem', // 子标题
+      // 个人主页
+      homepages: {
+        github: {
+          link: 'https://github.com/panyunyi97',
+          icon: <Icon type='github' theme='filled' className='homepage-icon' />
+        },
+        juejin: {
+          link: 'https://juejin.im/user/96412755827687',
+          icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
+        }
       },
-    },
-    subject: 'panyunyi的博客 - 您的评论获得新的回复！', // 主题
-    text: '您的评论获得新的回复！',
-    WEB_HOST: 'http://www.panyunyi.cn', // email callback url
-  },
-  TOKEN: {
-    secret: 'panyunyi', // secret is very important!
-    expiresIn: '720h', // token 有效期
-  },
-  DATABASE: {
-    database: 'test',
-    user: 'root',
-    password: '123456',
-    options: {
-      host: 'localhost', // 连接的 host 地址
-      dialect: 'mysql', // 连接到 mysql
-      pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000,
-      },
-      define: {
-        timestamps: false, // 默认不加时间戳
-        freezeTableName: true, // 表名默认不加 s
-      },
-      timezone: '+08:00',
-    },
-  },
-}
+      friendslink: {
+        lizi: {
+          link: 'http://blog.liziyang.co/',
+          img: 'http://blog.liziyang.co/images/pikachu.jpg',
+        },
+        wizchen: {
+          link: 'http://blog.wizchen.com',
+          img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
+        }
+      }
+    }
 
-// 部署的环境变量设置
-if (!devMode) {
-  console.log('env production....')
+    // === discuss avatar
+    export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
 
-  // ==== 配置数据库
-  config.DATABASE = {
-    ...config.DATABASE,
-    database: '', // 数据库名
-    user: '', // 账号
-    password: '', // 密码
-  }
+    /**
+     * github config
+     */
+    export const GITHUB = {
+      enable: true, // github 第三方授权开关
+      client_id: '87a4f88b943adaafd44a', // Setting > Developer setting > OAuth applications => client_id
+      url: 'https://github.com/login/oauth/authorize' // 跳转的登录的地址
+    }
 
-  // 配置 github 授权
-  config.GITHUB.client_id = ''
-  config.GITHUB.client_secret = ''
+    export const ABOUT = {
+      avatar: SIDEBAR.avatar,
+      describe: SIDEBAR.subTitle,
+      discuss: true, // 关于页面是否开启讨论
+      renderMyInfo: <MyInfo /> // 我的介绍 自定义组件 => src/views/web/about/MyInfo.jsx
+    }
 
-  // ==== 配置 token 密钥
-  config.TOKEN.secret = ''
+    // 公告 announcement
+    export const ANNOUNCEMENT = {
+      enable: true, // 是否开启
+      content: (
+        <>
+          个人笔记网站，请访问
+          <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href>
+        </>
+      )
+    }
+  ```
+ 
+### 后续功能补充（持续更新中）：
+----- 2021.1.18-----
 
-  // ==== 配置邮箱
+  最近偷得浮生半日闲，对一些已知的bug进行了修复，包括但不限于：
+  - 明文传输密码改为两次AES加密
+  - 评论文章时对qq邮箱进行了check
+  - 对IMTP授权码进行了AES加密防止被盗用
+  - 修复了 SimpleMDE 的CSS cdn被GFW和谐的问题，改为本地加载
+  - 增加了 闲言碎语后台编辑页面
+  
+应很多小伙伴的要求，开放了一个测试页面，可以供大家测试使用，地址为[测试地址](http://www.panyunyi.cn:81/)
 
-  // config.EMAIL_NOTICE.enable = true
-  config.EMAIL_NOTICE.transporterConfig.auth = {
-    user: 'guodadablog@163.com', // generated ethereal user
-    pass: '123456XXX', // generated ethereal password 授权码 而非 密码
-  }
-  config.EMAIL_NOTICE.WEB_HOST = 'https://guodada.fun'
-}
+具备管理员权限的用户名为： admin
 
-module.exports = config
-```
-
-关于 `github` 第三方授权和 `email` 授权，可以参考
-
-- [GitHub 第三方登录](https://www.jianshu.com/p/78d186aeb526)
-- [GitHub 第三方授权 demo](https://github.com/gershonv/oAuth2-github.git)
-- [nodemailer](https://nodemailer.com/)
-
-## 使用这个项目
-
-```bash
-git clone https://github.com/gershonv/react-blog.git
-
-## 安装依赖以及开启开发模式
-cd react-blog
-yarn
-yarn dev
-
-## 安装依赖以及开启开发模式 注意必须先配置好数据库、个人github账户登录名，配置文件在 server/config/index.js
-## 笔者采用的数据库字符集为 utf8mb4 排序规则 utf8mb4_general_ci
-cd server
-yarn
-yarn dev
+密码为：admin
 
 
-## 打包前端
-cd react-blog
-yarn build
+>写在后面
+>
+>再次感谢alvin0216，我只是在前人的肩膀上摘苹果。
+>
+>大概的功能就是这些，已经完全能够cover日常的工作和分享需求，支持线上的markdown编辑和导入导出。
+>
+>希望大家都能早日拥有属于自己的博客！
 
-## 后端笔者则是采用pm2
-cd server
-pm2 start app.js
-```
-
-### 导入功能说明
-
-导入 `md` 文件是按照 hexo 生成的前缀去解析的， 比如
-
-```bash
----
-title: ES6 - Class
-date: 2018-07-16 22:19:09
-categories: Javascript
-tags:
-  - Javascript
-  - ES6
----不过
-```
-
-对应会解析为
-
-- 标题：`ES6 - Class`
-- 创建日期：`2018-07-16 22:19:09`
-- 分类：`Javascript`
-- 标签：`Javascript` `ES6`
-
-如果导入标题一样的文件，可以确认是否覆盖原来的文章！
-
-
---------
-### 特别鸣谢：
-
-本博客主体基于[alvin2016的博客](https://github.com/alvin0216/react-blog)，做了一些个性化的调整，功能更加强大，修复了一些bug。
-
-欢迎fork & star，如有问题可提issue或直接pr
 
 
