@@ -32,7 +32,7 @@ React Blog
 
 ## 背景
 
-`React Blog` 最开始因为 [alvin0216](https://github.com/alvin0216) 在项目 [alvin0216/react-blog](https://github.com/alvin0216/react-blog) 的基础上构建的，是为了修复一些已知的问题，已经加入更多的个性化元素和网站的各类安全性保障构建的，更加炫酷也更加易用。
+`React Blog` 最开始是在 [alvin0216](https://github.com/alvin0216) 的项目 [alvin0216/react-blog](https://github.com/alvin0216/react-blog) 的基础上构建的，是为了修复一些已知的问题，已经加入更多的个性化元素和网站的各类安全性保障构建的，更加炫酷也更加易用。
 
 
 为了搭建个人网站，首先你需要租用一个云服务器（本文中一般使用centos来代替），使用阿里云/腾讯云/AWS 来进行网站的托管。或者你可以通过Ngrok来做内网穿透将网站部署在自己的pc上。

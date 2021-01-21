@@ -32,7 +32,7 @@ This ReadMe file contains the following:
 
 ## Background
 
-`React Blog` was originally built on the basis of project [alvin0216/react-blog](https://github.com/alvin0216/react-blog) because [alvin0216](https://github.com/alvin0216) , In order to fix some known issues and add more personalized elements, Last but no Least, I have added various security guarantees of the website, making it more cool and easier to use.
+`React Blog` was originally built on the basis of project [alvin0216/react-blog](https://github.com/alvin0216/react-blog) which create by [alvin0216](https://github.com/alvin0216) , In order to fix some known issues and add more personalized elements, Last but no Least, I have added various security guarantees of the website, making it more cool and easier to use.
 
 
 In order to build a personal website, you first need to rent a cloud server (centos is generally used instead in this article), and use Alibaba Cloud/Tencent Cloud/AWS to host the website. Or you can use Ngrok to do intranet penetration and deploy the website on your PC.
