@@ -1,302 +1,418 @@
->写在前面：
->用烦了wordpress，hexo和其他各种各样的博客框架，是时候该从桎梏中跳出，写一个自己的博客了！
->
-> 我的博客 www.panyunyi.cn
->
-> 博客的github地址 https://github.com/panyunyi97/react-blog
->
-> 欢迎 star & pr
+# React Blog 
 
-#### Centos 一键部署的脚本在根目录（Ubuntu的一键部署脚本还在整理中），直接
 
-    sh install.sh
-    
- 即可，首次搭建时使用install.sh。
- 后面再启动时，使用
- 
-    sh run.sh
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
-在试图搭建一个完全属于自己且自主可控的博客之前，我使用过 wordpress 和 Hexo 等傻瓜式的博客。但这类可少量客制化的博客并不能完完全全满足我的需求，我希望我自己的博客在我手中完全可控，一丝一毫都可以被我掌握，这样才显得安心和舒适。作为一个开发者，自己的博客其实就是自己的Resume，不单单需要内容翔实，更需要样式美观可控，所以我建议大家，都自己动手搭建一个真正属于自己的博客！
 
-在启动之前我也雄心壮志过，试图从零开始一点一点做，后来发现，成本太高而且旷日持久，所以我决定偷师github，找一个符合自己审美的React-blog进行深度改造，非常幸运的是，我找到了一个完全可用的[React Blog](https://github.com/alvin0216/react-blog)。
+For chinese , you can visit this [中文](https://github.com/panyunyi97/react-blog/blob/main/README.zh-CN.md)
 
-基于这个原始版blog，我开启了我的blog 客制化之路。
+One-click installation & deployment of the React blog, freeing your hands so that you only need to change the configuration file to have a perfect personal technical blog!
 
-首先给大家看一下最后的成果：
+This ReadMe file contains the following:
 
-![菜园子](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45408d8286f044da936cdb0a0e17ef8a~tplv-k3u1fbpfcp-zoom-1.image)
+1. How to install and deploy a blog
+2. How to configure front-end page information
+3. How to configure sensitive back-end information
 
-以及实现的功能一览：
 
-### 实现功能
+## Table of Contents
 
-- [x] 前台：主页 + 列表页 + 搜索页 + 分类页 + 标签页
-- [x] 后台：文章管理 + 用户管理
-- [x] 响应式、文章锚点导航、回到顶部、`markdown` 代码高亮、`mathjax`支持
-- [x] 用户：站内用户、`github` 第三方授权登录的用户
-- [x] 用户可以评论与回复、以及**邮件通知**回复的状态
-- [x] `md` 文件导入导出功能！可以直接上传 `md` 文件生成文章
-- [x] 私密与公开文章分离
-- [x] 一键评论，无需注册
-- [x] 主页背景
-- [x] 文章置顶
-- [x] 闲言碎语
-- [x] 动态获取mailbox secret
-- [x] 密码传输加密
-- [x] 后台图表
-- [ ] 智能推荐（关联推荐）
+- [Background](#Background)
+- [Install](#Install)
+- [Usage](#Usage)
+- [Features and Personalized Configuration](#Features-and-Personal-Configuration)
+     - [Features](#Features)
+     - [Personalized Configuration](#Personalized-Configuration)
+     - [Personalized Information Configuration](#Personalized-Information-Configuration)
+     - [Background sensitive information configuration](#Background-sensitive-information-configuration)
+- [Maintainer](#Maintainer)
+- [Contributing](#Contributing)
+- [License](License)
 
-### 技术栈
+## Background
 
-- 前端 （基于 `create-react-app eject` 后的配置）
+`React Blog` was originally built on the basis of project [alvin0216/react-blog](https://github.com/alvin0216/react-blog) because [alvin0216](https://github.com/alvin0216) , In order to fix some known issues and add more personalized elements, Last but no Least, I have added various security guarantees of the website, making it more cool and easier to use.
 
-  - react v16.9.0 `hooks` + `redux` + `react-router4`
-  - `marked highlight.js`
-  - `webpack` 打包优化
-  - `axios` 封装
 
-- 后端 （自构建后台项目）
-  - `koa2` + `koa-router`
-  - `sequelize` + `mysql`
-  - `jwt` + `bcrypt`
-  - `nodemailer`
-  - `koa-send` `archiver`
-  
-### 项目结构
+In order to build a personal website, you first need to rent a cloud server (centos is generally used instead in this article), and use Alibaba Cloud/Tencent Cloud/AWS to host the website. Or you can use Ngrok to do intranet penetration and deploy the website on your PC.
+
+
+## Install
+
+If you want to deploy on the Centos server, you can directly use our one-click installation deployment script:
+```sh
+$ sh install.sh
+```
+If you want to install and configure yourself, use [node](http://nodejs.org),[npm](https://npmjs.com),[yarn](),[forever]() for this project. Please make sure You have performed the correct installation locally.
+
+```sh
+$ npm install --global yarn
+$ npm install --global forever
+```
+
+
+## Usage
+
+If you use the one-click installation script mentioned above, please pay attention to whether the port is occupied when starting later:
+
+```sh
+$ yum install lsof
+$ lsof -i:80
+$ lsof -i:6060
+```
+If there is port occupation, please end the process or change the port
+
+Then execute the following instructions for production deployment
+
+```sh
+$ cd src
+$ yarn build
+$ nohup serve -s build -l 80 &
+$
+$ cd server
+$ forever run app.js
+```
+
+Or for development environment deployment
+
+```sh
+$ cd src
+$ nohup yarn dev
+$
+$ cd server
+$ forever run app.js
+```
+
+
+
+## Features and Personal Configuration
+
+### Features
+
+- [x] Front Desk: Homepage + List Page + Search Page + Category Page + Tab Page
+- [x] Backstage: article management + user management
+- [x] Responsive, article anchor navigation, back to top, `markdown` code highlighting, `mathjax` support
+- [x] Users: users on the site, users authorized to log in by a third-party `github`
+- [x] Users can comment and reply, as well as the status of **mail notification** reply
+- [x] `md` file import and export function! You can directly upload the `md` file to generate an article
+- [x] Separation of private and public articles
+- [x] One-click comment without registration
+- [x] Homepage background
+- [x] Top of article
+- [x] Gossip
+- [x] Get the mailbox secret dynamically
+- [x] Password transmission encryption
+- [x] Background chart
+- [ ] Smart Recommendation (Related Recommendation)
+
+### Personalized Configuration
+
+Personalized configuration is configured through ```src/config.js```
 
 ```js
-.
-│
-├─config                // 构建配置
-├─public                // html 入口
-├─scripts               // 项目脚本
-└─server                // 后端
-    ├─config            // 项目配置 github、email、database、token-secret 等等
-    ├─controllers       // 业务控制层
-    ├─middlewares       // 中间件
-    ├─models            // 数据库模型
-    ├─router            // 路由
-    ├─utils             // 工具包
-    ├─  app.js          // 后端主入口文件
-    ├─  initData.js     // 初始化基础数据脚本
-    └─...
-│
-└─src                   // 前端项目源码
-   ├─assets             // 静态文件
-   ├─components         // 公用组件
-   ├─layout             // 布局组件
-   ├─redux              // redux 目录
-   ├─routes             // 路由
-   ├─styles             // 样式
-   ├─utils              // 工具包
-   ├─views              // 视图层
-   ├─  App.jsx          // 后端主入口文件
-   ├─  config.js        // 项目配置 github 个人主页、个人介绍等等
-   ├─  index.js         // 主入口文件
-   └─...
+import React from 'react'
+import { Icon } from 'antd'
+import SvgIcon from '@/components/SvgIcon'
 
-```
+import Href from '@/components/Href'
+import MyInfo from '@/views/web/about/MyInfo'
 
-## blog改造流程一览
-- 页面的客制化改造
-- 功能的修复与添加
-- 个人信息的填充
+// API_BASE_URL
+export const API_BASE_URL = 'http://120.79.229.207:6060'
+// export const API_BASE_URL = 'http://127.0.0.1:6060'
+// project config
+export const HEADER_BLOG_NAME = '菜园子' // header title 
 
-### 页面的客制化改造
-为了更加适用于自己的使用场景，对页面进行了一些客制化的改造
-
-- 页面背景（写成了可配置可拆卸的）
-此处奉上我最喜欢的这张图即封面图
-
-- 页面动效
-加上了很多博客都有的翻转滚动的小棒！是不是很棒！
-
-### 功能的修复与添加
-为了将博客所有者与阅读者隔离开，加入了role字段进行控制。
-
-- 公开与私密文章：
-
-  博客不单单是展示自己、记录笔记的地方，更是个人情感的树洞，是回忆编织的大网，所以肯定是需要将公开和私密的文章隔离开啦，根据用户角色鉴权来返回对应的数据。这样更好的保护了隐私，也让博客所有者穿上了自己的底裤~
-  
-- Markdown 编辑器 mathjax 支持
-  
-  因为博主是一个弱小的科研爱好者，所以写公式更是必须的啦，之前找的这个React-blog在这个功能上存在一些瑕疵，不能有效的支持mathjax，所以进行了一些改动，对 react-simplemde-editor 进行了一些简单的封装，使其支持MathJax预览，在文章显示上适用marked进行编码，使mathjax可以有效显示。
-  
-  具体实现
- ```js
-    export const translateMarkdown2html = (plainText, isGuardXss = false) => {
-    const marked_render = new marked.Renderer()
-    marked_render.old_paragraph = marked_render.paragraph
-    // 重写`paragraph()`方法
-    marked_render.paragraph = function(text) {
-      // isTeXInline - 该文本是否有行内公式
-      var isTeXInline = /\$(.*)\$/g.test(text)
-      // isTeXLine - 该文本是否有行间公式
-      var isTeXLine = /^\$\$(\s*.*\s*)\$\$$/.test(text)
-
-      if (!isTeXLine && isTeXInline) {
-        // 如果不是行间公式，但是行内公式，则使用<span class="marked_inline_tex">包裹公式内容，消除$定界符
-        text = text.replace(/(\$([^\$]*)\$)+/g, function($1, $2) {
-          // 避免和行内代码冲突
-          if ($2.indexOf('<code>') >= 0 || $2.indexOf('</code>') >= 0) {
-            return $2
-          } else {
-            return '<span class=\'marked_inline_tex\'>' + $2.replace(/\$/g, '') + '</span>'
-          }
-        })
-      } else {
-        // 如果是行间公式，则使用<div class='marked_tex'>包裹公式内容，消除$$定界符
-        // 如果不是LaTex公式，则直接返回原文本
-        text = (isTeXLine) ? '<div class=\'marked_tex\'>' + text.replace(/\$/g, '') + '</div>' : text
-      }
-      // 使用渲染器原有的`paragraph()`方法渲染整段文本
-      text = this.old_paragraph(text)
-      return text
+// === sidebar
+export const SIDEBAR = {
+    avatar: require('@/assets/images/avatar.jpeg'), // sidebar image
+    title: '种菜的小朋友', // title
+    subTitle: 'Carpe diem', // subtitle
+    // personal website
+    homepages: {
+    github: {
+        link: 'https://github.com/panyunyi97',
+        icon: <Icon type='github' theme='filled' className='homepage-icon' />
+    },
+    juejin: {
+        link: 'https://juejin.im/user/96412755827687',
+        icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
     }
-    // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
-
-    return marked(isGuardXss ? xss(plainText) : plainText, {
-      renderer: marked_render,
-      pedantic: false,
-      gfm: true,
-      tables: true,
-      breaks: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false,
-      xhtml: false,
-      highlight: function(code) {
-        /*eslint no-undef: "off"*/
-        return hljs.highlightAuto(code).value
-      }
-    })
+    },
+    //frindslink in sidebar
+    friendslink: {
+    lizi: {
+        link: 'http://blog.liziyang.co/',
+        img: 'http://blog.liziyang.co/images/pikachu.jpg',
+    },
+    wizchen: {
+        link: 'http://blog.wizchen.com',
+        img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
     }
+    }
+}
+
+// === discuss avatar
+export const DISCUSS_AVATAR = SIDEBAR.avatar // your default avatar in comment line
+/**
+ * github config
+ */
+export const GITHUB = {
+    enable: true, // github 第三方授权开关
+    client_id: '87a4f88b943adaafd44a', // Setting > Developer setting > OAuth applications => client_id
+    url: 'https://github.com/login/oauth/authorize' // github auth page
+}
+
+export const ABOUT = {
+    avatar: SIDEBAR.avatar,
+    describe: SIDEBAR.subTitle,
+    discuss: true, // open the comment function on 'about me' page 
+    renderMyInfo: <MyInfo /> // 我的介绍 自定义组件 => src/views/web/about/MyInfo.jsx
+}
+
+// 公告 announcement
+export const ANNOUNCEMENT = {
+    enable: true, // 是否开启
+    content: (
+    <>
+        个人笔记网站，请访问
+        <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href>
+    </>
+    )
+}
 ```
-  
-- 文章置顶
-  
-  置顶文章是一个必须的功能，当你有一些得意之作时，更希望它能有更高的优先级，能帮助到更多的人，所以增加了该功能
-  
-- 一键评论
-  
-  这是为了方便朋友们能够更快速的进行评论，因为让朋友们注册的话有持有密码和密码泄漏的风险，所以直接使用用户名和qq邮箱（方便拿到头像）进行快速评论即可，后台将自动注册登录该用户。
+### Personalized Information Configuration
 
- - github登录：
-   
-   之前的blog中的登录方式已经被取缔了，所以更新了新的登录方式：
-   
-   具体可见：[github oauth2 认证](https://docs.github.com/cn/free-pro-team@latest/developers/apps/authorizing-oauth-apps)
-   
-- 闲言碎语：
+Personal information is configured through ```src/view/web/about/index.jsx```
+```js
+import React from 'react'
 
-  该模块是模拟信息流模式留给博客所有者的独立空间，可以发布心情和感受，更好地完善博客的完整功能————记录美好生活。
- 
-  
-- 后台管理：
+// components
+import { Divider, Rate, Icon, Avatar } from 'antd'
+import Href from '@/components/Href'
+import SvgIcon from '@/components/SvgIcon'
+// rate is the star
+// label is your skills
+const skills = [
+  {
+    label: '具备扎实的Java功底，熟练了解各种特性',
+    rate: '5'
+  },
+  {
+    label: '具备扎实的Python功底，熟练了解各类特性',
+    rate: '5'
+  },
+  {
+    label: '具备扎实的 Javascript 基础，熟练使用 ES6+ 语法。',
+    rate: 4
+  },
+  {
+    label: '具备不那么扎实的 C++ 基础，没熟练了解各类特性',
+    rate: 3
+  },
+  {
+    label: 'Android 顶级玩家',
+    rate: 5
+  },
+  {
+    label: '熟悉 React 并理解其原理，熟悉 Vue 框架及其用法。',
+    rate: 5
+  },
+  {
+    label: '熟悉 Flask/Django 并理解其原理，熟悉各类用法。',
+    rate: 5
+  },
+  {
+    label: 'Spring 全家桶爱好者，后端中级开发者,netty/kafka/hadoop/Storm/Spark',
+    rate: '3'
+  },
+  {
+    label: '3D 轻量级玩家，openGL小菜,3D shape segmentation & 3D scene segmentation',
+    rate: '3'
+  },
+  {
+    label: '熟练使用 Webpack 打包工具，熟悉常用工程化和模块化方案。',
+    rate: 4
+  },
+  {
+    label: '熟悉 Koa、Mysql，针对需求可以做到简单的数据库设计、接口的开发与设计！',
+    rate: 3
+  },
+  {
+    label: '熟悉 HTTP 协议，缓存、性能优化、安全等，了解浏览器原理。',
+    rate: 4
+  },
+  {
+    label: '熟悉常用的算法与数据结构',
+    rate: 3
+  }
+]
 
-[![后台管理](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a68948e4b6d44a8bb5a05156b385ce6~tplv-k3u1fbpfcp-zoom-1.image)](https://imgchr.com/i/rAMKDP)
+const MyInfo = () => {
+  return (
+    <>
 
-### 个人信息的填充
+      <Divider orientation='center'>关于我</Divider>
 
-  把很多东西都做成了完全可配置的
-  例如： 友链、头像等等，如果你不喜欢折腾，可以即插即用，部署好mysql/npm/yarn 就可以一键使用了，未来也会提供一键安装的功能。
-  ```js
-    import React from 'react'
-    import { Icon } from 'antd'
-    import SvgIcon from '@/components/SvgIcon'
+      <ul className='about-list'>
+        <li>Name：潘云逸</li>
+        <li>Bachelor： 中央财经大学（CUFE）CS</li>
+        <li>Master： 南京大学（NJU）CS</li>
+        <li>
+          Contact me：
+          <Icon type='qq' /> 779087031
+          <Divider type='vertical' />
+          <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
+          <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
+        </li>
+        <li>Work Base：ShangHai</li>
+        <li>
+          friends link：
+          <Href href='http://blog.liziyang.co/'>栗子栗子</Href>
+          <Divider type='vertical' />
+        </li>
+        <li>
+          skills
+          <ul>
+            {skills.map((item, i) => (
+              <li key={i}>
+                {item.label}
+                <Rate defaultValue={item.rate} disabled />
+              </li>
+            ))}
+          </ul>
+        </li>
+        <li>
+          others
+          <ul>
+            <li>常用开发工具： idea、pycharm、vim、vscode、webstorm、git</li>
+            <li>熟悉的 UI 框架： antd、element-ui</li>
+            <li>具备良好的编码风格和习惯，团队规范意识，乐于分享</li>
+          </ul>
+        </li>
+        <li>
+          publication
+          <ul>
+            <li>ICPR 2020: Two Stage Scene Segmentation Base on Self-attention Mechanism</li>
+            <li> 安徽大学学报： 图核综述 </li>
+            <li> 专利： 一种基于机器学习的CME事件跟踪方法 </li>
+            <li> 译著： 计算机视觉基础 </li>
+          </ul>
+        </li>
+      </ul>
+    </>
+  )
+}
 
-    import Href from '@/components/Href'
-    import MyInfo from '@/views/web/about/MyInfo'
+export default MyInfo
+```
+### Background sensitive information configuration
 
-    // API_BASE_URL
-    export const API_BASE_URL = 'http://120.79.229.207:6060'
-    // export const API_BASE_URL = 'http://127.0.0.1:6060'
-    // project config
-    export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
 
-    // === sidebar
-    export const SIDEBAR = {
-      avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-      title: '种菜的小朋友', // 标题
-      subTitle: 'Carpe diem', // 子标题
-      // 个人主页
-      homepages: {
-        github: {
-          link: 'https://github.com/panyunyi97',
-          icon: <Icon type='github' theme='filled' className='homepage-icon' />
-        },
-        juejin: {
-          link: 'https://juejin.im/user/96412755827687',
-          icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
-        }
+Sensitive information in the background is configured through ``server\config\index.js``, including the startup port of the background, the configuration of the database, and the configuration of the email notification of comments.
+
+```js
+const devMode = process.env.NODE_ENV === 'development'
+const config = {
+  PORT: 6060, // start port
+  ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // your github name
+  GITHUB: {
+    client_id: '87a4f88b943adaafd44a',
+    client_secret: '9494809fc485d93084452fbf8b21ba2a829bfb82',
+    access_token_url: 'https://github.com/login/oauth/access_token',
+    fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
+    fetch_user: 'https://api.github.com/user' // fetch user url https://api.github.com/users/gershonv
+  },
+  EMAIL_NOTICE: {
+    // mail notification
+    // detail: https://nodemailer.com/
+    enable: true, // switcher
+    transporterConfig: {
+      host: 'smtp.qq.com',
+      port: 465,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: '779087031@qq.com', // generated ethereal user
+        pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 
+      }
+    },
+    subject: 'panyunyi的博客 - 您的评论获得新的回复！', // subject for the notification mail
+    // main content of the mail
+    text: '您的评论获得新的回复！',
+    WEB_HOST: 'http://www.panyunyi.cn' // email callback url
+  },
+  TOKEN: {
+    secret: 'root', // secret is very important!
+    expiresIn: '720h' // token exist time
+  },
+  DATABASE: {
+    database: 'test',
+    user: 'root',
+    password: '123456Root!',
+    options: {
+      host: 'localhost', //  host ip
+      dialect: 'mysql', // sql dilect
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
       },
-      friendslink: {
-        lizi: {
-          link: 'http://blog.liziyang.co/',
-          img: 'http://blog.liziyang.co/images/pikachu.jpg',
-        },
-        wizchen: {
-          link: 'http://blog.wizchen.com',
-          img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
-        }
-      }
+      define: {
+        timestamps: false, // timestamps is set to 'off' default
+        freezeTableName: true // table name not add s in default
+      },
+      timezone: '+08:00'
     }
+  }
+}
 
-    // === discuss avatar
-    export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
+// production env configuration
+if (!devMode) {
+  console.log('env production....')
 
-    /**
-     * github config
-     */
-    export const GITHUB = {
-      enable: true, // github 第三方授权开关
-      client_id: '87a4f88b943adaafd44a', // Setting > Developer setting > OAuth applications => client_id
-      url: 'https://github.com/login/oauth/authorize' // 跳转的登录的地址
-    }
+  // ==== configure database
+  config.DATABASE = {
+    ...config.DATABASE,
+    database: '', // database name
+    user: '', // user name
+    password: '' // password
+  }
 
-    export const ABOUT = {
-      avatar: SIDEBAR.avatar,
-      describe: SIDEBAR.subTitle,
-      discuss: true, // 关于页面是否开启讨论
-      renderMyInfo: <MyInfo /> // 我的介绍 自定义组件 => src/views/web/about/MyInfo.jsx
-    }
+  // configure github auth
+  config.GITHUB.client_id = ''
+  config.GITHUB.client_secret = ''
 
-    // 公告 announcement
-    export const ANNOUNCEMENT = {
-      enable: true, // 是否开启
-      content: (
-        <>
-          个人笔记网站，请访问
-          <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href>
-        </>
-      )
-    }
-  ```
- 
-### 后续功能补充（持续更新中）：
------ 2021.1.18-----
+  // ==== configure token secret key
+  config.TOKEN.secret = ''
 
-  最近偷得浮生半日闲，对一些已知的bug进行了修复，包括但不限于：
-  - 明文传输密码改为两次AES加密
-  - 评论文章时对qq邮箱进行了check
-  - 对IMTP授权码进行了AES加密防止被盗用
-  - 修复了 SimpleMDE 的CSS cdn被GFW和谐的问题，改为本地加载
-  - 增加了 闲言碎语后台编辑页面
-  
-应很多小伙伴的要求，开放了一个测试页面，可以供大家测试使用，地址为[测试地址](http://www.panyunyi.cn:81/)
+  // ==== configure mailbox
 
-具备管理员权限的用户名为： admin
+  // config.EMAIL_NOTICE.enable = true
+  config.EMAIL_NOTICE.transporterConfig.auth = {
+    user: '779087031@qq.com', // generated ethereal user
+    pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 
+  }
+  config.EMAIL_NOTICE.WEB_HOST = 'https://panyunyi.cn'
+}
 
-密码为：admin
+module.exports = config
+
+```
+
+## Maintainers
+
+[@panyunyi97](https://github.com/panyunyi97)。
+
+## Contributing
+
+Feel free to dive in! [open an issue](https://github.com/panyunyi97/react-blog/issues/new) or submit PRs.
 
 
->写在后面
->
->再次感谢alvin0216，我只是在前人的肩膀上摘苹果。
->
->大概的功能就是这些，已经完全能够cover日常的工作和分享需求，支持线上的markdown编辑和导入导出。
->
->希望大家都能早日拥有属于自己的博客！
+React-blog follows the  [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
 
 
+## License
 
+[MIT](LICENSE) © Richard Littauer
