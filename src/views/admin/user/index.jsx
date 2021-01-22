@@ -14,7 +14,6 @@ const typeMapList = [
 
 function AdminUser(props) {
   useBreadcrumb(['用户管理'])
-  const { getFieldDecorator } = props.form
   const [queryParams, setQueryParams] = useState({})
   const { tableProps, updateList, onSearch } = useAntdTable({
     requestUrl: '/user/list',
@@ -85,28 +84,22 @@ function AdminUser(props) {
     <>
       {/* 检索 */}
       <Form layout='inline' onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-        <Form.Item label='姓名'>
-          {getFieldDecorator('username')(
-            <Input placeholder='请输入姓名' allowClear />
-          )}
+        <Form.Item label='姓名' name='username'>
+          <Input placeholder='请输入姓名' allowClear />
         </Form.Item>
 
-        <Form.Item label='用户类型'>
-          {getFieldDecorator('type')(
-            <Select style={{ width: 200 }} allowClear>
-              {typeMapList.map(item => (
-                <Select.Option key={item.value} value={item.value}>
-                  {item.label}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
+        <Form.Item label='用户类型' name='type'>
+          <Select style={{ width: 200 }} allowClear>
+            {typeMapList.map(item => (
+              <Select.Option key={item.value} value={item.value}>
+                {item.label}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
-        <Form.Item label='创建日期'>
-          {getFieldDecorator('rangeDate')(
-            <DatePicker.RangePicker />
-          )}
+        <Form.Item label='创建日期' name='rangeDate'>
+          <DatePicker.RangePicker />
         </Form.Item>
 
         <Form.Item>
@@ -120,4 +113,4 @@ function AdminUser(props) {
   )
 }
 
-export default Form.create()(AdminUser)
+export default AdminUser

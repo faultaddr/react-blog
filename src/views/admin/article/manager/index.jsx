@@ -19,7 +19,6 @@ function ArticleManager(props) {
     tagList: state.article.tagList,
     categoryList: state.article.categoryList
   }))
-  const { getFieldDecorator } = props.form
   const [queryParams, setQueryParams] = useState({})
   const [batch, setBatch] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
@@ -158,43 +157,38 @@ function ArticleManager(props) {
     <div className='admin-article-manager'>
       {/* 检索 */}
       <Form layout='inline' onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-        <Form.Item label='关键词'>
-          {getFieldDecorator('keyword')(
-            <Input placeholder='请输入文章关键词' allowClear />
-          )}
+        <Form.Item label='关键词' name='keyword'>
+          <Input placeholder='请输入文章关键词' allowClear />
         </Form.Item>
-        <Form.Item label='标签'>
-          {getFieldDecorator('tag')(
-            <Select style={{ width: 200 }} allowClear>
-              {tagList.map(item => (
-                <Select.Option key={item.name} value={item.name}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label='分类'>
-          {getFieldDecorator('category')(
-            <Select style={{ width: 200 }} allowClear>
-              {categoryList.map(item => (
-                <Select.Option key={item.name} value={item.name}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label='私密性'>
-          {getFieldDecorator('type')(
-            <Select style={{ width: 200 }} allowClear>
-              <Select.Option key={'公开'} value={true}>
-                {'公开'}
+        <Form.Item label='标签' name='tag'>
+          <Select style={{ width: 200 }} allowClear>
+            {tagList.map(item => (
+              <Select.Option key={item.name} value={item.name}>
+                {item.name}
               </Select.Option>
-              <Select.Option key={'私密'} value={false}>
-                {'私密'}
+            ))}
+          </Select>
+          )}
+        </Form.Item>
+        <Form.Item label='分类' name='category'>
+          <Select style={{ width: 200 }} allowClear>
+            {categoryList.map(item => (
+              <Select.Option key={item.name} value={item.name}>
+                {item.name}
               </Select.Option>
-            </Select>
+            ))}
+          </Select>
+          )}
+        </Form.Item>
+        <Form.Item label='私密性' name='type'>
+          <Select style={{ width: 200 }} allowClear>
+            <Select.Option key={'公开'} value={true}>
+              {'公开'}
+            </Select.Option>
+            <Select.Option key={'私密'} value={false}>
+              {'私密'}
+            </Select.Option>
+          </Select>
           )}
         </Form.Item>
         <Form.Item>
@@ -234,4 +228,4 @@ function ArticleManager(props) {
   )
 }
 
-export default Form.create()(ArticleManager)
+export default ArticleManager
