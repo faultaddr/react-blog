@@ -6,8 +6,8 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 
 // API_BASE_URL
-// export const SERVER_URL = 'http://120.79.229.207'
-export const SERVER_URL = 'http://127.0.0.1'
+export const SERVER_URL = 'http://120.79.229.207'
+// export const SERVER_URL = 'http://127.0.0.1'
 export const API_BASE_URL = SERVER_URL + ':6060'
 // export const API_BASE_URL = 'http://127.0.0.1:6060'
 // project config

@@ -13,7 +13,7 @@ const io = require('socket.io')(server, options)
 var osUtils = require('os-utils')
 var interval = -1
 var currCPU = 0
-server.listen(1234 ,'127.0.0.1')
+server.listen(1234 ,'localhost')
 
 
 function updateCPU() {
@@ -32,11 +32,11 @@ class MonitorController {
         //连接事件
         socket.emit('connected', '连接成功')
         console.log('连接成功')
-      
+
         socket.on('disconnect', () => {
           console.log('disconnect')
         })
-      
+
         socket.on('endConnection', function (data) {
           console.log('endConnection')
           console.log(data)

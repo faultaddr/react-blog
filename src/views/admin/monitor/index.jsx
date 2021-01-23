@@ -4,7 +4,7 @@ import { SERVER_URL, API_BASE_URL } from '@/config'
 import { Gauge, Area } from '@ant-design/charts'
 import { Space } from 'antd'
 import DemoLiquid from './DemoLiquid'
-const ws = io(SERVER_URL + ':1234')
+const ws = io('localhost:1234')
 function Monitor(props) {
   var [percentList, setPercentList] = useState([])
   var [percent, setPercent] = useState(0.2)
@@ -104,6 +104,7 @@ function Monitor(props) {
   const asyncFetch = () => {
     fetch(API_BASE_URL + '/monitor')
       .then(response => {
+        console.log(response)
         ws.on('systemUpdate', message => {
           // get the cpu message to plot the graph
           percentList = [...percentList, { usage: parseFloat(message.cpuUsage), date: new Date().toLocaleString() }]
