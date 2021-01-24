@@ -13,7 +13,7 @@ const io = require('socket.io')(server, options)
 var osUtils = require('os-utils')
 var interval = -1
 var currCPU = 0
-server.listen(1234 ,'localhost')
+server.listen(1234)
 
 
 function updateCPU() {

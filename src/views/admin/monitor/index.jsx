@@ -4,7 +4,7 @@ import { SERVER_URL, API_BASE_URL } from '@/config'
 import { Gauge, Area } from '@ant-design/charts'
 import axios from '@/utils/axios'
 import DemoLiquid from './DemoLiquid'
-const ws = io('localhost:1234')
+const ws = io.connect(SERVER_URL + ':1234')
 function Monitor(props) {
   var [percentList, setPercentList] = useState([])
   var [percent, setPercent] = useState(0.2)
