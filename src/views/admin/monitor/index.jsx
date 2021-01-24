@@ -2,7 +2,7 @@ import React, { useState, useEffect, Component } from 'react'
 import { io } from 'socket.io-client'
 import { SERVER_URL, API_BASE_URL } from '@/config'
 import { Gauge, Area } from '@ant-design/charts'
-import { Space } from 'antd'
+import axios from '@/utils/axios'
 import DemoLiquid from './DemoLiquid'
 const ws = io('localhost:1234')
 function Monitor(props) {
@@ -102,25 +102,17 @@ function Monitor(props) {
   //   MemUsage: (((totalMem - freeMem) / totalMem) * 100.0).toFixed(2) + '%',
   // 對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
   const asyncFetch = () => {
-    fetch(API_BASE_URL + '/monitor')
-      .then(response => {
-        console.log(response)
-        ws.on('systemUpdate', message => {
-          // get the cpu message to plot the graph
-          percentList = [...percentList, { usage: parseFloat(message.cpuUsage), date: new Date().toLocaleString() }]
-          memPercentList = [
-            ...memPercentList,
-            { usage: parseFloat(message.MemUsage), date: new Date().toLocaleString() },
-          ]
-          setPercentList(percentList)
-          setMemPercentList(memPercentList)
-          setPercent(parseFloat(message.cpuUsage))
-          setMemPercent(parseFloat(message.MemUsage))
-        })
-      })
-      .catch(error => {
-        console.log('fetch data failed', error)
-      })
+    axios.get('/monitor').then(res => {
+    })
+    ws.on('systemUpdate', message => {
+      // get the cpu message to plot the graph
+      percentList = [...percentList, { usage: parseFloat(message.cpuUsage), date: new Date().toLocaleString() }]
+      memPercentList = [...memPercentList, { usage: parseFloat(message.MemUsage), date: new Date().toLocaleString() }]
+      setPercentList(percentList)
+      setMemPercentList(memPercentList)
+      setPercent(parseFloat(message.cpuUsage))
+      setMemPercent(parseFloat(message.MemUsage))
+    })
   }
 
   return (
