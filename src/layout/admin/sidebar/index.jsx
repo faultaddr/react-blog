@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import { Menu, Icon } from 'antd'
+import { Menu } from 'antd'
+import { Icon } from '@ant-design/compatible'
 import menu from './menu'
 const SubMenu = Menu.SubMenu
 

@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom'
 
 import { loginout } from '@/redux/user/actions'
 
-import { Button, Icon, Dropdown, Menu, Avatar } from 'antd'
+import { Button, Dropdown, Menu, Avatar } from 'antd'
 import logo from '@/assets/images/avatar.jpeg'
+import { DownOutlined } from '@ant-design/icons'
 
 function AdminHeader(props) {
   const dispatch = useDispatch()
@@ -39,7 +40,7 @@ function AdminHeader(props) {
         <span className='header-title'>Blog Manager</span>
         <Dropdown overlay={menu} className='header-dropdown'>
           <a className='ant-dropdown-link'>
-            {userInfo.username} <Icon type='down' />
+            {userInfo.username} <DownOutlined />
           </a>
         </Dropdown>
       </div>

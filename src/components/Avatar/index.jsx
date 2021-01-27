@@ -6,8 +6,9 @@ import { DISCUSS_AVATAR } from '@/config'
 
 // components
 import Href from '@/components/Href'
-import { Avatar, Popover, Icon, Typography } from 'antd'
+import { Avatar, Popover, Typography } from 'antd'
 import SvgIcon from '@/components/SvgIcon'
+import { GithubOutlined } from '@ant-design/icons'
 
 const { Text, Title } = Typography
 
@@ -31,7 +32,7 @@ function AppAvatar(props) {
         title={
           github.bio ? (
             <>
-              <Icon type='github' className='mr10' />
+              <GithubOutlined className='mr10'></GithubOutlined>
               {github.bio}
             </>
           ) : null

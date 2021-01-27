@@ -16,7 +16,7 @@ import SvgIcon from '@/components/SvgIcon'
 import { Comment, Avatar, Form, Button, Divider, Input, Icon, Menu, Dropdown, message, Modal } from 'antd'
 import List from './list' // 评论列表
 import AppAvatar from '@/components/Avatar'
-
+import { DownOutlined, InfoCircleOutlined, GithubOutlined } from '@ant-design/icons'
 import useBus from '@/hooks/useBus'
 
 const { TextArea } = Input
@@ -39,7 +39,7 @@ const Editor = ({ username, onChange, userNameChange, emailChange, onSubmit, sub
     </Form.Item>
     <Form.Item>
       <div className='controls'>
-        <Icon type='info-circle' className='controls-tip-icon' />
+        <InfoCircleOutlined className='controls-tip-icon' />
         <span className='controls-tip'>支持 Markdown 语法</span>
         <Button className='disscus-btn' htmlType='submit' loading={submitting} onClick={onSubmit} type='primary'>
           {articleId !== -1 ? '添加评论' : '留言'}
@@ -167,7 +167,7 @@ function Discuss(props) {
         <span className='discuss-user'>
           <Dropdown overlay={renderDropdownMenu()} trigger={['click', 'hover']}>
             <span>
-              {username || '未登录用户'} <Icon type='down' />
+              {username || '未登录用户'} <DownOutlined />
             </span>
           </Dropdown>
         </span>
@@ -179,12 +179,12 @@ function Discuss(props) {
           username ? (userInfo.email ? (
             <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像'/>
           ) : (
-            <Icon type='github' theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />)
+            <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />)
           ) : (
             userName ? (
               <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像'/>
             ) : (
-              <Icon type='github' theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
+              <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
             )
           )
         }

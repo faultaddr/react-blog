@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Input, Icon, Row } from 'antd'
+import { Input, Row } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
 import useMount from '@/hooks/useMount'
 import { decodeQuery } from '@/utils'
+import { SearchOutlined } from '@ant-design/icons'
 
 function SearchButton(props) {
   const history = useHistory()
@@ -28,7 +29,7 @@ function SearchButton(props) {
 
   return (
     <div id='search-box'>
-      <Icon type='search' className='search-icon' onClick={e => props.history.push(`/?page=1&keyword=${keyword}`)} />
+      <SearchOutlined className='search-icon' onClick={e => props.history.push(`/?page=1&keyword=${keyword}`)} />
       <Input
         type='text'
         value={keyword}

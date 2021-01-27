@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Icon, Input, Button, Modal } from 'antd'
+import React, { useState, useEffect, useRef } from 'react'
+import { Form, Input, Button, Modal } from 'antd'
+import { GithubOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 
 import { GITHUB } from '@/config'
@@ -33,18 +34,17 @@ function SignModal(props) {
   const location = useLocation() // location
   const [visible, setVisible] = useState(false)
   const [type, setType] = useState('login')
-
+  const [form] = Form.useForm()
   useListener('openSignModal', type => {
-    props.form.resetFields()
+    form.resetFields()
     setType(type)
     setVisible(true)
   })
 
   function handleSubmit(e) {
     e.preventDefault()
-    props.form.validateFieldsAndScroll((errors, values) => {
-      if (errors) return
-      const action = type === 'login' ? login : register
+    const action = type === 'login' ? login : register
+    form.validateFields().then(values => {
       dispatch(action(values)).then(() => {
         setVisible(false) // type =  login | register
       })
@@ -59,7 +59,6 @@ function SignModal(props) {
 
   // 确认密码
   function compareToFirstPassword(rule, value, callback) {
-    const form = props.form
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!')
     } else {
@@ -74,7 +73,7 @@ function SignModal(props) {
       visible={visible}
       onCancel={e => setVisible(false)}
       footer={null}>
-      <Form layout='horizontal'>
+      <Form layout='horizontal' form={form}>
         {type === 'login' ? (
           <>
             <FormItem label='用户名' name='account'
@@ -115,7 +114,7 @@ function SignModal(props) {
         {type}
       </Button>
       {GITHUB.enable && (
-        <Button block icon='github' onClick={githubLogin} style={{ marginTop: 10 }}>
+        <Button block icon={<GithubOutlined />} onClick={githubLogin} style={{ marginTop: 10 }}>
           github login
         </Button>
       )}

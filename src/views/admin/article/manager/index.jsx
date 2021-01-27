@@ -168,7 +168,6 @@ function ArticleManager(props) {
               </Select.Option>
             ))}
           </Select>
-          )}
         </Form.Item>
         <Form.Item label='分类' name='category'>
           <Select style={{ width: 200 }} allowClear>
@@ -178,7 +177,6 @@ function ArticleManager(props) {
               </Select.Option>
             ))}
           </Select>
-          )}
         </Form.Item>
         <Form.Item label='私密性' name='type'>
           <Select style={{ width: 200 }} allowClear>
@@ -189,7 +187,6 @@ function ArticleManager(props) {
               {'私密'}
             </Select.Option>
           </Select>
-          )}
         </Form.Item>
         <Form.Item>
           <Button type='primary' htmlType='submit' style={{ marginRight: 8 }}>检索</Button>

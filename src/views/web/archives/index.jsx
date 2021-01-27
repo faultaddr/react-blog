@@ -13,6 +13,7 @@ import Pagination from '@/components/Pagination'
 
 // hooks
 import useFetchList from '@/hooks/useFetchList'
+import { ClockCircleOutlined } from '@ant-design/icons'
 
 function Archives(props) {
   const { dataList, loading, pagination } = useFetchList({
@@ -40,7 +41,7 @@ function Archives(props) {
                 </Timeline.Item>
               )}
 
-              <Timeline.Item dot={<Icon type='clock-circle-o' style={{ fontSize: '16px' }} />} color='red'>
+              <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />} color='red'>
                 <div className='year'>
                   {d[0]['createdAt'].slice(0, 4)}
                   ...

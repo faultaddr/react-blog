@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 // components
 import { Link } from 'react-router-dom'
 import Href from '@/components/Href'
-import { Icon, Divider, Tag } from 'antd'
+import { Divider, Tag } from 'antd'
 
 import { Alert } from 'antd'
 import { ANNOUNCEMENT } from '@/config'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Modal, Upload, Icon, notification, Tag, message, Table } from 'antd'
+import { Modal, Upload, notification, Tag, message, Table } from 'antd'
 
 import { API_BASE_URL } from '@/config'
 import { getToken, debounce } from '@/utils'
@@ -9,6 +9,7 @@ import axios from '@/utils/axios'
 // hooks
 import { useListener } from '@/hooks/useBus'
 import useBoolean from '@/hooks/useBoolean'
+import { InboxOutlined } from '@ant-design/icons'
 
 function UploadModal(props) {
   const dispatch = useDispatch() // dispatch hooks
@@ -120,7 +121,7 @@ function UploadModal(props) {
         headers={{ Authorization: getToken() }}
         accept='text/markdown'>
         <p className='ant-upload-drag-icon'>
-          <Icon type='inbox' />
+          <InboxOutlined />
         </p>
         <p className='ant-upload-text'>Click or drag file to this area to upload</p>
         <p className='ant-upload-hint'>

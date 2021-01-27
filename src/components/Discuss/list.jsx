@@ -5,7 +5,8 @@ import axios from '@/utils/axios'
 import { translateMarkdown2html } from '@/utils'
 import dayjs from '@/utils/dayjs'
 import AppAvatar from '@/components/Avatar'
-import { Comment, Button, Tooltip, Input, Icon, Popconfirm, message } from 'antd'
+import { Comment, Button, Tooltip, Input, Popconfirm, message } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
 
 const { TextArea } = Input
 
@@ -72,7 +73,7 @@ function CommentItem(props) {
         <>
           {userInfo.role === 1 && (
             <Popconfirm title={'是否删除该留言？'} cancelText='取消' okText='确认' onConfirm={onDelete}>
-              <Icon type='delete' className='icon-delete' />
+              <DeleteOutlined className='icon-delete' />
             </Popconfirm>
           )}
         </>

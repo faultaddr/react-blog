@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import { Spin, Icon } from 'antd'
-
-const antIcon = <Icon type='loading' style={{ fontSize: 24 }} spin />
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
 /**
  * 使用 webpack 的 import 方法实现动态加载组件！dynamic import

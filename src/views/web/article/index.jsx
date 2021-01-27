@@ -13,7 +13,7 @@ import ArticleTag from '@/components/ArticleTag'
 import SvgIcon from '@/components/SvgIcon'
 import Navigation from './Navigation'
 import Discuss from '@/components/Discuss'
-
+import {MenuOutlined} from '@ant-design/icons'
 function Article(props) {
   const [loading, withLoading] = useAjaxLoading()
 
@@ -80,7 +80,7 @@ function Article(props) {
         {isFoldNavigation ? (
           <>
             <div className='drawer-btn' onClick={e => setDrawerVisible(true)}>
-              <Icon type='menu-o' className='nav-phone-icon' />
+              <MenuOutlined className='nav-phone-icon' />
             </div>
             <Drawer
               title={title}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Icon, Dropdown, Menu, Input, message } from 'antd'
+import { Dropdown, Menu, Input, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -9,6 +9,8 @@ import navList from '../right/navList'
 
 // icon
 import SvgIcon from '@/components/SvgIcon'
+import { MenuOutlined, SearchOutlined } from '@ant-design/icons'
+import {Icon} from '@ant-design/compatible'
 
 const HeaderLeft = props => {
   const [keyword, setKeyword] = useState('')
@@ -43,7 +45,7 @@ const HeaderLeft = props => {
         </Menu.Item>
       ))}
       <Menu.Item key={'search'}>
-        <Icon type='search' />
+        <SearchOutlined />
         <Input
           className='search-input'
           onClick={clickSearch}
@@ -65,7 +67,7 @@ const HeaderLeft = props => {
         trigger={['click']}
         overlay={menu}
         getPopupContainer={() => document.querySelector('.app-header .header-left')}>
-        <Icon type='menu-o' className='header-dropdown-icon' />
+        <MenuOutlined className='header-dropdown-icon' />
       </Dropdown>
     </div>
   )

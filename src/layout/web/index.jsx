@@ -1,6 +1,6 @@
 import React from 'react'
 import '@/styles/app.less'
-import { Layout, Icon, Row, Col, BackTop } from 'antd'
+import { Layout, Row, Col, BackTop } from 'antd'
 
 import Header from './header'
 import SideBar from './sidebar'

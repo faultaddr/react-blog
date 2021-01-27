@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { Input, Tooltip, Icon, Tag } from 'antd'
+import { Input, Tooltip, Tag } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 const { CheckableTag } = Tag
 
@@ -76,7 +77,7 @@ function AppTag(props) {
 
       {!inputVisible && (
         <Tag onClick={showInput} style={{ background: '#fff', borderStyle: 'dashed' }}>
-          <Icon type='plus' /> New Tag
+          <PlusOutlined /> New Tag
         </Tag>
       )}
     </>
