@@ -3,7 +3,7 @@ import Layout from '@/layout/web'
 import lazy from '@/components/Lazy'
 
 export default {
-  path: '/',
+  path: '/home',
   name: 'home',
   component: Layout,
   childRoutes: [
@@ -16,7 +16,6 @@ export default {
     { path: '/github', component: GITHUB.enable && lazy(() => import('@/components/GithubLogining')) },
     { path: '/about', component: lazy(() => import('@/views/web/about')) },
     { path: '/fragment', component: lazy(() => import('@/views/web/fragments')) },
-    { path: '*', component: lazy(() => import('@/components/404')) }
-
+    { path: '*', component: lazy(() => import('@/components/404')) },
   ],
 }
