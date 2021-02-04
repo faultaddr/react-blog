@@ -3,11 +3,11 @@ import Layout from '@/layout/web'
 import lazy from '@/components/Lazy'
 
 export default {
-  path: '/home',
+  path: '/',
   name: 'home',
   component: Layout,
   childRoutes: [
-    { path: '', component: lazy(() => import('@/views/web/home')) },
+    { path: '/home', component: lazy(() => import('@/views/web/home')) },
     { path: 'article/:id', component: lazy(() => import('@/views/web/article')) },
     { path: 'archives', component: lazy(() => import('@/views/web/archives')) },
     { path: 'categories', component: lazy(() => import('@/views/web/categories')) },

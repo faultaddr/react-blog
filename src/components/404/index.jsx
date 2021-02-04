@@ -12,7 +12,7 @@ function PageNotFound(props) {
         <Button
           type='primary'
           onClick={() => {
-            props.history.push('/')
+            props.history.push('/home')
           }}>
           Back Home
         </Button>

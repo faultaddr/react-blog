@@ -2,7 +2,7 @@ export default [
   {
     icon: 'home',
     title: '首页',
-    link: '/'
+    link: '/home'
   },
   {
     icon: 'edit',
