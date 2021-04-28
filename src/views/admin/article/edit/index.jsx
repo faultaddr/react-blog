@@ -4,6 +4,7 @@ import './index.less'
 
 import axios from '@/utils/axios'
 import { Button, Input, Modal, BackTop, message, Switch } from 'antd'
+import { CheckCircleFilled } from '@ant-design/icons'
 import MdEditor from '@/components/MdEditor'
 import List from './Tag'
 import useBreadcrumb from '@/hooks/useBreadcrumb'
@@ -151,7 +152,7 @@ function Edit(props) {
         disabled={!title}
         className='action-icon'
         title={editId ? '更新' : '新增'}
-        icon={editId ? 'file-sync' : 'plus'}
+        icon={editId ? <CheckCircleFilled /> : <CheckCircleFilled />}
         onClick={() => {
           editId ? update() : add()
         }}

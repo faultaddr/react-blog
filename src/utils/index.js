@@ -40,8 +40,9 @@ import { clear, get } from '@/utils/storage'
 // }
 
 // 转化md 为html
-export const translateMarkdown2html = (plainText, isGuardXss = false) => {
+export const translateMarkdown2html = plainText => {
   const marked_render = new marked.Renderer()
+  const isGuardXss = false
   marked_render.old_paragraph = marked_render.paragraph
   // 重写`paragraph()`方法
   marked_render.paragraph = function (text) {
@@ -70,7 +71,7 @@ export const translateMarkdown2html = (plainText, isGuardXss = false) => {
     return text
   }
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
-
+  console.log(plainText)
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: marked_render,
     pedantic: false,
