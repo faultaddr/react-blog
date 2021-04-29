@@ -17,7 +17,7 @@ function AdminHeader(props) {
   const menu = (
     <Menu className='menu'>
       <Menu.Item>
-        <span onClick={e => history.push('/')}>
+        <span onClick={e => history.push('/home')}>
           返回主页
         </span>
       </Menu.Item>
