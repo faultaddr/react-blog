@@ -29,7 +29,7 @@ function SearchButton(props) {
 
   return (
     <div id='search-box'>
-      <SearchOutlined className='search-icon' onClick={e => props.history.push(`/?page=1&keyword=${keyword}`)} />
+      <SearchOutlined className='search-icon' onClick={e => props.history.push(`/home?page=1&keyword=${keyword}`)} />
       <Input
         type='text'
         value={keyword}
