@@ -26,7 +26,7 @@ const HeaderLeft = props => {
   }
 
   function onSubmit() {
-    history.push(`/?page=1&keyword=${keyword}`)
+    history.push(`/home?page=1&keyword=${keyword}`)
     setKeyword('')
   }
 

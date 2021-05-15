@@ -1,3 +1,14 @@
 {
-  "editor.formatOnSave": false // 每次保存的时候自动格式化
+  "editor.formatOnSave": false,
+  "files.associations": {
+    "deque": "cpp",
+    "list": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp",
+    "initializer_list": "cpp",
+    "xhash": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp",
+    "random": "cpp"
+  } // 每次保存的时候自动格式化
 }

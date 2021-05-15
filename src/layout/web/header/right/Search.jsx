@@ -16,7 +16,7 @@ function SearchButton(props) {
   })
 
   const handleSubmit = () => {
-    if (keyword) history.push(`/?page=1&keyword=${keyword}`)
+    if (keyword) history.push(`/home?page=1&keyword=${keyword}`)
   }
 
   const handleChange = e => {

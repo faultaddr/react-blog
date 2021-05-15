@@ -71,7 +71,6 @@ export const translateMarkdown2html = plainText => {
     return text
   }
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
-  console.log(plainText)
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: marked_render,
     pedantic: false,
