@@ -192,7 +192,7 @@ module.exports = function(webpackEnv) {
       jsonpFunction: `webpackJsonp${appPackageJson.name}`
     },
     externals: {
-      'highlight.js': 'hljs'
+      'highlight.js': 'hljs',
     },
     optimization: {
       minimize: isEnvProduction,

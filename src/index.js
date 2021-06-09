@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'React-dom'
 import App from './App'
 import { Provider as BusProvider } from '@/hooks/useBus'
-
 // redux
 import { Provider } from 'react-redux'
 import store from '@/redux'
