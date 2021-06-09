@@ -267,13 +267,14 @@ module.exports = function(webpackEnv) {
         name: true,
         maxAsyncRequests: 50,
         maxInitialRequests: 50,
-        maxSize: 1000000,
+        maxSize: 2000000,
+        minSize: 200000,
         cacheGroups: {
           commons: {
             chunks: "initial",
             minChunks: 2,
-            maxInitialRequests: 5, // The default limit is too small to showcase the effect
-            minSize: 0 // This is example is too small to create commons chunks
+            maxInitialRequests: 20, // The default limit is too small to showcase the effect
+            minSize: 200000 // This is example is too small to create commons chunks
           },
           'react-vendor': {
             test: /[\\/]node_modules[\\/](react|react-dom|redux|react-router-dom)[\\/]/,
