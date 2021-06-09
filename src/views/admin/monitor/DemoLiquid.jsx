@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import { Gauge, Liquid } from '@ant-design/charts'
+const { Liquid } = window.charts
 export default class DemoLiquid extends Component {
   constructor(props) {
     super(props)

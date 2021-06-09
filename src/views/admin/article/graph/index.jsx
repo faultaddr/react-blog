@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Line } from '@ant-design/charts'
 import { API_BASE_URL } from '@/config'
+const { Line } = window.charts
 const DemoLine = () => {
   const [data, setData] = useState([])
   useEffect(() => {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, Component } from 'react'
 import { io } from 'socket.io-client'
 import { SERVER_URL, API_BASE_URL } from '@/config'
-import { Gauge, Area } from '@ant-design/charts'
+// import { Gauge, Area } from '@ant-design/charts'
+
 import axios from '@/utils/axios'
 import DemoLiquid from './DemoLiquid'
 const ws = io.connect(SERVER_URL + ':1234')
+const { Gauge, Area } = window.charts
 function Monitor(props) {
   var [percentList, setPercentList] = useState([])
   var [percent, setPercent] = useState(0.2)
