@@ -86,6 +86,7 @@ echo -e "Node"${GREEN_COLOR}${v}${RES}"安装完成"
 echo -e "\n"
 
 # install mysql for database usage
+yum -y install wget
 
 echo -e '\033[1;32m 安装MySQL \033[0m'
 echo -e '\033[1;32m 开始安装mysql最新稳定版5.7（实际上为社区版本)\033[0m'
