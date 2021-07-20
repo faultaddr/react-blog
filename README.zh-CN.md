@@ -70,7 +70,7 @@ $ yarn build
 $ nohup serve -s build -l 80 &
 $
 $ cd server
-$ forever run app.js
+$ forever start app.js
 ```
 
 或者进行开发环境部署
@@ -80,7 +80,7 @@ $ cd src
 $ nohup yarn dev
 $
 $ cd server
-$ forever run app.js
+$ forever start app.js
 ```
 
 
