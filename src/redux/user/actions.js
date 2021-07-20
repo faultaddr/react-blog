@@ -3,10 +3,9 @@ import axios from '@/utils/axios'
 import { message } from 'antd'
 import * as PSW from '@/utils/password'
 export const login = params => {
-  console.log(params.password)
-  // if (params.password !== undefined) {
-  //   params.password = PSW.default.encrypt(params.password)
-  // }
+  if (params.password !== undefined) {
+    params.password = PSW.default.encrypt(params.password)
+  }
   return dispatch =>
     axios.post('/login', params).then(res => {
       dispatch({
