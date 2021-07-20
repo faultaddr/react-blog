@@ -58,10 +58,24 @@ if (!devMode) {
 
   // ==== 配置数据库
   config.DATABASE = {
-    ...config.DATABASE,
-    database: '', // 数据库名
-    user: '', // 账号
-    password: '' // 密码
+    database: 'test',
+    user: 'root',
+    password: '123456Root!',
+    options: {
+      host: 'localhost', // 连接的 host 地址
+      dialect: 'mysql', // 连接到 mysql
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      },
+      define: {
+        timestamps: false, // 默认不加时间戳
+        freezeTableName: true // 表名默认不加 s
+      },
+      timezone: '+08:00'
+    }
   }
 
   // 配置 github 授权
@@ -69,7 +83,10 @@ if (!devMode) {
   config.GITHUB.client_secret = ''
 
   // ==== 配置 token 密钥
-  config.TOKEN.secret = ''
+  config.TOKEN = {
+    secret: 'root', // secret is very important!
+    expiresIn: '720h' // token 有效期
+  }
 
   // ==== 配置邮箱
 
