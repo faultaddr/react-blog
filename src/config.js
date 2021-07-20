@@ -6,7 +6,7 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 
 // API_BASE_URL
-export const SERVER_URL = 'http://139.198.160.87'
+export const SERVER_URL = 'http://www.panyunyi.cn'
 // export const SERVER_URL = 'http://127.0.0.1'
 export const API_BASE_URL = SERVER_URL + ':6060'
 // export const API_BASE_URL = 'http://127.0.0.1:6060'
