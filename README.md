@@ -71,7 +71,7 @@ $ yarn build
 $ nohup serve -s build -l 80 &
 $
 $ cd server
-$ forever run app.js
+$ forever start app.js
 ```
 
 Or for development environment deployment
@@ -81,7 +81,7 @@ $ cd src
 $ nohup yarn dev
 $
 $ cd server
-$ forever run app.js
+$ forever start app.js
 ```
 
 
