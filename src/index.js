@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'React-dom'
+import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider as BusProvider } from '@/hooks/useBus'
 // redux
