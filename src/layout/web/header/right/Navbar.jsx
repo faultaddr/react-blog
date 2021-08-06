@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Link, useLocation } from 'react-router-dom'
-import { Menu } from 'antd'
-import { Icon } from '@ant-design/compatible'
+import { Menu, Icon } from 'antd'
 
 import navList from './navList'
 

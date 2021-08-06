@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from '@ant-design/compatible'
+import {Icon} from 'antd'
 import SvgIcon from '@/components/SvgIcon'
 
 import Href from '@/components/Href'

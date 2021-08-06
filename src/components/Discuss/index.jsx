@@ -12,8 +12,7 @@ import { loginout } from '@/redux/user/actions'
 import useAjaxLoading from '@/hooks/useAjaxLoading'
 import { save, get, remove } from '@/utils/storage'
 // components
-import SvgIcon from '@/components/SvgIcon'
-import { Comment, Avatar, Form, Button, Divider, Input, Icon, Menu, Dropdown, message, Modal } from 'antd'
+import { Comment, Avatar, Button, Divider, Input, Menu, Dropdown, message, Modal, Form } from 'antd'
 import List from './list' // 评论列表
 import AppAvatar from '@/components/Avatar'
 import { DownOutlined, InfoCircleOutlined, GithubOutlined } from '@ant-design/icons'

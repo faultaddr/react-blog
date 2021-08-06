@@ -1,7 +1,7 @@
 import React from 'react'
 
 // components
-import { Divider, Rate, Icon, Avatar } from 'antd'
+import { Divider, Rate, Avatar } from 'antd'
 import Href from '@/components/Href'
 import SvgIcon from '@/components/SvgIcon'
 import { QqOutlined } from '@ant-design/icons'

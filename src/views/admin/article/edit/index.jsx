@@ -3,7 +3,7 @@ import { connect, useSelector } from 'react-redux'
 import './index.less'
 
 import axios from '@/utils/axios'
-import { Button, Input, Modal, BackTop, message, Switch } from 'antd'
+import { Button, Input, Modal, BackTop, message, Switch, Icon } from 'antd'
 import { CheckCircleFilled } from '@ant-design/icons'
 import MdEditor from '@/components/MdEditor'
 import List from './Tag'
@@ -152,7 +152,7 @@ function Edit(props) {
         disabled={!title}
         className='action-icon'
         title={editId ? '更新' : '新增'}
-        icon={editId ? <CheckCircleFilled /> : <CheckCircleFilled />}
+        icon={<Icon type={editId ? <CheckCircleFilled /> : <CheckCircleFilled />} />}
         onClick={() => {
           editId ? update() : add()
         }}

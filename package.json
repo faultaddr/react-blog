@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.1.10",
-    "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.4.0",
     "@babel/core": "7.5.5",
     "@matejmazur/react-mathjax": "^0.1.10",

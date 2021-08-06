@@ -1,4 +1,4 @@
-import { Button, Input, Modal, BackTop, message, Switch } from 'antd'
+import { Button, Input, Modal, BackTop, message, Switch, Icon } from 'antd'
 import MdEditor from '@/components/MdEditor'
 import React, { Component, useState, useEffect } from 'react'
 import axios from '@/utils/axios'
@@ -25,7 +25,7 @@ function FragmentEdit(props) {
         size='large'
         className='action-icon'
         title={'发布'}
-        icon={'plus'}
+        icon={<Icon type={'plus'} />}
         onClick={() => {
           add()
         }}

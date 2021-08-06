@@ -8,7 +8,7 @@ import { translateMarkdown, translateMarkdown2html, calcCommentsCount } from '@/
 import useAjaxLoading from '@/hooks/useAjaxLoading'
 
 // components
-import { Drawer, Icon, Divider, Spin } from 'antd'
+import { Drawer, Divider, Spin } from 'antd'
 import ArticleTag from '@/components/ArticleTag'
 import SvgIcon from '@/components/SvgIcon'
 import Navigation from './Navigation'

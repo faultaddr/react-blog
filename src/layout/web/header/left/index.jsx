@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dropdown, Menu, Input, message } from 'antd'
+import { Dropdown, Menu, Input, message, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -10,7 +10,6 @@ import navList from '../right/navList'
 // icon
 import SvgIcon from '@/components/SvgIcon'
 import { MenuOutlined, SearchOutlined } from '@ant-design/icons'
-import {Icon} from '@ant-design/compatible'
 
 const HeaderLeft = props => {
   const [keyword, setKeyword] = useState('')
