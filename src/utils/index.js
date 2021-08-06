@@ -58,13 +58,13 @@ export const translateMarkdown2html = plainText => {
         if ($2.indexOf('<code>') >= 0 || $2.indexOf('</code>') >= 0) {
           return $2
         } else {
-          return '<span class=\'marked_inline_tex\'>' + $2.replace(/\$/g, '') + '</span>'
+          return "<span class='marked_inline_tex'>" + $2.replace(/\$/g, '') + '</span>'
         }
       })
     } else {
       // 如果是行间公式，则使用<div class='marked_tex'>包裹公式内容，消除$$定界符
       // 如果不是LaTex公式，则直接返回原文本
-      text = (isTeXLine) ? '<div class=\'marked_tex\'>' + text.replace(/\$/g, '') + '</div>' : text
+      text = isTeXLine ? "<div class='marked_tex'>" + text.replace(/\$/g, '') + '</div>' : text
     }
     // 使用渲染器原有的`paragraph()`方法渲染整段文本
     text = this.old_paragraph(text)
@@ -84,7 +84,7 @@ export const translateMarkdown2html = plainText => {
     highlight: function (code) {
       /*eslint no-undef: "off"*/
       return hljs.highlightAuto(code).value
-    }
+    },
   })
 }
 
@@ -124,7 +124,8 @@ export const groupBy = (arr, f) => {
     groups[group] = groups[group] || []
     groups[group].push(item)
   })
-  return Object.keys(groups).map(group => groups[group])
+  var res = Object.keys(groups).sort().reverse()
+  return Object.keys(groups).map((group, i) => groups[res[i]])
 }
 
 /**
@@ -152,9 +153,7 @@ export function getToken() {
  * @param {Number} len - 长度
  */
 export function RandomId(len) {
-  return Math.random()
-    .toString(36)
-    .substr(3, len)
+  return Math.random().toString(36).substr(3, len)
 }
 
 /**
@@ -190,11 +189,12 @@ export function encryption(data) {
   strs = strs.join('&') // 数组变字符串
   const endData = strs + '&sign=' + CryptoJS.MD5(strs + 'ADfj3kcadc2349akvm1CPFFCD84f').toString() // MD5加密
   const key = CryptoJS.enc.Utf8.parse('0880076B18D7EE81') // 加密秘钥
-  const iv = CryptoJS.enc.Utf8.parse('CB3EC842D7C69578')//  矢量
-  const encryptResult = CryptoJS.AES.encrypt(endData, key, {//  AES加密
+  const iv = CryptoJS.enc.Utf8.parse('CB3EC842D7C69578') //  矢量
+  const encryptResult = CryptoJS.AES.encrypt(endData, key, {
+    //  AES加密
     iv: iv,
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7 // 后台用的是pad.Pkcs5,前台对应为Pkcs7
+    padding: CryptoJS.pad.Pkcs7, // 后台用的是pad.Pkcs5,前台对应为Pkcs7
   })
   return encodeURIComponent(CryptoJS.enc.Base64.stringify(encryptResult.ciphertext)) // Base64加密encode;
 }

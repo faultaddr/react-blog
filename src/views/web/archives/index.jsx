@@ -14,7 +14,14 @@ import Pagination from '@/components/Pagination'
 // hooks
 import useFetchList from '@/hooks/useFetchList'
 import { ClockCircleOutlined } from '@ant-design/icons'
-
+function MsgSort(obj) {
+  obj.sort((a, b) => {
+    const t1 = new Date(Date.parse(a.createdAt.replace(/-/g, '/')))
+    const t2 = new Date(Date.parse(b.createdAt.replace(/-/g, '/')))
+    return t2.getTime() - t1.getTime()
+  })
+  return obj
+}
 function Archives(props) {
   const { dataList, loading, pagination } = useFetchList({
     requestUrl: '/article/list',
@@ -24,9 +31,8 @@ function Archives(props) {
     },
     fetchDependence: [props.location.pathname, props.location.search]
   })
-
   const list = groupBy(dataList, item => item.createdAt.slice(0, 4)) // 按年份排序
-
+  list.map((d, i) => (MsgSort(d)))
   return (
     <div className='app-archives'>
       <Spin tip='Loading...' spinning={loading} delay={500}>

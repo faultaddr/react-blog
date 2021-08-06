@@ -9,7 +9,7 @@ const {
   reply: ReplyModel,
   user: UserModel,
   record: RecordModel,
-  sequelize
+  sequelize,
 } = require('../models')
 
 const fs = require('fs')
@@ -25,7 +25,7 @@ class ArticleController {
       ArticleModel.create({
         id: -1,
         title: '关于页面',
-        content: '关于页面存档，勿删'
+        content: '关于页面存档，勿删',
       })
     }
   }
@@ -39,7 +39,7 @@ class ArticleController {
       categoryList: Joi.array(),
       tagList: Joi.array(),
       type: Joi.boolean(),
-      top: Joi.boolean()
+      top: Joi.boolean(),
     })
 
     if (validator) {
@@ -65,7 +65,7 @@ class ArticleController {
       { ...ctx.params, ...ctx.query },
       {
         id: Joi.number().required(),
-        type: Joi.number() // type 用于区分是否增加浏览次数 1 新增浏览次数 0 不新增
+        type: Joi.number(), // type 用于区分是否增加浏览次数 1 新增浏览次数 0 不新增
       }
     )
     if (validator) {
@@ -82,22 +82,22 @@ class ArticleController {
               {
                 model: ReplyModel,
                 attributes: ['id', 'content', 'createdAt'],
-                include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }]
+                include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }],
               },
-              { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }
+              { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } },
             ],
-            row: true
-          }
+            row: true,
+          },
         ],
         order: [[CommentModel, 'createdAt', 'DESC'], [[CommentModel, ReplyModel, 'createdAt', 'ASC']]], // comment model order
-        row: true
+        row: true,
       })
 
       const { type = 1 } = ctx.query
       // viewer count ++
       type === 1 && ArticleModel.update({ viewCount: ++data.viewCount }, { where: { id: ctx.params.id } })
       // 每个浏览记录都存一个stamp，这样后续能够看出文章的阅读趋势方便推荐
-      type ===1 && RecordModel.create({articleId: ctx.params.id})
+      type === 1 && RecordModel.create({ articleId: ctx.params.id })
       // JSON.parse(github)
       data.comments.forEach(comment => {
         comment.user.github = JSON.parse(comment.user.github)
@@ -119,7 +119,7 @@ class ArticleController {
       tag: Joi.string(),
       preview: Joi.number(),
       order: Joi.string(),
-      type: Joi.boolean()
+      type: Joi.boolean(),
     })
 
     if (validator) {
@@ -135,21 +135,21 @@ class ArticleController {
         const data = await ArticleModel.findAndCountAll({
           where: {
             id: {
-              $not: -1 // 过滤关于页面的副本
+              $not: -1, // 过滤关于页面的副本
             },
             $and: {
               type: {
-                $eq: JSON.parse(type)
-              }
+                $eq: JSON.parse(type),
+              },
             },
             $or: {
               title: {
-                $like: `%${keyword}%`
+                $like: `%${keyword}%`,
               },
               content: {
-                $like: `%${keyword}%`
-              }
-            }
+                $like: `%${keyword}%`,
+              },
+            },
           },
           include: [
             { model: TagModel, attributes: ['name'], where: tagFilter },
@@ -157,14 +157,14 @@ class ArticleController {
             {
               model: CommentModel,
               attributes: ['id'],
-              include: [{ model: ReplyModel, attributes: ['id'] }]
-            }
+              include: [{ model: ReplyModel, attributes: ['id'] }],
+            },
           ],
           offset: (page - 1) * pageSize,
           limit: parseInt(pageSize),
           order: articleOrder,
           row: true,
-          distinct: true // count 计算
+          distinct: true, // count 计算
         })
         if (preview === 1) {
           data.rows.forEach(d => {
@@ -177,16 +177,16 @@ class ArticleController {
         const data = await ArticleModel.findAndCountAll({
           where: {
             id: {
-              $not: -1 // 过滤关于页面的副本
+              $not: -1, // 过滤关于页面的副本
             },
             $or: {
               title: {
-                $like: `%${keyword}%`
+                $like: `%${keyword}%`,
               },
               content: {
-                $like: `%${keyword}%`
-              }
-            }
+                $like: `%${keyword}%`,
+              },
+            },
           },
           include: [
             { model: TagModel, attributes: ['name'], where: tagFilter },
@@ -194,14 +194,14 @@ class ArticleController {
             {
               model: CommentModel,
               attributes: ['id'],
-              include: [{ model: ReplyModel, attributes: ['id'] }]
-            }
+              include: [{ model: ReplyModel, attributes: ['id'] }],
+            },
           ],
           offset: (page - 1) * pageSize,
           limit: parseInt(pageSize),
           order: articleOrder,
           row: true,
-          distinct: true // count 计算
+          distinct: true, // count 计算
         })
         if (preview === 1) {
           data.rows.forEach(d => {
@@ -212,7 +212,6 @@ class ArticleController {
         ctx.body = data
       }
     }
-
   }
 
   // 修改文章
@@ -220,7 +219,7 @@ class ArticleController {
     const validator = ctx.validate(
       {
         articleId: ctx.params.id,
-        ...ctx.request.body
+        ...ctx.request.body,
       },
       {
         articleId: Joi.number().required(),
@@ -229,7 +228,7 @@ class ArticleController {
         categories: Joi.array(),
         tags: Joi.array(),
         type: Joi.boolean(),
-        top: Joi.boolean()
+        top: Joi.boolean(),
       }
     )
     if (validator) {
@@ -237,19 +236,19 @@ class ArticleController {
       const articleId = parseInt(ctx.params.id)
       const tagList = tags.map(tag => ({ name: tag, articleId }))
       const categoryList = categories.map(cate => ({ name: cate, articleId }))
-      await ArticleModel.update({ title, content, type, top}, { where: { id: articleId } })
+      await ArticleModel.update({ title, content, type, top }, { where: { id: articleId } })
       await TagModel.destroy({ where: { articleId } })
       await TagModel.bulkCreate(tagList)
       await CategoryModel.destroy({ where: { articleId } })
       await CategoryModel.bulkCreate(categoryList)
-      ctx.body = { 'type': type }
+      ctx.body = { type: type }
     }
   }
 
   // 删除文章
   static async delete(ctx) {
     const validator = ctx.validate(ctx.params, {
-      id: Joi.number().required()
+      id: Joi.number().required(),
     })
     if (validator) {
       const articleId = ctx.params.id
@@ -269,7 +268,7 @@ class ArticleController {
   // 删除多个文章
   static async delList(ctx) {
     const validator = ctx.validate(ctx.params, {
-      list: Joi.string().required()
+      list: Joi.string().required(),
     })
 
     if (validator) {
@@ -295,7 +294,7 @@ class ArticleController {
    */
   static async checkExist(ctx) {
     const validator = ctx.validate(ctx.request.body, {
-      fileNameList: Joi.array().required()
+      fileNameList: Joi.array().required(),
     })
 
     if (validator) {
@@ -343,7 +342,7 @@ class ArticleController {
   static async uploadConfirm(ctx) {
     const validator = ctx.validate(ctx.request.body, {
       authorId: Joi.number(),
-      uploadList: Joi.array()
+      uploadList: Joi.array(),
     })
     if (validator) {
       const { uploadList, authorId } = ctx.request.body
@@ -364,7 +363,7 @@ class ArticleController {
             categories: categories.map(d => ({ name: d })),
             tags: tags.map(d => ({ name: d })),
             content,
-            authorId
+            authorId,
           }
           if (date) data.createdAt = date
           if (item.articleId) data.articleId = item.articleId
@@ -400,7 +399,7 @@ class ArticleController {
   // 导出文章
   static async output(ctx) {
     const validator = ctx.validate(ctx.params, {
-      id: Joi.number().required()
+      id: Joi.number().required(),
     })
 
     if (validator) {
@@ -409,8 +408,8 @@ class ArticleController {
         include: [
           // 查找 分类
           { model: TagModel, attributes: ['name'] },
-          { model: CategoryModel, attributes: ['name'] }
-        ]
+          { model: CategoryModel, attributes: ['name'] },
+        ],
       })
 
       const { filePath, fileName } = await generateFile(article)
@@ -421,20 +420,20 @@ class ArticleController {
 
   static async outputList(ctx) {
     const validator = ctx.validate(ctx.params, {
-      list: Joi.string().required()
+      list: Joi.string().required(),
     })
     if (validator) {
       const articleList = ctx.params.list.split(',')
 
       const list = await ArticleModel.findAll({
         where: {
-          id: articleList
+          id: articleList,
         },
         include: [
           // 查找 分类
           { model: TagModel, attributes: ['name'] },
-          { model: CategoryModel, attributes: ['name'] }
-        ]
+          { model: CategoryModel, attributes: ['name'] },
+        ],
       })
 
       // const filePath = await generateFile(list[0])
@@ -447,7 +446,7 @@ class ArticleController {
       zip.pipe(zipStream)
       list.forEach(item => {
         zip.append(fs.createReadStream(`${outputPath}/${item.title}.md`), {
-          name: `${item.title}.md` // 压缩文件名
+          name: `${item.title}.md`, // 压缩文件名
         })
       })
       await zip.finalize()
@@ -461,14 +460,14 @@ class ArticleController {
     const list = await ArticleModel.findAll({
       where: {
         id: {
-          $not: -1 // 过滤关于页面的副本
-        }
+          $not: -1, // 过滤关于页面的副本
+        },
       },
       include: [
         // 查找 分类
         { model: TagModel, attributes: ['name'] },
-        { model: CategoryModel, attributes: ['name'] }
-      ]
+        { model: CategoryModel, attributes: ['name'] },
+      ],
     })
 
     // const filePath = await generateFile(list[0])
@@ -481,7 +480,7 @@ class ArticleController {
     zip.pipe(zipStream)
     list.forEach(item => {
       zip.append(fs.createReadStream(`${outputPath}/${item.title}.md`), {
-        name: `${item.title}.md` // 压缩文件名
+        name: `${item.title}.md`, // 压缩文件名
       })
     })
     await zip.finalize()
