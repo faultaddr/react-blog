@@ -3,6 +3,7 @@ import MdEditor from '@/components/MdEditor'
 import React, { Component, useState, useEffect } from 'react'
 import axios from '@/utils/axios'
 import dayjs from 'dayjs'
+import { PlusCircleFilled } from '@ant-design/icons'
 function FragmentEdit(props) {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('panyunyi')
@@ -25,7 +26,7 @@ function FragmentEdit(props) {
         size='large'
         className='action-icon'
         title={'发布'}
-        icon={<Icon type={'plus'} />}
+        icon={<PlusCircleFilled />}
         onClick={() => {
           add()
         }}

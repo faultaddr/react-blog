@@ -132,7 +132,7 @@ export const SIDEBAR = {
     homepages: {
     github: {
         link: 'https://github.com/panyunyi97',
-        icon: <Icon type='github' theme='filled' className='homepage-icon' />
+        icon: <GithubFill className='homepage-icon' /> 
     },
     juejin: {
         link: 'https://juejin.im/user/96412755827687',

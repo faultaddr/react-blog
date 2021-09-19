@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import 'antd/dist/antd.css'
+import './index.less'
 import { Comment, Tooltip, List, Card, Avatar } from 'antd'
 import axios from '@/utils/axios'
 import useAjaxLoading from '@/hooks/useAjaxLoading'
 import dayjs from '@/utils/dayjs'
-import { RandomId } from 'utils'
 
 const { Meta } = Card
 
@@ -31,6 +30,7 @@ function FragmentList(props) {
 
   return (
     <div
+      className='app-fragments'
       style={{
         display: 'flex',
         flexDirection: 'column',

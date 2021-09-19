@@ -4,7 +4,7 @@ import SvgIcon from '@/components/SvgIcon'
 
 import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
-
+import {GithubFill} from 'utils/antdIcon'
 // API_BASE_URL
 export const SERVER_URL = 'http://www.panyunyi.cn'
 // export const SERVER_URL = 'http://127.0.0.1'
@@ -22,7 +22,7 @@ export const SIDEBAR = {
   homepages: {
     github: {
       link: 'https://github.com/panyunyi97',
-      icon: <Icon type='github' theme='filled' className='homepage-icon' />
+      icon: <GithubFill className='homepage-icon' />
     },
     juejin: {
       link: 'https://juejin.im/user/96412755827687',

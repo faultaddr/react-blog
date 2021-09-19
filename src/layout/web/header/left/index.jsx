@@ -38,7 +38,7 @@ const HeaderLeft = props => {
       {navList.map(nav => (
         <Menu.Item key={nav.link}>
           <Link to={nav.link}>
-            {nav.icon && <Icon type={nav.icon} style={{ marginRight: 15 }} />}
+            {nav.icon}
             <span className='nav-text'>{nav.title}</span>
           </Link>
         </Menu.Item>

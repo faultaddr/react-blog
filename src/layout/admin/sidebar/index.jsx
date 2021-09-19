@@ -31,7 +31,7 @@ function AdminSidebar(props) {
             key={item.path}
             title={
               <span>
-                {item.icon && <Icon type={item.icon} />}
+                {item.icon}
                 <span>{item.name}</span>
               </span>
             }>
@@ -43,7 +43,7 @@ function AdminSidebar(props) {
           item.name && (
             <Menu.Item key={item.path}>
               <NavLink to={item.path}>
-                {item.icon && <Icon type={item.icon} />}
+                {item.icon}
                 <span>{item.name}</span>
               </NavLink>
             </Menu.Item>

@@ -3,11 +3,11 @@ import { connect, useSelector } from 'react-redux'
 import './index.less'
 
 import axios from '@/utils/axios'
-import { Button, Input, Modal, BackTop, message, Switch, Icon } from 'antd'
-import { CheckCircleFilled } from '@ant-design/icons'
+import { Button, Input, Modal, BackTop, message, Switch} from 'antd'
 import MdEditor from '@/components/MdEditor'
 import List from './Tag'
 import useBreadcrumb from '@/hooks/useBreadcrumb'
+import { CheckCircleOutline, CheckCircleFill } from 'utils/antdIcon'
 function Edit(props) {
   const store = useSelector(state => ({
     tagList: state.article.tagList,
@@ -152,7 +152,7 @@ function Edit(props) {
         disabled={!title}
         className='action-icon'
         title={editId ? '更新' : '新增'}
-        icon={<Icon type={editId ? <CheckCircleFilled /> : <CheckCircleFilled />} />}
+        icon={editId ? <CheckCircleFill /> : <CheckCircleOutline />}
         onClick={() => {
           editId ? update() : add()
         }}

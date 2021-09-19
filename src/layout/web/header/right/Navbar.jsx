@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, Icon } from 'antd'
+import { Menu } from 'antd'
 
 import navList from './navList'
 
@@ -14,7 +14,7 @@ function NavBar(props) {
       {navList.map(nav => (
         <Menu.Item key={nav.link}>
           <Link to={nav.link}>
-            {nav.icon && <Icon type={nav.icon} />}
+            {nav.icon}
             <span className='nav-text'>{nav.title}</span>
           </Link>
         </Menu.Item>

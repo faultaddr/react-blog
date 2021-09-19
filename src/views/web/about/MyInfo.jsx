@@ -4,7 +4,7 @@ import React from 'react'
 import { Divider, Rate, Avatar } from 'antd'
 import Href from '@/components/Href'
 import SvgIcon from '@/components/SvgIcon'
-import { QqOutlined } from '@ant-design/icons'
+import { QqOutline } from 'utils/antdIcon'
 
 const skills = [
   {
@@ -73,7 +73,7 @@ const MyInfo = () => {
         <li>硕士： 南京大学（NJU）CS</li>
         <li>
           联系方式：
-          <QqOutlined /> 779087031
+          <QqOutline /> 779087031
           <Divider type='vertical' />
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
           <a href='mailto:cuferpan@gmail.com'>cuferpan@gmail.com</a>
