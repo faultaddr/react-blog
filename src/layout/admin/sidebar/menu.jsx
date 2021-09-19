@@ -1,56 +1,59 @@
+import React from 'react'
+import { EditOutline, FolderOutline, HomeOutline, StarOutline, SwitcherOutline, FolderOpenOutline, UserOutline, MonitorOutline } from 'utils/antdIcon'
+
 const menu = [
   {
     path: '/admin',
-    icon: 'home',
+    icon: <HomeOutline />,
     name: '首页',
   },
   {
     path: '/admin/article',
-    icon: 'switcher',
+    icon: <SwitcherOutline />,
     name: '文章',
     children: [
       {
         path: '/admin/article/manager',
-        icon: 'folder',
+        icon: <FolderOutline />,
         name: '管理',
       },
       {
         path: '/admin/article/add',
-        icon: 'edit',
+        icon: <EditOutline />,
         name: '新增',
       },
       {
         path: '/admin/article/graph',
-        icon: 'star',
+        icon: <StarOutline />,
         name: '图表',
       },
     ],
   },
   {
     path: '/admin/fragment',
-    icon: 'switcher',
+    icon: <FolderOpenOutline />,
     name: '闲言',
     children: [
       {
         path: '/admin/fragment/manager',
-        icon: 'folder',
+        icon: <FolderOutline />,
         name: '管理',
       },
       {
         path: '/admin/fragment/add',
-        icon: 'edit',
+        icon: <EditOutline />,
         name: '新增',
       },
     ],
   },
   {
     path: '/admin/user',
-    icon: 'user',
+    icon: <UserOutline />,
     name: '用户管理',
   },
   {
     path: '/admin/monitor',
-    icon: 'star',
+    icon: <MonitorOutline />,
     name: '系统监控',
   },
 ]

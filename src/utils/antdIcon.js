@@ -56,3 +56,4 @@ export { default as InfoCircleFill } from '@ant-design/icons/lib/icons/InfoCircl
 export { default as StarFill } from '@ant-design/icons/lib/icons/StarFilled'
 export { default as MessageOutline } from '@ant-design/icons/lib/icons/MessageOutlined'
 export { default as LineOutline} from '@ant-design/icons/lib/icons/LineChartOutlined'
+export { default as MonitorOutline} from '@ant-design/icons/lib/icons/MonitorOutlined'

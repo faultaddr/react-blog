@@ -47,7 +47,7 @@ function Archives(props) {
                 </Timeline.Item>
               )}
 
-              <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />} color='red'>
+              <Timeline.Item style = {{ background: 'transparent'}} dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />} color='red'>
                 <div className='year'>
                   {d[0]['createdAt'].slice(0, 4)}
                   ...
