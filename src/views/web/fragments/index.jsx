@@ -17,7 +17,7 @@ function FragmentList(props) {
   const [fragment, setFragment] = useState([])
 
   useEffect(() => {
-    withLoading(axios.get(`/fragment`))
+    withLoading(axios.get(`/fragment/list`))
       .then(res => {
         // console.log(moment('2020-12-06T04:00:00.000Z').format('MMMM Do YYYY, h:mm:ss a'))
         setFragment(res.rows)

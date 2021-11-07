@@ -41,6 +41,24 @@ class FragmentController {
       ctx.status = 204
     }
   }
+
+  // 获取文章详情
+  static async findFragmentById(ctx) {
+    const validator = ctx.validate(
+      { ...ctx.params, ...ctx.query },
+      {
+        id: Joi.number().required()
+      }
+    )
+    if (validator) {
+      const data = await ArticleModel.findOne({
+        where: { id: ctx.params.id },
+        row: true,
+      })
+      ctx.body = data
+    }
+  }
+
 }
 
 module.exports = FragmentController

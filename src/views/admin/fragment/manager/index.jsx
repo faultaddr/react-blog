@@ -43,9 +43,6 @@ function FragmentManager(props) {
           return (
             <ul className='action-list'>
               <li>
-                <Link to={`/fragment/${articleId}`}>查看</Link>
-              </li>
-              <li>
                 <Link to={{ pathname: `/admin/fragment/edit/${record.id}`, state: { articleId } }}>编辑</Link>
               </li>
               <li>

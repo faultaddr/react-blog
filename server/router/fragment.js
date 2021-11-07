@@ -1,12 +1,11 @@
 const Router = require('koa-router')
 const router = new Router({prefix: '/fragment'})
-const {fetchFragmentList, create} = require('../controllers/fragment')
+const {fetchFragmentList, create, findFragmentById, deleteFragment} = require('../controllers/fragment')
 
 router
-  .get('/list', fetchFragmentList) // 创建评论或者回复 articleId 文章 id
+  .get('/list', fetchFragmentList) // 获取所有碎语
+  .get('/:id', findFragmentById) // 获取指定id碎语
   .post('/create', create)
-  .delete('/:id', deleteFragment) // 删除指定文章
-//   .delete('/comment/:commentId', deleteComment) // 删除一级评论
-//   .delete('/reply/:replyId', deleteReply) // 删除回复
+  .delete('/:id', deleteFragment) // 删除指定碎语
 
 module.exports = router
