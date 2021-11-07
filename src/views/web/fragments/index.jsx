@@ -79,24 +79,6 @@ function FragmentList(props) {
               </div>
             </div>
           </List.Item>
-          // <List.Item>
-          //   <Card
-          //     style={{ width: 300 }}
-          //     // cover={
-          //     //   <img
-          //     //     alt='随机图片'
-          //     //     src={'https://picsum.photos/id/' + getRandomInt(100) + '/300/400'}
-          //     //   />
-          //     // }
-          //   >
-          //     <Meta
-          //       title={dayjs(item.createdAt, 'YYYYMMDD').fromNow()}
-          //       avatar={<Avatar src='http://127.0.0.1/static/media/avatar.7e58ba1b.jpeg' />}
-          //       description={item.content}
-          //       // datetime={moment('2020-12-06T04:00:00.000Z').format('MMMM Do YYYY, h:mm:ss a')}
-          //     />
-          //   </Card>
-          // </List.Item>
         )}
       />
     </div>

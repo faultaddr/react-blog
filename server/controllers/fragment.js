@@ -26,6 +26,21 @@ class FragmentController {
       ctx.body = data
     }
   }
+
+  static async deleteFragment(ctx) {
+    const validator = ctx.validate(ctx.request.body, {
+      id: Joi.string()
+    })
+    if (validator) {
+      const fragmentId = ctx.params.id
+      await sequelize.query(
+        `delete *
+        from fragment
+        where article.id=${fragmentId}`
+      )
+      ctx.status = 204
+    }
+  }
 }
 
 module.exports = FragmentController

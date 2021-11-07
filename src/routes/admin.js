@@ -12,6 +12,7 @@ export default {
     { path: 'article/manager', component: lazy(() => import('@/views/admin/article/manager')) },
     { path: 'article/graph', component: lazy(() => import('@/views/admin/article/graph')) },
     { path: 'fragment/add', component: lazy(() => import('@/views/admin/fragment/edit')) },
+    { path: 'fragment/manager', component: lazy(() => import('@/views/admin/fragment/manager')) },
     { path: 'user', component: lazy(() => import('@/views/admin/user')) },
     { path: 'monitor', component: lazy(() => import('@/views/admin/monitor')) },
   ],

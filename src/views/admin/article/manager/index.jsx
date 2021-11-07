@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { Table, Tag, Switch, message, Input, Button, Popconfirm, Select, Form} from 'antd'
+import { Table, Tag, Switch, message, Input, Button, Popconfirm, Select, Form } from 'antd'
 
 import axios from '@/utils/axios'
 
@@ -138,14 +138,13 @@ function ArticleManager(props) {
     })
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        setQueryParams({ ...queryParams, ...values })
-        onSearch({ ...queryParams, ...values })
-      }
-    })
+  const handleSubmit = values => {
+    try {
+      setQueryParams({ ...queryParams, ...values })
+      onSearch({ ...queryParams, ...values })
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo)
+    }
   }
 
   const rowSelection = batch ? {
@@ -156,7 +155,7 @@ function ArticleManager(props) {
   return (
     <div className='admin-article-manager'>
       {/* 检索 */}
-      <Form layout='inline' onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+      <Form layout='inline' onFinish={handleSubmit} style={{ marginBottom: 20 }}>
         <Form.Item label='关键词' name='keyword'>
           <Input placeholder='请输入文章关键词' allowClear />
         </Form.Item>
