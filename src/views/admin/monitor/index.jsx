@@ -103,7 +103,7 @@ function Monitor(props) {
   //   MemUsage: (((totalMem - freeMem) / totalMem) * 100.0).toFixed(2) + '%',
   // 對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
   const asyncFetch = () => {
-    axios.get('/monitor').then(res => {
+    axios.get('/monitor/start').then(res => {
     })
     ws.on('systemUpdate', message => {
       // get the cpu message to plot the graph

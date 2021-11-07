@@ -34,9 +34,8 @@ class FragmentController {
     if (validator) {
       const fragmentId = ctx.params.id
       await sequelize.query(
-        `delete *
-        from fragment
-        where article.id=${fragmentId}`
+        `delete from fragment
+        where fragment.id=${fragmentId}`
       )
       ctx.status = 204
     }
@@ -58,6 +57,26 @@ class FragmentController {
       ctx.body = data
     }
   }
+
+    // 修改文章
+    static async updateFragment(ctx) {
+      const validator = ctx.validate(
+        {
+          id: ctx.params.id,
+          ...ctx.request.body,
+        },
+        {
+          id: Joi.number().required(),
+          content: Joi.string(),
+        }
+      )
+      if (validator) {
+        const { content} = ctx.request.body
+        const fragmentId = parseInt(ctx.params.id)
+        await FragmentModel.update({ content }, { where: { id: fragmentId } })
+        ctx.body = {'result': 'success'}
+      }
+    }
 
 }
 
