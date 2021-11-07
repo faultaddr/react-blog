@@ -51,7 +51,7 @@ class FragmentController {
       }
     )
     if (validator) {
-      const data = await ArticleModel.findOne({
+      const data = await FragmentModel.findOne({
         where: { id: ctx.params.id },
         row: true,
       })

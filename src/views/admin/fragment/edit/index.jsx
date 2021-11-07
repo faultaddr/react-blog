@@ -7,6 +7,20 @@ import { PlusCircleFilled } from '@ant-design/icons'
 function FragmentEdit(props) {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('panyunyi')
+  const editId = parseInt(props.match.params.id)
+  function fetchFragment(id) {
+    axios.get(`/fragment/${id}`).then(res => {
+      setContent(res.content)
+    })
+  }
+
+  useEffect(() => {
+    // did mounted
+    if (editId) {
+      fetchFragment(editId)
+    } else {
+    }
+  }, [props.match.params])
   function add() {
     axios
       .post('/fragment/create', {
