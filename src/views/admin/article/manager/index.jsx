@@ -97,7 +97,7 @@ function ArticleManager(props) {
                 <Link to={`/article/${articleId}`}>查看</Link>
               </li>
               <li>
-                <Link to={{ pathname: `/admin/article/edit/${record.id}`, state: { articleId } }}>编辑</Link>
+                <Link to={{ pathname: `/admin/article/edit/${record.uuid}`, state: { articleId } }}>编辑</Link>
               </li>
               <li>
                 <a onClick={e => copyShareLink(record.uuid)}>分享</a>

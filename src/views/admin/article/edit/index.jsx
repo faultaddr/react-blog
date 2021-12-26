@@ -14,7 +14,7 @@ function Edit(props) {
     categoryList: state.article.categoryList,
     authorId: state.user.userId
   }))
-
+  const [realId, setRealId] = useState(0)
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
   const [type, setType] = useState(true)
@@ -23,7 +23,7 @@ function Edit(props) {
   const [categoryList, setCategoryList] = useState([])
   const [tagSelectedList, setTagSelectedList] = useState([])
   const [cateSelectedList, setCateSelectedList] = useState([])
-  const editId = parseInt(props.match.params.id)
+  const editId = props.match.params.id
 
   useBreadcrumb([{ link: '/admin/article/manager', name: '文章管理' }, editId ? '编辑文章' : '新增文章'])
 
@@ -48,7 +48,8 @@ function Edit(props) {
   }, [store.tagList, store.categoryList])
 
   function fetchArticle(id) {
-    axios.get(`/article/${id}?type=0`).then(res => {
+    axios.get(`/article/share/${id}?type=0`).then(res => {
+      setRealId(res.id)
       setTitle(res.title)
       setContent(res.content)
       setType(res.type)
@@ -84,7 +85,7 @@ function Edit(props) {
 
   function update() {
     axios
-      .put(`/article/${editId}`, {
+      .put(`/article/${realId}`, {
         title,
         content,
         tags: tagSelectedList,

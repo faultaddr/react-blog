@@ -23,7 +23,7 @@ const { TextArea } = Input
 const Editor = ({ username, onChange, userNameChange, emailChange, onSubmit, submitting, name, mail, value, articleId }) => (
   <div>
     {username === '' ? (
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'left'}}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left' }}>
         <Form.Item>
           <TextArea rows={1} placeholder='用户名' onChange={userNameChange} value={name} />
         </Form.Item>
@@ -110,8 +110,8 @@ function Discuss(props) {
 
     if (!userInfo.username) {
       if (userInfo == null || userInfo.username === '') {
-        const values = {'username': userName, 'password': 'root', 'email': email}
-        const loginValues = {'account': userName, 'password': 'root'}
+        const values = { 'username': userName, 'password': 'root', 'email': email }
+        const loginValues = { 'account': userName, 'password': 'root' }
         const registerAction = register
         const loginAction = login
         if (!checkEmailAvailable(email)) {
@@ -175,13 +175,13 @@ function Discuss(props) {
 
       <Comment
         avatar={
-          username ? (userInfo.email ? (
-            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像'/>
+          username ? ((userInfo.email !== undefined) && (userInfo.email !== null) ? (
+            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像' />
           ) : (
             <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />)
           ) : (
             userName ? (
-              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像'/>
+              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像' />
             ) : (
               <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
             )

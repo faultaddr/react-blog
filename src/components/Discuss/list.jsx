@@ -6,7 +6,7 @@ import { translateMarkdown2html } from '@/utils'
 import dayjs from '@/utils/dayjs'
 import AppAvatar from '@/components/Avatar'
 import { Comment, Button, Tooltip, Input, Popconfirm, message } from 'antd'
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, GithubOutlined } from '@ant-design/icons'
 
 const { TextArea } = Input
 
@@ -79,7 +79,10 @@ function CommentItem(props) {
         </>
       ]}
       author={<span>{user && user.username}</span>}
-      avatar={ <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + user.email.split('@') + '&s=100'} alt='头像'/>}
+      avatar={
+        user.email ? <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + user.email.split('@')[0] + '&s=100'} alt='头像' />
+          : <GithubOutlined theme='filled' style={{ fontSize: 25, margin: '5px 5px 0 0' }} />
+      }
       content={
         <div className='article-detail' dangerouslySetInnerHTML={{ __html: translateMarkdown2html(item.content, true) }} />
       }
