@@ -104,6 +104,7 @@ $ forever start app.js
 - [x] Get the mailbox secret dynamically
 - [x] Password transmission encryption
 - [x] Background chart
+- [x] Share Link for the admain to manage the visiablity of the private article
 - [ ] Smart Recommendation (Related Recommendation)
 
 ### Personalized Configuration
