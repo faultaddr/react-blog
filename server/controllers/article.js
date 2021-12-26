@@ -105,7 +105,11 @@ class ArticleController {
           reply.user.github = JSON.parse(reply.user.github)
         })
       })
-      ctx.body = data
+      if(data.type){
+        ctx.body = data
+      }else{
+        ctx.body = null
+      }
     }
   }
 
