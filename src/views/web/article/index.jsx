@@ -13,7 +13,7 @@ import ArticleTag from '@/components/ArticleTag'
 import SvgIcon from '@/components/SvgIcon'
 import Navigation from './Navigation'
 import Discuss from '@/components/Discuss'
-import {MenuOutlined} from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
 function Article(props) {
   const [loading, withLoading] = useAjaxLoading()
 
@@ -37,14 +37,25 @@ function Article(props) {
   }, [])
 
   useEffect(() => {
-    withLoading(axios.get(`/article/${props.match.params.id}`))
-      .then(res => {
-        res.content = translateMarkdown2html(res.content)
-        setArticle(res)
-      })
-      .catch(e => {
-        props.history.push('/404')
-      })
+    if (props.match.params.id !== undefined) {
+      withLoading(axios.get(`/article/${props.match.params.id}`))
+        .then(res => {
+          res.content = translateMarkdown2html(res.content)
+          setArticle(res)
+        })
+        .catch(e => {
+          props.history.push('/404')
+        })
+    } else if (props.match.params.uuid !== undefined) {
+      withLoading(axios.get(`/article/share/${props.match.params.uuid}`))
+        .then(res => {
+          console.log(res.content)
+          res.content = translateMarkdown2html(res.content)
+          setArticle(res)
+        }).catch(e => {
+          props.history.push('/404')
+        })
+    }
   }, [props.match.params.id])
 
   function setCommentList(list) {

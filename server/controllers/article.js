@@ -16,6 +16,7 @@ const fs = require('fs')
 const { uploadPath, outputPath, findOrCreateFilePath, decodeFile, generateFile } = require('../utils/file')
 const archiver = require('archiver') // 打包 zip
 const send = require('koa-send') // 文件下载
+const { randomUUID } = require('crypto')
 
 class ArticleController {
   // 初始化数据 关于页面（用于评论关联）
@@ -50,8 +51,9 @@ class ArticleController {
       } else {
         const tags = tagList.map(t => ({ name: t }))
         const categories = categoryList.map(c => ({ name: c }))
+        const uuid = randomUUID().replaceAll('-','')
         const data = await ArticleModel.create(
-          { title, content, authorId, tags, categories, type, top },
+          { title, content, authorId, tags, categories, type, top, uuid },
           { include: [TagModel, CategoryModel] }
         )
         ctx.body = data
@@ -105,6 +107,7 @@ class ArticleController {
           reply.user.github = JSON.parse(reply.user.github)
         })
       })
+      console.log(data.uuid);
       if(data.type){
         ctx.body = data
       }else{
@@ -113,6 +116,52 @@ class ArticleController {
     }
   }
 
+  static async findByUUId(ctx) {
+    const validator = ctx.validate(
+      { ...ctx.params, ...ctx.query },
+      {
+        uuid: Joi.string().required(),
+      }
+    )
+    if (validator) {
+      let data = await ArticleModel.findOne({
+        where: { uuid: ctx.params.uuid },
+        include: [
+          // 查找 分类 标签 评论 回复...
+          { model: TagModel, attributes: ['name'] },
+          { model: CategoryModel, attributes: ['name'] },
+          {
+            model: CommentModel,
+            attributes: ['id', 'content', 'createdAt'],
+            include: [
+              {
+                model: ReplyModel,
+                attributes: ['id', 'content', 'createdAt'],
+                include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }],
+              },
+              { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } },
+            ],
+            row: true,
+          },
+        ],
+
+        row: true,
+      })
+      const { type = 1 } = ctx.query
+      // viewer count ++
+      type === 1 && ArticleModel.update({ viewCount: ++data.viewCount }, { where: { id: data.id } })
+      // 每个浏览记录都存一个stamp，这样后续能够看出文章的阅读趋势方便推荐
+      type === 1 && RecordModel.create({ articleId: data.id })
+      // JSON.parse(github)
+      data.comments.forEach(comment => {
+        comment.user.github = JSON.parse(comment.user.github)
+        comment.replies.forEach(reply => {
+          reply.user.github = JSON.parse(reply.user.github)
+        })
+      })
+        ctx.body = data
+    }
+  }
   // 获取文章列表
   static async getList(ctx) {
     const validator = ctx.validate(ctx.query, {

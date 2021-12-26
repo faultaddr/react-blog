@@ -10,6 +10,7 @@ const {
   uploadConfirm,
   outputAll,
   findById,
+  findByUUId,
   update,
   delete: del,
   outputList,
@@ -27,6 +28,7 @@ router
   .get('/output/:id', output) // 导出文章
   .get('/output/list/:list', outputList) // 导出指定文章
   .get('/:id', findById) // 获取文章
+  .get('/share/:uuid', findByUUId) // view from share link
   .put('/:id', update) // 修改文章
   .delete('/list/:list', delList) // 删除指定文章列表
   .delete('/:id', del) // 删除指定文章

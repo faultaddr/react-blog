@@ -9,6 +9,7 @@ export default {
   childRoutes: [
     { path: '/home', component: lazy(() => import('@/views/web/home')) },
     { path: 'article/:id', component: lazy(() => import('@/views/web/article')) },
+    { path: 'article/share/:uuid', component: lazy(() => import('@/views/web/article')) },
     { path: 'archives', component: lazy(() => import('@/views/web/archives')) },
     { path: 'categories', component: lazy(() => import('@/views/web/categories')) },
     { path: 'categories/:name', component: lazy(() => import('@/views/web/tag')) },

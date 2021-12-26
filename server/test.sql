@@ -31,6 +31,7 @@ CREATE TABLE `article` (
       `updatedAt` datetime DEFAULT NULL,
       `type` boolean DEFAULT true,
       `top` boolean DEFAULT false,
+      `uuid` varchar(32) DEFAULT REPLACE(UUID(),'-',''),
       PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 92 DEFAULT CHARSET = utf8;
 -- ----------------------------

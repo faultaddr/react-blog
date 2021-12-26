@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { Table, Tag, Switch, message, Input, Button, Popconfirm, Select, Form } from 'antd'
-
+import { Table, Tag, Switch, message, Input, Button, Popconfirm, Select, Form, notification} from 'antd'
+import { SERVER_URL } from '@/config'
 import axios from '@/utils/axios'
 
 import { Link } from 'react-router-dom'
@@ -100,6 +100,9 @@ function ArticleManager(props) {
                 <Link to={{ pathname: `/admin/article/edit/${record.id}`, state: { articleId } }}>编辑</Link>
               </li>
               <li>
+                <a onClick={e => copyShareLink(record.uuid)}>分享</a>
+              </li>
+              <li>
                 <a onClick={e => output(record.id, record.title)}>导出</a>
               </li>
               <li>
@@ -113,12 +116,21 @@ function ArticleManager(props) {
       }
     ]
   })
-
+  const openNotification = msg => {
+    const args = {
+      message: 'copy that and share',
+      description: msg,
+      duration: 0,
+    }
+    notification.open(args)
+  }
   function renderColor(name, list) {
     const target = list.find(l => l.name === name)
     return target && target.color
   }
-
+  function copyShareLink(uuid) {
+    openNotification(`${SERVER_URL}/article/share/` + uuid)
+  }
   function output(articleId) {
     download(`/article/output/${articleId}`)
   }

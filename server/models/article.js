@@ -10,6 +10,10 @@ module.exports = (sequelize, dataTypes) => {
       viewCount: { type: dataTypes.INTEGER(11), defaultValue: 0 }, // 阅读数
       type: { type: dataTypes.BOOLEAN, defaultValue: true}, // 是否私密
       top: {type: dataTypes.BOOLEAN, defaultValue: false},
+      uuid: {
+        type: dataTypes.STRING(32),
+        allowNull: true,
+      },
       createdAt: {
         type: dataTypes.DATE,
         defaultValue: dataTypes.NOW,
