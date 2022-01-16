@@ -40,7 +40,6 @@ export default function useAntdTable({ requestUrl = '', queryParams = null, colu
         setTablePagination({ ...tablePagination }) // 设置分页
         setDataList(rows)
         setLoading(false)
-        console.log('%c useAntdTabled', 'background: yellow', requestParams, rows)
       })
       .catch(error => {
         console.log('fetchDataList error: ', requestParams, error)

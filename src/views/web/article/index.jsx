@@ -49,7 +49,6 @@ function Article(props) {
     } else if (props.match.params.uuid !== undefined) {
       withLoading(axios.get(`/article/share/${props.match.params.uuid}`))
         .then(res => {
-          console.log(res.content)
           res.content = translateMarkdown2html(res.content)
           setArticle(res)
         }).catch(e => {

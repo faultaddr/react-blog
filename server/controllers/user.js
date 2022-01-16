@@ -56,7 +56,6 @@ async function getCommitCount(time) {
   finalResult = {
     data: result
   }
-  console.log(finalResult)
   return finalResult
 }
 

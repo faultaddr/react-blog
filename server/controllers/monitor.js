@@ -29,22 +29,18 @@ function updateCPU() {
 class MonitorController {
   static async sysMonitor(ctx) {
     io.on('connection', (socket) => {
-        //连接事件
-        socket.emit('connected', '连接成功')
-        console.log('连接成功')
+      //连接事件
+      socket.emit('connected', '连接成功')
 
-        socket.on('disconnect', () => {
-          console.log('disconnect')
-        })
-
-        socket.on('endConnection', function (data) {
-          console.log('endConnection')
-          console.log(data)
-          socket.emit('unConnection', '服务器端已停止')
-          clearInterval(interval)
-          interval = -1
-        })
+      socket.on('disconnect', () => {
       })
+
+      socket.on('endConnection', function (data) {
+        socket.emit('unConnection', '服务器端已停止')
+        clearInterval(interval)
+        interval = -1
+      })
+    })
     updateCPU()
     if (interval < 0) {
       interval = setInterval(function () {
@@ -57,10 +53,9 @@ class MonitorController {
           usedMem: (totalMem - freeMem).toFixed(2) + 'G',
           MemUsage: ((totalMem - freeMem) / totalMem).toFixed(3),
         }
-        console.log(data)
         io.sockets.emit('systemUpdate', data)
       }, 1000) //每隔1s取系统数据
-      ctx.body='200'
+      ctx.body = 200
     }
   }
 }

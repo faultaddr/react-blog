@@ -61,7 +61,6 @@ export default function useFetchList({
         pagination.pageSize = parseInt(requestParams.pageSize)
         setPagination({ ...pagination })
         setDataList(response.rows)
-        // console.log('%c useFetchList: ', 'background: yellow', requestParams, response)
         withLoading && setLoading(false)
       })
       .catch(e => withLoading && setLoading(false))

@@ -26,7 +26,6 @@ function AppLoading(props) {
     let componentWillUnmount = false
     // component did mount
     const params = decodeQuery(props.location.search)
-    console.log(params.code)
     if (params.code) {
       // github callback code
       setLoading(true)
