@@ -9,7 +9,7 @@ import { groupBy } from '@/utils'
 // components
 import { Timeline, Spin } from 'antd'
 import { Link } from 'react-router-dom'
-import Pagination from '@/components/Pagination'
+import WebPagination from '@/components/Pagination'
 
 // hooks
 import useFetchList from '@/hooks/useFetchList'
@@ -65,7 +65,7 @@ function Archives(props) {
           ))}
         </Timeline>
 
-        <Pagination {...pagination} style={{ float: 'initial', marginTop: 10 }} />
+        <WebPagination {...pagination} style={{ float: 'initial', marginTop: 10 }} />
       </Spin>
     </div>
   )

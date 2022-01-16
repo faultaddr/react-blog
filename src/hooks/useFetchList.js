@@ -75,13 +75,13 @@ export default function useFetchList({
   )
 
   const handlePageChange = useCallback(
-    page => {
+    (page, pageSize) => {
       // return
+      console.log(`$1${page}${pageSize}`)
       const search = location.search.includes('page=')
-        ? location.search.replace(/(page=)(\d+)/, `$1${page}`)
-        : `?page=${page}`
+        ? location.search.replace(/(page=)(\d+)/, `$1${page}`).replace(/(pageSize=)(\d+)/, `pageSize=${pageSize}`)
+        : `?page=${page}&pageSize=${pageSize}`
       const jumpUrl = location.pathname + search
-
       history.push(jumpUrl)
     },
     [queryParams, location.pathname]

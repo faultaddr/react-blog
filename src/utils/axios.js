@@ -50,7 +50,8 @@ service.interceptors.response.use(
             break
         }
       } else {
-        message.error(err.message)
+        console.log(err.message)
+        // message.error(err.message)
       }
     }, 200) // 200 毫秒内重复报错则只提示一次！
 

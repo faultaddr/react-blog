@@ -9,7 +9,7 @@ import QuickLink from './QuickLink'
 import ArticleList from './List'
 
 import { Empty, Spin } from 'antd'
-import Pagination from '@/components/Pagination'
+import WebPagination from '@/components/Pagination'
 
 // hooks
 import useFetchList from '@/hooks/useFetchList'
@@ -53,12 +53,12 @@ const Home = props => {
           </div>
         )}
 
-        <Pagination
+        <WebPagination
           {...pagination}
           onChange={
-            page => {
+            (page, pageSize) => {
               document.querySelector('.app-main').scrollTop = 0 // turn to the top
-              pagination.onChange(page)
+              pagination.onChange(page, pageSize)
             }
           } />
       </div>

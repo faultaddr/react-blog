@@ -69,7 +69,10 @@ export default function useAntdTable({ requestUrl = '', queryParams = null, colu
    */
   function handleTableChange(pagination, filters, sorter) {
     if (JSON.stringify(filters) === '{}' && JSON.stringify(sorter) === '{}') {
-      fetchListWithLoading({ page: pagination.current })
+      fetchListWithLoading({
+        page: pagination.current,
+        pageSize: pagination.pageSize
+      })
     }
   }
 

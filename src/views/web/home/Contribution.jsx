@@ -21,16 +21,16 @@ const ContributionChart = props => {
         setContributions(res.data)
       })
       .catch(e => {
-        console.log(e)
+        ;
       })
   }, [])
-
+  const isGreaterThan1300 = useMediaQuery({ query: '(min-width: 1300px)' })
   return (
-    <ul className='github'>
+    contributions.length > 0 && isGreaterThan1300 ? <ul className='github'>
       {showTitle && <Divider>{title}</Divider>}
       <CalendarHeatmap
-        startDate={contributions && contributions.length ? new Date(contributions[0].date) : new Date('2021-01-01')}
-        endDate={contributions && contributions.length ? new Date(contributions[contributions.length - 1].date) : new Date('2021-12-31')}
+        startDate={contributions.length > 0 ? new Date(contributions[0].date) : new Date('2021-01-01')}
+        endDate={contributions.length > 0 ? new Date(contributions[contributions.length - 1].date) : new Date('2021-12-31')}
         values={contributions.length > 0 ? contributions : []}
         classForValue={value => {
           if (!value) {
@@ -39,7 +39,7 @@ const ContributionChart = props => {
           return `color-github-${value.count}`
         }}
       />
-    </ul>
+    </ul> : null
   )
 }
 
