@@ -37,7 +37,7 @@ function AdminHeader(props) {
     <>
       <div>
         {/* <img src={logo} alt='pvmed' /> */}
-        <span className='header-title'>Blog Manager</span>
+        <span className='header-title' onClick={e => history.push('/home')}>React-Blog Manager</span>
         <Dropdown overlay={menu} className='header-dropdown'>
           <a className='ant-dropdown-link'>
             {userInfo.username} <DownOutlined />
