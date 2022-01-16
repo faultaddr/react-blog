@@ -18,8 +18,7 @@ const ContributionChart = props => {
   useEffect(() => {
     axios.get(`/user/github/contributions`)
       .then(res => {
-        
-        setContributions(res)
+        setContributions(res.data)
       })
       .catch(e => {
         console.log(e)
@@ -30,9 +29,9 @@ const ContributionChart = props => {
     <ul className='github'>
       {showTitle && <Divider>{title}</Divider>}
       <CalendarHeatmap
-        startDate={contributions && contributions.length ? new Date(contributions.date[0].dataDate) : new Date('2021-01-01')}
-        endDate={contributions && contributions.length ? new Date(contributions[contributions.date.length - 1].dataDate) : new Date('2021-12-31')}
-        values={contributions && contributions.length ? contributions.count : []}
+        startDate={contributions && contributions.length ? new Date(contributions[0].date) : new Date('2021-01-01')}
+        endDate={contributions && contributions.length ? new Date(contributions[contributions.length - 1].date) : new Date('2021-12-31')}
+        values={contributions.length > 0 ? contributions : []}
       />
     </ul>
   )

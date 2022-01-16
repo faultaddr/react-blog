@@ -47,17 +47,14 @@ async function getCommitCount(time) {
   var doc = parser.parseFromString(response.data)
   var crArray = doc.getElementsByClassName('ContributionCalendar-day')
   var result = []
-  var countArray = []
   crArray.forEach(element => {
     var count = element.getAttribute('data-count')
-    if (count !== undefined && count != null) {
-      result.push({ dataDate: element.getAttribute('data-date') })
-      countArray.push(parseInt(count))
+    if (count !== undefined && count != null && count !== "0") {
+      result.push({ date: element.getAttribute('data-date'), count: parseInt(count) })
     }
   });
   finalResult = {
-    date: result,
-    count: countArray
+    data: result
   }
   console.log(finalResult)
   return finalResult
