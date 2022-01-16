@@ -32,6 +32,12 @@ const ContributionChart = props => {
         startDate={contributions && contributions.length ? new Date(contributions[0].date) : new Date('2021-01-01')}
         endDate={contributions && contributions.length ? new Date(contributions[contributions.length - 1].date) : new Date('2021-12-31')}
         values={contributions.length > 0 ? contributions : []}
+        classForValue={value => {
+          if (!value) {
+            return 'color-empty'
+          }
+          return `color-github-${value.count}`
+        }}
       />
     </ul>
   )
