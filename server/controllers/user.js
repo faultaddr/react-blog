@@ -1,11 +1,16 @@
 const Joi = require('joi')
 const axios = require('axios')
 const PSW = require('../utils/password')
+const DOMParser = require('dom-parser')
 const { GITHUB } = require('../config')
+var fs = require('fs')
 const { decodeQuery } = require('../utils')
 const { comparePassword, encrypt } = require('../utils/bcrypt')
 const { createToken } = require('../utils/token')
+
 const { user: UserModel, comment: CommentModel, reply: ReplyModel, ip: IpModel, sequelize } = require('../models')
+const func = require('joi/lib/types/func')
+const DomParser = require('dom-parser')
 
 /**
  * 读取 github 用户信息
@@ -14,6 +19,47 @@ const { user: UserModel, comment: CommentModel, reply: ReplyModel, ip: IpModel, 
 async function getGithubInfo(username) {
   const result = await axios.get(`${GITHUB.fetch_user}/${username}`)
   return result && result.data
+}
+
+async function getDateBetween(start, end) {
+  var result = [];
+  //使用传入参数的时间
+  var startTime = new Date(start)
+  var endTime = new Date(end)
+  while (endTime - startTime >= 0) {
+    let year = startTime.getFullYear();
+    let month = startTime.getMonth();
+    month = month < 9 ? '0' + (month + 1) : month + 1;
+    let day = startTime.getDate().toString().length == 1 ? "0" + startTime.getDate() : startTime.getDate();
+    //加入数组
+    result.push(year + "-" + month + "-" + day);
+    //更新日期
+    startTime.setDate(startTime.getDate() + 1);
+  }
+  return result;
+}
+
+async function getCommitCount(time) {
+  //https://github.com/panyunyi97?tab=overview&from=2021-09-01&to=2021-09-31
+  //https://github.com/users/panyunyi97/contributions?to=2021-12-31
+  const response = await axios.get(`https://github.com/users/panyunyi97/contributions?to=2021-12-31`);
+  var parser = new DomParser();
+  var doc = parser.parseFromString(response.data)
+  var crArray = doc.getElementsByClassName('ContributionCalendar-day')
+  var result = []
+  var countArray = []
+  crArray.forEach(element => {
+    var count = element.getAttribute('data-count')
+    if (count !== undefined && count != null)
+      result.push({ dataDate: element.getAttribute('data-date') })
+      countArray.push(count)
+  });
+  finalResult = {
+    date: result,
+    count: countArray
+  }
+  console.log(finalResult)
+  return finalResult
 }
 
 class UserController {
@@ -292,6 +338,35 @@ class UserController {
       console.trace('create github user error ==============>', error.message)
     }
   }
+
+
+  /**
+   * 获取github contribution 信息
+   * @param {String} userName - github name
+   * https://github.com/panyunyi97?tab=overview&from=2021-09-01&to=2021-09-31
+   */
+  static async getGithubContributions(ctx) {
+    const validator = ctx.validate(
+      {
+        ...ctx.params,
+        ...ctx.request.body,
+      },
+      {
+        userName: Joi.string().allow(''),
+      }
+    )
+
+    if (validator) {
+      const { userName } = ctx.params
+      var now = new Date()
+      var result = []
+      result = await getCommitCount(0)
+      ctx.body = result
+      ctx.status = 200
+    }
+  }
+
+
 }
 
 module.exports = UserController

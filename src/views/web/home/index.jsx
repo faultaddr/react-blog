@@ -13,11 +13,11 @@ import Pagination from '@/components/Pagination'
 
 // hooks
 import useFetchList from '@/hooks/useFetchList'
-
+import ContributionChart from './Contribution'
 const Home = props => {
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
-    queryParams: { pageSize: HOME_PAGESIZE, type: true},
+    queryParams: { pageSize: HOME_PAGESIZE, type: true },
     fetchDependence: [props.location.search]
   })
 
@@ -39,6 +39,8 @@ const Home = props => {
 
         {/* quick link */}
         <QuickLink list={list} />
+
+        <ContributionChart userName='panyunyi97' />
 
         {/* serach empty result */}
         {list.length === 0 && keyword && (

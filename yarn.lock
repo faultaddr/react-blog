@@ -4497,6 +4497,11 @@ date-fns@2.x:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.25.0.tgz#8c5c8f1d958be3809a9a03f4b742eba894fc5680"
   integrity sha512-ovYRFnTrbGPD4nqaEqescPEv1mNwvt+UTqI3Ay9SzNtey9NZnYu6E2qCcBBgJ6/2VF1zGGygpyTDITqpQQ5e+w==
 
+date-fns@^2.17.0:
+  version "2.28.0"
+  resolved "https://registry.npmmirror.com/date-fns/download/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
+  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
+
 dayjs@1.x, dayjs@^1.8.31:
   version "1.10.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
@@ -5981,6 +5986,13 @@ git-cz@^3.3.0:
   integrity sha512-wIc93R0B8DIarbkhUMVBO+mezlSZSNj0sF8FBSLaSjS76o/uYPyDKYcAEdmGUkGgBfpI65u647eVTkOvT+cS0Q==
   dependencies:
     global "^4.3.2"
+
+github-contributions-canvas@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmmirror.com/github-contributions-canvas/download/github-contributions-canvas-0.6.0.tgz#c444f1bc2dc952c23f51f21d863a62a76e6e10e5"
+  integrity sha1-xETxvC3JUsI/UfIdhjpip25uEOU=
+  dependencies:
+    date-fns "^2.17.0"
 
 gl-matrix@^3.0.0, gl-matrix@^3.1.0, gl-matrix@^3.3.0, gl-matrix@^3.4.3:
   version "3.4.3"
@@ -8208,6 +8220,11 @@ mem@^4.0.0:
     map-age-cleaner "^0.1.1"
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
+
+memoize-one@^5.0.0:
+  version "5.2.1"
+  resolved "https://registry.npmmirror.com/memoize-one/download/memoize-one-5.2.1.tgz#8337aa3c4335581839ec01c3d594090cebe8f00e"
+  integrity sha1-gzeqPEM1WBg57AHD1ZQJDOvo8A4=
 
 memory-fs@^0.4.1:
   version "0.4.1"
@@ -10717,6 +10734,14 @@ react-app-polyfill@^1.0.2:
     raf "^3.4.1"
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
+
+react-calendar-heatmap@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.npmmirror.com/react-calendar-heatmap/download/react-calendar-heatmap-1.8.1.tgz#8370151f6cf7477d49cb3459596d6d046bdfc704"
+  integrity sha1-g3AVH2z3R31JyzRZWW1tBGvfxwQ=
+  dependencies:
+    memoize-one "^5.0.0"
+    prop-types "^15.6.2"
 
 react-canvas-nest@^1.1.1:
   version "1.1.1"

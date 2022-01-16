@@ -657,6 +657,11 @@ destroy@^1.0.4:
   resolved "https://registry.npm.taobao.org/destroy/download/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
+dom-parser@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npmmirror.com/dom-parser/download/dom-parser-0.1.6.tgz#696c633b535ab3291424eb5bf58ee426f64632ca"
+  integrity sha1-aWxjO1NasykUJOtb9Y7kJvZGMso=
+
 dot-prop@^4.2.1:
   version "4.2.1"
   resolved "https://registry.npm.taobao.org/dot-prop/download/dot-prop-4.2.1.tgz#45884194a71fc2cda71cbb4bceb3a4dd2f433ba4"
