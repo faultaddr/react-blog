@@ -18,7 +18,7 @@ const ContributionChart = props => {
   useEffect(() => {
     axios.get(`/user/github/contributions`)
       .then(res => {
-        alert(res.data)
+        
         setContributions(res)
       })
       .catch(e => {

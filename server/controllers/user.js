@@ -50,9 +50,10 @@ async function getCommitCount(time) {
   var countArray = []
   crArray.forEach(element => {
     var count = element.getAttribute('data-count')
-    if (count !== undefined && count != null)
+    if (count !== undefined && count != null) {
       result.push({ dataDate: element.getAttribute('data-date') })
-      countArray.push(count)
+      countArray.push(parseInt(count))
+    }
   });
   finalResult = {
     date: result,
