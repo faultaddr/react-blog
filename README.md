@@ -416,4 +416,4 @@ React-blog follows the  [Contributor Covenant](http://contributor-covenant.org/v
 
 ## License
 
-[MIT](LICENSE) © Richard Littauer
+[MIT](LICENSE) © Yunyi Pan
