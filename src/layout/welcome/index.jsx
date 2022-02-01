@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './index.scss'
 import { Layout } from 'antd'
+import {Typer} from './typer'
 const WelcomeLayout = props => {
   function redirect() {
     props.history.push('/home')
@@ -9,8 +10,8 @@ const WelcomeLayout = props => {
     <Layout style={{ width: '100%', height: '100%' }} >
       <div class='container' onClick={redirect}>
 
-        <div class='text-container'><div></div></div>
-
+        {/* <div class='text-container'><div></div></div> */}
+        <Typer/>
         <div class='bird-container bird-container--one'>
           <div class='bird bird--one'></div>
         </div>

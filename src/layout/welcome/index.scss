@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Arima+Madurai:300');
-
+$bg-color: #333;
+$bl-color: #22BAD9;
 *,
 *::before,
 *::after {
@@ -310,4 +311,45 @@ div {
 		transform: translateY(0vh) translateX(110vw) scale(0.45);
 	}
 	
+}
+
+.typer {
+
+  a {
+    color: inherit;
+    &:hover {
+      background-color: $bl-color;
+      color: white;
+      text-decoration: none;
+    }
+  }
+  &-header {
+    margin-top: 5%;
+    margin-bottom: 15%;
+    text-align: center;
+    font-size: 3em;
+    cursor: pointer;
+    color: $bl-color;
+  }
+  &-message {
+    color: rgb(190, 255, 105);
+    width: 500px;
+    font-size: 2em;
+    margin: auto;
+    .flash {
+      color: $bl-color;
+      font-weight: bold;
+      text-decoration: underline;
+	  
+      animation-name: blinker;
+      animation-duration: 0.7s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      @keyframes blinker {
+        0% { opacity: 1.0; }
+        50% { opacity: 0.0; }
+        100% { opacity: 1.0; }
+      }
+    }
+  }
 }
