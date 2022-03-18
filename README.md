@@ -406,6 +406,10 @@ module.exports = config
 
 [@panyunyi97](https://github.com/panyunyi97)。
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=panyunyi97/react-blog&type=Date)](https://star-history.com/#bytebase/star-history&Date)
+
 ## Contributing
 
 Feel free to dive in! [open an issue](https://github.com/panyunyi97/react-blog/issues/new) or submit PRs.
