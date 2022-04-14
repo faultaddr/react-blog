@@ -5,7 +5,7 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
 
-For chinese , you can visit this [中文](https://github.com/panyunyi97/react-blog/blob/main/README.zh-CN.md)
+For chinese , you can visit this [中文](https://github.com/faultaddr/react-blog/blob/main/README.zh-CN.md)
 
 One-click installation & deployment of the React blog, freeing your hands so that you only need to change the configuration file to have a perfect personal technical blog!
 
@@ -133,7 +133,7 @@ export const SIDEBAR = {
     // personal website
     homepages: {
     github: {
-        link: 'https://github.com/panyunyi97',
+        link: 'https://github.com/faultaddr',
         icon: <GithubFill className='homepage-icon' /> 
     },
     juejin: {
@@ -317,7 +317,7 @@ Sensitive information in the background is configured through ``server\config\in
 const devMode = process.env.NODE_ENV === 'development'
 const config = {
   PORT: 6060, // start port
-  ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // your github name
+  ADMIN_GITHUB_LOGIN_NAME: 'faultaddr', // your github name
   GITHUB: {
     client_id: '87a4f88b943adaafd44a',
     client_secret: '9494809fc485d93084452fbf8b21ba2a829bfb82',
@@ -404,15 +404,15 @@ module.exports = config
 
 ## Maintainers
 
-[@panyunyi97](https://github.com/panyunyi97)。
+[@faultaddr](https://github.com/faultaddr)。
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=panyunyi97/react-blog&type=Date)](https://star-history.com/#bytebase/star-history&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=faultaddr/react-blog&type=Date)](https://star-history.com/#bytebase/star-history&Date)
 
 ## Contributing
 
-Feel free to dive in! [open an issue](https://github.com/panyunyi97/react-blog/issues/new) or submit PRs.
+Feel free to dive in! [open an issue](https://github.com/faultaddr/react-blog/issues/new) or submit PRs.
 
 
 React-blog follows the  [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
