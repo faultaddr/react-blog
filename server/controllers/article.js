@@ -16,7 +16,7 @@ const fs = require('fs')
 const { uploadPath, outputPath, findOrCreateFilePath, decodeFile, generateFile } = require('../utils/file')
 const archiver = require('archiver') // 打包 zip
 const send = require('koa-send') // 文件下载
-const { randomUUID } = require('crypto')
+const { v4: uuidv4 , stringify} = require('uuid');
 
 class ArticleController {
   // 初始化数据 关于页面（用于评论关联）
@@ -51,7 +51,7 @@ class ArticleController {
       } else {
         const tags = tagList.map(t => ({ name: t }))
         const categories = categoryList.map(c => ({ name: c }))
-        const uuid = randomUUID().replaceAll('-','')
+        const uuid = uuidv4().toString().replace(/-/g, '')
         const data = await ArticleModel.create(
           { title, content, authorId, tags, categories, type, top, uuid },
           { include: [TagModel, CategoryModel] }
