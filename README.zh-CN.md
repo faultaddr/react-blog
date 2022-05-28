@@ -132,7 +132,7 @@ export const SIDEBAR = {
     // 个人主页
     homepages: {
     github: {
-        link: 'https://github.com/panyunyi97',
+        link: 'https://github.com/faultaddr',
         icon: <GithubFill className='homepage-icon' /> 
     },
     juejin: {
@@ -316,7 +316,7 @@ export default MyInfo
 const devMode = process.env.NODE_ENV === 'development'
 const config = {
   PORT: 6060, // 启动端口
-  ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // 博主的 github 登录的账户名 user
+  ADMIN_GITHUB_LOGIN_NAME: 'faultaddr', // 博主的 github 登录的账户名 user
   GITHUB: {
     client_id: '87a4f88b943adaafd44a',
     client_secret: '9494809fc485d93084452fbf8b21ba2a829bfb82',
@@ -402,11 +402,11 @@ module.exports = config
 
 ## 维护者
 
-[@panyunyi97](https://github.com/panyunyi97)。
+[@faultaddr](https://github.com/faultaddr)。
 
 ## 如何贡献
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/panyunyi97/react-blog/issues/new) 或者提交一个 Pull Request。
+非常欢迎你的加入！[提一个 Issue](https://github.com/faultaddr/react-blog/issues/new) 或者提交一个 Pull Request。
 
 
 React-blog 遵循 [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) 行为规范。

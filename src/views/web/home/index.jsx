@@ -40,7 +40,7 @@ const Home = props => {
         {/* quick link */}
         <QuickLink list={list} />
 
-        <ContributionChart userName='panyunyi97' />
+        <ContributionChart userName='faultaddr' />
 
         {/* serach empty result */}
         {list.length === 0 && keyword && (

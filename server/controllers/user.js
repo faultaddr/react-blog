@@ -40,9 +40,9 @@ async function getDateBetween(start, end) {
 }
 
 async function getCommitCount(time) {
-  //https://github.com/panyunyi97?tab=overview&from=2021-09-01&to=2021-09-31
-  //https://github.com/users/panyunyi97/contributions?to=2021-12-31
-  const response = await axios.get(`https://github.com/users/panyunyi97/contributions?to=2021-12-31`);
+  //https://github.com/faultaddr?tab=overview&from=2021-09-01&to=2021-09-31
+  //https://github.com/users/faultaddr/contributions?to=2021-12-31
+  const response = await axios.get(`https://github.com/users/faultaddr/contributions?to=2021-12-31`);
   var parser = new DomParser();
   var doc = parser.parseFromString(response.data)
   var crArray = doc.getElementsByClassName('ContributionCalendar-day')
@@ -340,7 +340,7 @@ class UserController {
   /**
    * 获取github contribution 信息
    * @param {String} userName - github name
-   * https://github.com/panyunyi97?tab=overview&from=2021-09-01&to=2021-09-31
+   * https://github.com/faultaddr?tab=overview&from=2021-09-01&to=2021-09-31
    */
   static async getGithubContributions(ctx) {
     const validator = ctx.validate(

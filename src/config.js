@@ -21,7 +21,7 @@ export const SIDEBAR = {
   // 个人主页
   homepages: {
     github: {
-      link: 'https://github.com/panyunyi97',
+      link: 'https://github.com/faultaddr',
       icon: <GithubFill className='homepage-icon' />
     },
     juejin: {

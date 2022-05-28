@@ -1,7 +1,7 @@
 const devMode = process.env.NODE_ENV === 'development'
 const config = {
   PORT: 6060, // 启动端口
-  ADMIN_GITHUB_LOGIN_NAME: 'panyunyi97', // 博主的 github 登录的账户名 user
+  ADMIN_GITHUB_LOGIN_NAME: 'faultaddr', // 博主的 github 登录的账户名 user
   GITHUB: {
     client_id: '87a4f88b943adaafd44a',
     client_secret: '9494809fc485d93084452fbf8b21ba2a829bfb82',

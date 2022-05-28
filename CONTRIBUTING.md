@@ -1,3 +1,3 @@
-[panyunyi97 (maintainer)](https://github.com/panyunyi97)
+[faultaddr (maintainer)](https://github.com/faultaddr)
 
 [alvin0216 (original author)](https://github.com/alvin0216)
