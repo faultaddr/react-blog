@@ -6,7 +6,7 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 import {GithubFill} from 'utils/antdIcon'
 // API_BASE_URL
-export const SERVER_URL = 'http://www.panyunyi.cn'
+export const SERVER_URL = 'http://panyunyi.cn'
 // export const SERVER_URL = 'http://127.0.0.1'
 export const API_BASE_URL = SERVER_URL + ':6060'
 // export const API_BASE_URL = 'http://127.0.0.1:6060'
@@ -31,8 +31,8 @@ export const SIDEBAR = {
   },
   friendslink: {
     lizi: {
-      link: 'http://blog.liziyang.co/',
-      img: 'http://blog.liziyang.co/images/pikachu.jpg',
+      link: 'http://blog.liziyang.space/',
+      img: 'http://blog.liziyang.space/images/pikachu.jpg',
     },
     wizchen: {
       link: 'http://blog.wizchen.com',

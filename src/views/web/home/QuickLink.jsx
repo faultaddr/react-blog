@@ -19,6 +19,10 @@ const List = props => {
           <Link to={`/article/${item.id}`}>{item.title}</Link>
         </li>
       ))}
+      <a href='https://beian.miit.gov.cn/' target='_blank'>京ICP备16068058号-1</a>
+      <p></p>
+      <a href='https://beian.miit.gov.cn/' target='_blank'>京ICP备16068058号-3</a>
+      <p></p>
     </ul>
   )
 }
@@ -32,7 +36,8 @@ const QuickLink = props => {
 
   const [drawerVisible, setDrawerVisible] = useState(false)
 
-  return isGreaterThan1300 ? <List list={list} /> : (
+  return isGreaterThan1300 ? <div className='preview'> <List list={list} />
+  </div> : (
     <>
       <div className='drawer-btn' onClick={e => setDrawerVisible(true)}>
         <MenuOutlined className='nav-phone-icon' />
@@ -45,6 +50,10 @@ const QuickLink = props => {
         visible={drawerVisible}
         getContainer={() => document.querySelector('.app-home')}>
         <List list={list} showTitle={false} />
+        <a href='https://beian.miit.gov.cn/' target='_blank'>京ICP备16068058号-1</a>
+        <p></p>
+        <a href='https://beian.miit.gov.cn/' target='_blank'>京ICP备16068058号-3</a>
+        <p></p>
       </Drawer>
     </>
   )
