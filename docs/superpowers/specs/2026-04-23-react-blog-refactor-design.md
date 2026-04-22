@@ -76,9 +76,9 @@ react-blog/
 ```prisma
 model User {
   id              Int       @id @default(autoincrement())
-  username        String?   @db.VarChar(50)
-  password        String?   // bcrypt 加密
-  email           String?   @db.VarChar(50)
+  username        String?   @db.VarChar(50)    // GitHub 用户可为空
+  password        String?                      // GitHub 用户可为空
+  email           String?   @unique @db.VarChar(50)  // 用于本地登录
   role            Role      @default(USER)
   notice          Boolean   @default(true)
   githubId        String?   @unique
@@ -90,8 +90,6 @@ model User {
   comments Comment[]
   replies  Reply[]
   ips      Ip[]
-
-  @@index([email])
 }
 
 enum Role {
@@ -100,29 +98,41 @@ enum Role {
 }
 ```
 
+**字段说明：**
+- `username`, `password`, `email` 可为空：支持 GitHub OAuth 登录用户
+- 本地注册用户必须提供 `username`, `password`, `email`
+
 ### 文章表 (Article)
 
 ```prisma
 model Article {
-  id        Int      @id @default(autoincrement())
-  title     String   @unique @db.VarChar(255)
-  content   String?  @db.Text
-  summary   String?  @db.VarChar(500)
-  cover     String?  @db.VarChar(500)
-  viewCount Int      @default(0)
-  isPrivate Boolean  @default(false)
-  isTop     Boolean  @default(false)
-  uuid      String?  @db.VarChar(32)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  title       String   @unique @db.VarChar(255)
+  slug        String?  @unique @db.VarChar(255)  // SEO 友好 URL
+  content     String?  @db.Text
+  summary     String?  @db.VarChar(500)
+  cover       String?  @db.VarChar(500)
+  viewCount   Int      @default(0)
+  isPrivate   Boolean  @default(false)
+  isTop       Boolean  @default(false)
+  uuid        String?  @db.VarChar(32)           // 私密文章分享链接
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?                          // 发布时间（可独立控制）
 
   tags       Tag[]
   categories Category[]
   comments   Comment[]
 
   @@index([isPrivate, isTop, createdAt])
+  @@index([createdAt])
+  @@index([slug])
 }
 ```
+
+**新增字段：**
+- `slug`: SEO 友好 URL，如 `/article/my-first-post`
+- `publishedAt`: 独立发布时间，支持定时发布功能
 
 ### 标签表 (Tag)
 
@@ -166,6 +176,7 @@ model Comment {
   replies Reply[]
 
   @@index([articleId])
+  @@index([createdAt])
 }
 ```
 
@@ -177,16 +188,23 @@ model Reply {
   content   String   @db.Text
   commentId Int
   userId    Int
-  replyTo   Int?
+  replyTo   Int?     // 回复的回复ID（支持楼中楼）
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [userId], references: [id])
+  parent  Reply?  @relation("ReplyTree", fields: [replyTo], references: [id], onDelete: Cascade)
+  children Reply[] @relation("ReplyTree")
 
   @@index([commentId])
+  @@index([createdAt])
 }
 ```
+
+**设计说明：**
+- `replyTo` 支持楼中楼回复
+- 自引用关系通过 `ReplyTree` 关系定义
 
 ### 碎片/语录表 (Fragment)
 
@@ -197,6 +215,8 @@ model Fragment {
   isPrivate Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
 }
 ```
 
@@ -399,6 +419,277 @@ apps/web/src/
 - 同一服务器提供 tRPC API
 - MySQL 数据库独立运行
 - 支持 Docker Compose 一键部署
+
+---
+
+## 认证与授权
+
+### JWT 认证流程
+
+```typescript
+// apps/server/src/trpc/context.ts
+import { verify } from 'jsonwebtoken'
+
+export async function createContext({ req, res }: CreateFastifyContextOptions) {
+  const token = req.headers.authorization?.replace('Bearer ', '')
+
+  let user = null
+  if (token) {
+    try {
+      user = verify(token, process.env.JWT_SECRET!)
+    } catch {
+      // token 无效或过期
+    }
+  }
+
+  return { req, res, user }
+}
+
+export type Context = Awaited<ReturnType<typeof createContext>>
+```
+
+### Procedure 权限定义
+
+```typescript
+// apps/server/src/trpc/procedures.ts
+import { initTRPC } from '@trpc/server'
+import { Context } from './context'
+import { TRPCError } from '@trpc/server'
+
+const t = initTRPC.context<Context>().create()
+
+// 公开接口
+export const publicProcedure = t.procedure
+
+// 需登录
+export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } })
+})
+
+// 仅管理员
+export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.user || ctx.user.role !== 'ADMIN') {
+    throw new TRPCError({ code: 'FORBIDDEN' })
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } })
+})
+```
+
+### GitHub OAuth 流程
+
+1. 前端跳转到 GitHub 授权页面
+2. 用户授权后 GitHub 重定向回 `/auth/github/callback?code=xxx`
+3. 后端用 code 换取 access_token
+4. 后端用 access_token 获取用户信息
+5. 查找或创建用户，生成 JWT 返回
+
+---
+
+## 环境配置
+
+### 环境变量
+
+```bash
+# .env.example
+
+# 数据库
+DATABASE_URL="mysql://user:password@localhost:3306/blog"
+
+# JWT
+JWT_SECRET="your-secret-key"
+JWT_EXPIRES_IN="720h"
+
+# GitHub OAuth
+GITHUB_CLIENT_ID="xxx"
+GITHUB_CLIENT_SECRET="xxx"
+
+# 邮件通知
+SMTP_HOST="smtp.qq.com"
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER="xxx@qq.com"
+SMTP_PASS="授权码"
+
+# 站点配置
+SITE_URL="http://localhost:3000"
+ADMIN_GITHUB_LOGIN="your-github-username"
+```
+
+### 配置验证
+
+```typescript
+// apps/server/src/config.ts
+import { z } from 'zod'
+
+const envSchema = z.object({
+  DATABASE_URL: z.string(),
+  JWT_SECRET: z.string().min(32),
+  JWT_EXPIRES_IN: z.string().default('720h'),
+  GITHUB_CLIENT_ID: z.string(),
+  GITHUB_CLIENT_SECRET: z.string(),
+  // ...
+})
+
+export const env = envSchema.parse(process.env)
+```
+
+---
+
+## 错误处理
+
+### API 错误格式
+
+```typescript
+// 统一错误响应格式
+interface ApiError {
+  code: string       // 错误码: 'ARTICLE_NOT_FOUND', 'UNAUTHORIZED'
+  message: string    // 用户友好消息
+  details?: unknown  // 额外上下文（仅开发环境）
+}
+
+// 错误码定义
+export const ErrorCodes = {
+  // 通用
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+
+  // 文章
+  ARTICLE_NOT_FOUND: 'ARTICLE_NOT_FOUND',
+  ARTICLE_TITLE_EXISTS: 'ARTICLE_TITLE_EXISTS',
+
+  // 用户
+  USER_NOT_FOUND: 'USER_NOT_FOUND',
+  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
+  EMAIL_EXISTS: 'EMAIL_EXISTS',
+} as const
+```
+
+### 前端错误处理
+
+```typescript
+// apps/web/src/utils/errorHandler.ts
+import { TRPCClientError } from '@trpc/client'
+
+export function handleApiError(error: unknown): string {
+  if (error instanceof TRPCClientError) {
+    const code = error.data?.code
+    const message = error.message
+
+    // 根据错误码返回友好消息
+    switch (code) {
+      case 'UNAUTHORIZED':
+        return '请先登录'
+      case 'FORBIDDEN':
+        return '没有权限执行此操作'
+      default:
+        return message || '操作失败，请重试'
+    }
+  }
+  return '网络错误，请重试'
+}
+```
+
+---
+
+## 数据迁移策略
+
+### 迁移步骤
+
+1. **备份现有数据库**
+   ```bash
+   mysqldump -u root -p blog > backup_$(date +%Y%m%d).sql
+   ```
+
+2. **创建 Prisma Schema**
+   - 保持与现有数据库结构兼容
+   - 新字段设置默认值
+
+3. **数据迁移脚本**
+   ```typescript
+   // scripts/migrate.ts
+   // 将现有 Sequelize 数据迁移到 Prisma
+   ```
+
+4. **用户密码迁移**
+   - 旧系统使用 `bcrypt-nodejs`
+   - 新系统使用 `bcrypt`
+   - 密码格式兼容，无需重新哈希
+
+5. **增量迁移**
+   - 新旧系统可并行运行
+   - 通过数据库同步数据
+   - 验证完成后切换流量
+
+---
+
+## tRPC 输入 Schema 示例
+
+```typescript
+// apps/server/src/trpc/routers/article.ts
+import { z } from 'zod'
+import { router, publicProcedure, protectedProcedure } from '../trpc'
+
+export const articleRouter = router({
+  list: publicProcedure
+    .input(z.object({
+      page: z.number().int().positive().default(1),
+      pageSize: z.number().int().positive().max(100).default(10),
+      keyword: z.string().optional(),
+      tag: z.string().optional(),
+      category: z.string().optional(),
+    }))
+    .query(async ({ ctx, input }) => {
+      // ...
+    }),
+
+  byId: publicProcedure
+    .input(z.object({
+      id: z.number().int().positive(),
+    }))
+    .query(async ({ ctx, input }) => {
+      // ...
+    }),
+
+  create: protectedProcedure
+    .input(z.object({
+      title: z.string().min(1).max(255),
+      content: z.string().optional(),
+      summary: z.string().max(500).optional(),
+      cover: z.string().url().optional(),
+      isPrivate: z.boolean().default(false),
+      tags: z.array(z.string().max(50)).default([]),
+      categories: z.array(z.string().max(50)).default([]),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      // ...
+    }),
+})
+```
+
+---
+
+## 日志策略
+
+```typescript
+// apps/server/src/utils/logger.ts
+import pino from 'pino'
+
+export const logger = pino({
+  level: process.env.LOG_LEVEL || 'info',
+  transport: process.env.NODE_ENV === 'development'
+    ? { target: 'pino-pretty' }
+    : undefined,
+})
+
+// 使用示例
+logger.info({ articleId: 1 }, 'Article created')
+logger.error({ err: error }, 'Failed to create article')
+```
 
 ---
 
