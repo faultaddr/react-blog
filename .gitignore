@@ -44,9 +44,9 @@ apps/server/prisma/*.db-journal
 *.local
 
 # Old project files (will be removed later)
-dll/
-config/
-scripts/
-src/
-server/
-public/
+/dll/
+/config/
+/scripts/
+/src/
+/server/
+/public/

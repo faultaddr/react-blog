@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户角色
+enum Role {
+  ADMIN
+  USER
+}
+
+// 用户表
+model User {
+  id              Int       @id @default(autoincrement())
+  username        String?   @db.VarChar(50)
+  password        String?
+  email           String?   @unique @db.VarChar(50)
+  role            Role      @default(USER)
+  notice          Boolean   @default(true)
+  githubId        String?   @unique
+  githubProfile   Json?
+  disabledDiscuss Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  comments Comment[]
+  replies  Reply[]
+  ips      Ip[]
+}
+
+// 文章表
+model Article {
+  id          Int       @id @default(autoincrement())
+  title       String    @unique @db.VarChar(255)
+  slug        String?   @unique @db.VarChar(255)
+  content     String?   @db.Text
+  summary     String?   @db.VarChar(500)
+  cover       String?   @db.VarChar(500)
+  viewCount   Int       @default(0)
+  isPrivate   Boolean   @default(false)
+  isTop       Boolean   @default(false)
+  uuid        String?   @db.VarChar(32)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  tags       Tag[]
+  categories Category[]
+  comments   Comment[]
+
+  @@index([isPrivate, isTop, createdAt])
+  @@index([createdAt])
+  @@index([slug])
+}
+
+// 标签表
+model Tag {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(50)
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([name, articleId])
+}
+
+// 分类表
+model Category {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(50)
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([name, articleId])
+}
+
+// 评论表
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  articleId Int
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+  replies Reply[]
+
+  @@index([articleId])
+  @@index([createdAt])
+}
+
+// 回复表
+model Reply {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  commentId Int
+  userId    Int
+  replyTo   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+  parent  Reply?  @relation("ReplyTree", fields: [replyTo], references: [id], onDelete: Cascade)
+  children Reply[] @relation("ReplyTree")
+
+  @@index([commentId])
+  @@index([createdAt])
+}
+
+// 碎片/语录表
+model Fragment {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.Text
+  isPrivate Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+}
+
+// 访问记录表
+model Record {
+  id        Int      @id @default(autoincrement())
+  ip        String   @db.VarChar(50)
+  path      String   @db.VarChar(255)
+  userAgent String?  @db.VarChar(500)
+  createdAt DateTime @default(now())
+
+  @@index([ip, createdAt])
+}
+
+// IP 黑名单
+model Ip {
+  id        Int      @id @default(autoincrement())
+  ip        String   @db.VarChar(50)
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([ip])
+}
