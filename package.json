@@ -6,11 +6,14 @@
     "dev": "pnpm --filter './apps/*' run dev",
     "build": "pnpm --filter './apps/*' run build",
     "test": "pnpm --filter './apps/*' run test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "lint": "pnpm --filter './apps/*' run lint",
     "dev:server": "pnpm --filter @blog/server run dev",
     "dev:web": "pnpm --filter @blog/web run dev"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "typescript": "^5.4.0"
   },
   "packageManager": "pnpm@9.0.0"
