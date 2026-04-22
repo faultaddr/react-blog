@@ -424,6 +424,38 @@ apps/web/src/
 
 ## 认证与授权
 
+### Token 存储策略
+
+**使用 httpOnly Cookie 存储 JWT（推荐）**
+
+优点：
+- 防止 XSS 攻击（JavaScript 无法访问）
+- 自动随请求发送
+- 支持过期时间控制
+
+```typescript
+// 登录成功后设置 cookie
+res.setCookie('token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax',
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 天
+  path: '/',
+})
+```
+
+### JWT Payload 结构
+
+```typescript
+interface JwtPayload {
+  userId: number
+  username: string | null
+  role: 'ADMIN' | 'USER'
+  iat: number
+  exp: number
+}
+```
+
 ### JWT 认证流程
 
 ```typescript
@@ -431,14 +463,16 @@ apps/web/src/
 import { verify } from 'jsonwebtoken'
 
 export async function createContext({ req, res }: CreateFastifyContextOptions) {
-  const token = req.headers.authorization?.replace('Bearer ', '')
+  // 从 cookie 或 header 获取 token
+  const token = req.cookies.token || req.headers.authorization?.replace('Bearer ', '')
 
-  let user = null
+  let user: JwtPayload | null = null
   if (token) {
     try {
-      user = verify(token, process.env.JWT_SECRET!)
+      user = verify(token, process.env.JWT_SECRET!) as JwtPayload
     } catch {
-      // token 无效或过期
+      // token 无效或过期，清除 cookie
+      res.clearCookie('token')
     }
   }
 
@@ -478,13 +512,30 @@ export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
 })
 ```
 
+### CSRF 保护
+
+Fastify 内置 CSRF 保护，配合 sameSite cookie：
+
+```typescript
+// apps/server/src/app.ts
+import csrf from '@fastify/csrf-protection'
+
+await app.register(csrf, {
+  sessionPlugin: false,
+})
+
+// 前端请求时携带 CSRF token
+// GET /api/csrf-token 获取 token
+// 请求头 X-CSRF-Token 携带 token
+```
+
 ### GitHub OAuth 流程
 
 1. 前端跳转到 GitHub 授权页面
 2. 用户授权后 GitHub 重定向回 `/auth/github/callback?code=xxx`
 3. 后端用 code 换取 access_token
 4. 后端用 access_token 获取用户信息
-5. 查找或创建用户，生成 JWT 返回
+5. 查找或创建用户，生成 JWT 设置到 cookie
 
 ---
 
@@ -495,18 +546,21 @@ export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
 ```bash
 # .env.example
 
+# 运行环境
+NODE_ENV="development"
+
 # 数据库
 DATABASE_URL="mysql://user:password@localhost:3306/blog"
 
 # JWT
-JWT_SECRET="your-secret-key"
+JWT_SECRET="your-secret-key-min-32-chars"
 JWT_EXPIRES_IN="720h"
 
 # GitHub OAuth
 GITHUB_CLIENT_ID="xxx"
 GITHUB_CLIENT_SECRET="xxx"
 
-# 邮件通知
+# 邮件通知（可选）
 SMTP_HOST="smtp.qq.com"
 SMTP_PORT=465
 SMTP_SECURE=true
@@ -516,6 +570,9 @@ SMTP_PASS="授权码"
 # 站点配置
 SITE_URL="http://localhost:3000"
 ADMIN_GITHUB_LOGIN="your-github-username"
+
+# 日志
+LOG_LEVEL="info"
 ```
 
 ### 配置验证
@@ -525,12 +582,21 @@ ADMIN_GITHUB_LOGIN="your-github-username"
 import { z } from 'zod'
 
 const envSchema = z.object({
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRES_IN: z.string().default('720h'),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
-  // ...
+  SITE_URL: z.string().url(),
+  ADMIN_GITHUB_LOGIN: z.string(),
+  LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('info'),
+  // 可选：邮件配置
+  SMTP_HOST: z.string().optional(),
+  SMTP_PORT: z.coerce.number().optional(),
+  SMTP_SECURE: z.coerce.boolean().optional(),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASS: z.string().optional(),
 })
 
 export const env = envSchema.parse(process.env)
