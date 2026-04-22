@@ -1,0 +1,36 @@
+// 错误码
+export const ErrorCodes = {
+  // 通用
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+
+  // 文章
+  ARTICLE_NOT_FOUND: 'ARTICLE_NOT_FOUND',
+  ARTICLE_TITLE_EXISTS: 'ARTICLE_TITLE_EXISTS',
+  ARTICLE_SLUG_EXISTS: 'ARTICLE_SLUG_EXISTS',
+
+  // 用户
+  USER_NOT_FOUND: 'USER_NOT_FOUND',
+  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
+  EMAIL_EXISTS: 'EMAIL_EXISTS',
+  USERNAME_EXISTS: 'USERNAME_EXISTS',
+
+  // 评论
+  COMMENT_NOT_FOUND: 'COMMENT_NOT_FOUND',
+
+  // 回复
+  REPLY_NOT_FOUND: 'REPLY_NOT_FOUND',
+} as const
+
+export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes]
+
+// 默认分页
+export const DEFAULT_PAGE_SIZE = 10
+export const MAX_PAGE_SIZE = 100
+
+// Token 配置
+export const TOKEN_COOKIE_NAME = 'token'
+export const TOKEN_MAX_AGE = 30 * 24 * 60 * 60 * 1000 // 30 days
