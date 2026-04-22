@@ -1,5 +1,5 @@
 import { Table, Button, Tag, Space, Popconfirm, message } from 'antd'
-import { PlusOutlined, EditOutlined, DeleteOutlined, TopOutlined, LockOutlined } from '@ant-design/icons'
+import { PlusOutlined, EditOutlined, DeleteOutlined, VerticalAlignTopOutlined, LockOutlined } from '@ant-design/icons'
 import { trpc } from '../../trpc'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
@@ -80,7 +80,7 @@ export function ArticleManagePage() {
           <Button
             type="link"
             size="small"
-            icon={<TopOutlined />}
+            icon={<VerticalAlignTopOutlined />}
             onClick={() => toggleTopMutation.mutate({ id: record.id })}
           >
             {record.isTop ? '取消置顶' : '置顶'}
