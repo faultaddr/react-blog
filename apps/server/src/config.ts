@@ -6,10 +6,11 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRES_IN: z.string().default('720h'),
-  GITHUB_CLIENT_ID: z.string(),
-  GITHUB_CLIENT_SECRET: z.string(),
-  SITE_URL: z.string().url(),
-  ADMIN_GITHUB_LOGIN: z.string(),
+  // GitHub OAuth (可选，开发时可跳过)
+  GITHUB_CLIENT_ID: z.string().optional(),
+  GITHUB_CLIENT_SECRET: z.string().optional(),
+  SITE_URL: z.string().url().default('http://localhost:6060'),
+  ADMIN_GITHUB_LOGIN: z.string().optional(),
   LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('info'),
   // 可选：邮件配置
   SMTP_HOST: z.string().optional(),
@@ -30,9 +31,9 @@ export const config = {
     expiresIn: env.JWT_EXPIRES_IN,
   },
   github: {
-    clientId: env.GITHUB_CLIENT_ID,
-    clientSecret: env.GITHUB_CLIENT_SECRET,
-    adminLogin: env.ADMIN_GITHUB_LOGIN,
+    clientId: env.GITHUB_CLIENT_ID || '',
+    clientSecret: env.GITHUB_CLIENT_SECRET || '',
+    adminLogin: env.ADMIN_GITHUB_LOGIN || '',
   },
   siteUrl: env.SITE_URL,
   logLevel: env.LOG_LEVEL,

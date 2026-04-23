@@ -4,13 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter './apps/*' run dev",
+    "dev:server": "pnpm --filter @blog/server run dev",
+    "dev:web": "pnpm --filter @blog/web run dev",
     "build": "pnpm --filter './apps/*' run build",
+    "start": "pnpm --filter @blog/server run start",
     "test": "pnpm --filter './apps/*' run test",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "lint": "pnpm --filter './apps/*' run lint",
-    "dev:server": "pnpm --filter @blog/server run dev",
-    "dev:web": "pnpm --filter @blog/web run dev"
+    "db:generate": "pnpm --filter @blog/server run db:generate",
+    "db:push": "pnpm --filter @blog/server run db:push",
+    "db:studio": "pnpm --filter @blog/server run db:studio"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

@@ -3,9 +3,9 @@ import { config } from '../config'
 import type { JwtPayload } from '@blog/shared'
 
 export function generateToken(payload: Omit<JwtPayload, 'iat' | 'exp'>): string {
-  return sign(payload, config.jwt.secret, {
+  return sign(payload as object, config.jwt.secret, {
     expiresIn: config.jwt.expiresIn,
-  })
+  } as any)
 }
 
 export function verifyToken(token: string): JwtPayload | null {

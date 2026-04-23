@@ -107,7 +107,7 @@ export async function getArticleBySlug(slug: string, includePrivate = false) {
 }
 
 export async function getArticleByUuid(uuid: string) {
-  return prisma.article.findUnique({
+  return prisma.article.findFirst({
     where: { uuid },
     include: {
       tags: true,
@@ -245,7 +245,7 @@ export async function getAllTags() {
     select: { name: true },
     distinct: ['name'],
   })
-  return tags.map(t => t.name)
+  return tags.map((t: { name: string }) => t.name)
 }
 
 // 获取所有分类
@@ -254,5 +254,5 @@ export async function getAllCategories() {
     select: { name: true },
     distinct: ['name'],
   })
-  return categories.map(c => c.name)
+  return categories.map((c: { name: string }) => c.name)
 }
